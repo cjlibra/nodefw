@@ -3,28 +3,56 @@ package main
 import (
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native" // Native engine
+	"strconv"
+	//"html"
+	"log"
+	//"net/url"
 	// _ "github.com/ziutek/mymysql/thrsafe" // Thread safe engine
 
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
 )
+
+type Status struct {
+	StationID     int
+	Workshop      string
+	StationType   string
+	LoaderID      int
+	UnLoaderId    int
+	StationStatus string
+}
+type Alarm struct {
+	AlarmID          int
+	Workshop         string
+	StationID        int
+	StationType      string
+	MachineID        int
+	AlarmCode        int
+	AlarmDescription string
+	StartTime        string
+}
 
 func checkError(error error) {
 	if error != nil {
 		panic("ERROR: " + error.Error()) // terminate program
 	}
 }
-func status(w http.ResponseWriter, r *http.Request) {
+func opendb() mysql.Conn {
 
-	w.Write([]byte("status!"))
 	db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
 
 	err := db.Connect()
 	if err != nil {
 		panic(err)
 	}
+	return db
 
+}
+func statusfunc(w http.ResponseWriter, r *http.Request) {
+	db := opendb()
+	defer db.Close()
 	res, err := db.Start("select * from stations_status")
 	checkError(err)
 
@@ -35,6 +63,9 @@ func status(w http.ResponseWriter, r *http.Request) {
 	fmt.Println()
 
 	// Print all rows
+	var status Status
+	var statuses []Status
+
 	for {
 		row, err := res.GetRow()
 		checkError(err)
@@ -47,17 +78,97 @@ func status(w http.ResponseWriter, r *http.Request) {
 		// Print all cols
 		for _, col := range row {
 			if col == nil {
-				fmt.Print("<NULL>")
+				fmt.Print("error col is <null>")
+				return
 			} else {
 				os.Stdout.Write(col.([]byte))
 			}
 			fmt.Print(" ")
 		}
 		fmt.Println()
+
+		status.StationID = row.Int(res.Map("StationID"))
+		status.Workshop = row.Str(res.Map("Workshop"))
+		status.StationType = row.Str(res.Map("StationType"))
+		status.LoaderID = row.Int(res.Map("LoaderID"))
+		status.UnLoaderId = row.Int(res.Map("UnloaderID"))
+		status.StationStatus = row.Str(res.Map("StationStatus"))
+
+		statuses = append(statuses, status)
 	}
 
-}
+	b, err := json.Marshal(statuses)
+	if err != nil {
+		checkError(err)
+	}
+	os.Stdout.Write(b)
+	w.Write(b)
 
+}
+func alarmfunc(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm() //解析参数，默认是不会解析的
+	//fmt.Fprintf(w, "Hi, I love you %s", html.EscapeString(r.URL.Path[1:]))
+	if r.Method == "GET" {
+		//fmt.Println("method:", r.Method) //获取请求的方法
+		stationid := r.FormValue("stationid")
+		//w.Write([]byte(stationid[0]))
+
+		if stationid == "" {
+			w.Write([]byte("error input! no stationid"))
+			return
+		} else {
+			//fmt.Println(stationid)
+			_, err := strconv.Atoi(stationid)
+			if err != nil {
+				w.Write([]byte("error input! no num"))
+				return
+			}
+			db := opendb()
+			defer db.Close()
+			res, err := db.Start("select * from alarms_active where StationID = %s", stationid)
+			checkError(err)
+			var alarm Alarm
+			var alarms []Alarm
+			for {
+				row, err := res.GetRow()
+				checkError(err)
+
+				if row == nil {
+					// No more rows
+					break
+				}
+
+				// Print all cols
+				for _, col := range row {
+					if col == nil {
+						fmt.Print("error  col is<NULL>")
+						return
+					} else {
+						os.Stdout.Write(col.([]byte))
+					}
+					fmt.Print(" ")
+				}
+				fmt.Println()
+
+				alarm.AlarmID = row.Int(res.Map("AlarmID"))
+				alarm.Workshop = row.Str(res.Map("Workshop"))
+				alarm.StationID = row.Int(res.Map("StationID"))
+				alarm.StationType = row.Str(res.Map("StationType"))
+				alarm.MachineID = row.Int(res.Map("MachineID"))
+				alarm.AlarmCode = row.Int(res.Map("AlarmCode"))
+				alarm.AlarmDescription = row.Str(res.Map("AlarmDescription"))
+				alarm.StartTime = row.Str(res.Map("StartTime"))
+				alarms = append(alarms, alarm)
+			}
+			b, err := json.Marshal(alarms)
+			if err != nil {
+				checkError(err)
+			}
+			os.Stdout.Write(b)
+			w.Write(b)
+		}
+	}
+}
 func StaticServer(w http.ResponseWriter, req *http.Request) {
 
 	staticHandler := http.FileServer(http.Dir("./htmlsrc/"))
@@ -66,8 +177,12 @@ func StaticServer(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-
-	http.HandleFunc("/status/", status)
+	http.HandleFunc("/alarm", alarmfunc)
+	http.HandleFunc("/status/", statusfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal("ListenAndServer: ", err)
+
+	}
 }
