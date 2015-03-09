@@ -169,6 +169,199 @@ func alarmfunc(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
+type WorkShop struct {
+	WorkShop string
+}
+
+func infogetwshopfunc(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	db := opendb()
+	defer db.Close()
+	res, err := db.Start("SELECT DISTINCT Workshop FROM stations")
+	checkError(err)
+	var workshop WorkShop
+	var workshops []WorkShop
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		// Print all cols
+		for _, col := range row {
+			if col == nil {
+				fmt.Print("error  col is<NULL>")
+				return
+			} else {
+				os.Stdout.Write(col.([]byte))
+			}
+			fmt.Print(" ")
+		}
+		fmt.Println()
+
+		workshop.WorkShop = row.Str(res.Map("Workshop"))
+
+		workshops = append(workshops, workshop)
+	}
+	b, err := json.Marshal(workshops)
+	if err != nil {
+		checkError(err)
+	}
+	os.Stdout.Write(b)
+	w.Write(b)
+
+}
+
+type LineType struct {
+	Linetype string
+}
+
+func infogetltypefunc(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	db := opendb()
+	defer db.Close()
+	res, err := db.Start("SELECT DISTINCT LineType FROM stations")
+	checkError(err)
+	var linetype LineType
+	var linetypes []LineType
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		// Print all cols
+		for _, col := range row {
+			if col == nil {
+				fmt.Print("error  col is<NULL>")
+				return
+			} else {
+				os.Stdout.Write(col.([]byte))
+			}
+			fmt.Print(" ")
+		}
+		fmt.Println()
+
+		linetype.Linetype = row.Str(res.Map("LineType"))
+
+		linetypes = append(linetypes, linetype)
+	}
+	b, err := json.Marshal(linetypes)
+	if err != nil {
+		checkError(err)
+	}
+	os.Stdout.Write(b)
+	w.Write(b)
+}
+
+type SID struct {
+	Sid int
+}
+
+func sidbyworkshop(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	workshop := r.FormValue("workshop")
+	if workshop == "" {
+		w.Write([]byte("error input! no  workshop"))
+		return
+	} else {
+		db := opendb()
+		defer db.Close()
+		res, err := db.Start("select LineID from stations where Workshop = \"%s\" ", workshop)
+		checkError(err)
+		var sid SID
+		var sids []SID
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+
+			sid.Sid = row.Int(res.Map("LineID"))
+
+			sids = append(sids, sid)
+		}
+		b, err := json.Marshal(sids)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+
+	}
+
+}
+
+func sidbylinetype(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	linetype := r.FormValue("linetype")
+	if linetype == "" {
+		w.Write([]byte("error input! no  linetype"))
+		return
+	} else {
+		db := opendb()
+		defer db.Close()
+		res, err := db.Start("select LineID from stations where LineType = \"%s\" ", linetype)
+		checkError(err)
+		var sid SID
+		var sids []SID
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+
+			sid.Sid = row.Int(res.Map("LineID"))
+
+			sids = append(sids, sid)
+		}
+		b, err := json.Marshal(sids)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+
+	}
+
+}
 func StaticServer(w http.ResponseWriter, req *http.Request) {
 
 	staticHandler := http.FileServer(http.Dir("./htmlsrc/"))
@@ -176,7 +369,117 @@ func StaticServer(w http.ResponseWriter, req *http.Request) {
 	return
 }
 
+type InfoMachine struct {
+	MachineID      int
+	MachineClass   string
+	MachineName    string
+	MachineType    string
+	LoadedState    string
+	TotalOutput    int
+	CurOutput      int
+	CurTotalOutput int
+	CurPartNum     string
+	CurBatchNum    string
+	UpdateTime     string
+	LineID         int
+	Workshop       string
+	LineType       string
+	LoaderID       int
+	LoaderStatus   string
+	UnloaderID     int
+	UnloaderStatus string
+}
+
+func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	lineid := r.FormValue("lineid")
+	loader := r.FormValue("loader")
+	_, err := strconv.Atoi(loader)
+	if err != nil {
+		w.Write([]byte("error input loader! no num"))
+		return
+	}
+	if lineid == "" {
+		w.Write([]byte("error input! no lineid"))
+		return
+	} else {
+		//fmt.Println(stationid)
+		_, err := strconv.Atoi(lineid)
+		if err != nil {
+			w.Write([]byte("error input! no num"))
+			return
+		}
+		db := opendb()
+		defer db.Close()
+		var loadername string
+		if loader == "1" {
+			loadername = "LoaderID"
+		} else {
+			loadername = "UnloaderID"
+
+		}
+
+		res, err := db.Start("select * from machines left join stations on stations.%s = machines.MachineID where LineID = %s", loadername, lineid)
+
+		checkError(err)
+		var infomachine InfoMachine
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+
+			infomachine.MachineID = row.Int(res.Map("MachineID"))
+			infomachine.MachineClass = row.Str(res.Map("MachineClass"))
+			infomachine.MachineName = row.Str(res.Map("MachineName"))
+			infomachine.MachineType = row.Str(res.Map("MachineType"))
+			infomachine.LoadedState = row.Str(res.Map("LoadedState"))
+			infomachine.TotalOutput = row.Int(res.Map("TotalOutput"))
+			infomachine.CurOutput = row.Int(res.Map("CurOutput"))
+			infomachine.CurTotalOutput = row.Int(res.Map("CurTotalOutput"))
+			infomachine.CurPartNum = row.Str(res.Map("CurPartNum"))
+			infomachine.CurBatchNum = row.Str(res.Map("CurBatchNum"))
+			infomachine.UpdateTime = row.Str(res.Map("UpdateTime"))
+			infomachine.LineID = row.Int(res.Map("LineID"))
+			infomachine.Workshop = row.Str(res.Map("Workshop"))
+			infomachine.LineType = row.Str(res.Map("LineType"))
+			infomachine.LoaderID = row.Int(res.Map("LoaderID"))
+			infomachine.LoaderStatus = row.Str(res.Map("LoaderStatus"))
+			infomachine.UnloaderID = row.Int(res.Map("UnloaderID"))
+			infomachine.UnloaderStatus = row.Str(res.Map("UnloaderStatus"))
+
+		}
+		b, err := json.Marshal(infomachine)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+
+}
 func main() {
+	http.HandleFunc("/infoloaderbylineid", infoloaderbylineid) /*infoloaderbylineid?lineid=2&&loader=1*/
+	http.HandleFunc("/sidbylinetype", sidbylinetype)           /*sidbylinetype?linetype=" " */
+	http.HandleFunc("/sidbyworkshop", sidbyworkshop)           /*/sidbyworkshop?workshop=" " */
+	http.HandleFunc("/info_getlt", infogetltypefunc)
+	http.HandleFunc("/info_getws", infogetwshopfunc)
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
