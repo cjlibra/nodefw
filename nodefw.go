@@ -5,7 +5,7 @@ import (
 	_ "github.com/ziutek/mymysql/native" // Native engine
 	"strconv"
 	//"html"
-	"log"
+	//"log"
 	//"net/url"
 	// _ "github.com/ziutek/mymysql/thrsafe" // Thread safe engine
 
@@ -483,9 +483,13 @@ func main() {
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
+	
+	for {
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log.Fatal("ListenAndServer: ", err)
+		//log.Fatal("ListenAndServer: ", err)
+		fmt.Println("ListenAndServer: ", err)
 
+	}
 	}
 }
