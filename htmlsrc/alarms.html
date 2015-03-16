@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>流水线管理系统</title>
+	<link rel="shortcut icon" href="./favicon.ico">
+   <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">  -->
+	<link rel="stylesheet" href="./jmobile/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="./jmobile/demos/_assets/css/jqm-demos.css">
+	<script src="./js/jquery.js"></script>
+	<script src="./jmobile/demos/_assets/js/index.js"></script>
+	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript">
+	    var linestrorig = '<li>  <div class="ui-grid-c"> \
+		                <div class="ui-block-a">   \
+						<p>$num$</p>  \
+					</div>   \
+					<div class="ui-block-b">  \
+						<p>$workshop$</p>   \
+					</div>   \
+					<div class="ui-block-c">  \
+						<p>$worktype$</p>  \
+					</div>   \
+					<div class="ui-block-d"  style = "background-color: $collor$ ">  \
+						<p>$action$</p>  \
+					</div>  \
+				</div>  \
+		  </li>'  ;
+		   var liststrs="";
+	    function GetJsonStatus(){
+		   
+	        $.getJSON("/status/",null,function(data){ 
+ 
+		        $.each(data,function(idx,item){ 
+					if(idx==0){ 
+						 return true;//同countinue，返回false同break 
+					} 
+                    linestr = linestrorig ;
+					//alert("name:"+item.StationID+",value:"+item.Workshop); 
+					linestr = linestr.replace(/\$num\$/g,item.StationID);
+					//alert(linestr)
+					linestr = linestr.replace(/\$workshop\$/g,item.Workshop);
+					linestr = linestr.replace(/\$worktype\$/g,item.StationType);
+					 
+					linestr = linestr.replace(/\$action\$/g,item.StationStatus);
+					
+					 
+					if (item.StationStatus === "自动运行中") {console.log("act");;linestr=linestr.replace(/\$collor\$/g,"green")};
+					//alert(linestr);
+					if (item.StationStatus === "待机") 
+					{
+					 
+					   linestr = linestr.replace(/\$collor\$/g,"orange");
+					}else{
+					 
+					  linestr = linestr.replace(/\$collor\$/g,"red");
+					}
+					
+					
+					//console.log(linestr)
+					liststrs = liststrs + linestr;
+		        }); 
+				 
+				$("#listview").html(liststrs);
+		    }); 
+			
+			
+
+        }
+	//	$(document).ready(GetJsonStatus);
+		 
+		
+		
+	  
+	  </script>
+</head>
+<body>
+<div data-role="page" class="jqm-demos" data-quicklinks="true">
+
+	<div data-role="header" data-position="fixed" >
+	 <h1>流水线管理系统</h1>
+	 <div data-role="navbar">
+	    <ul>
+		<li><a href="#index" >设备状态</a></li>
+		<li><a href="#index" >设备详情</a></li>
+		<li><a href="#index" >统计图表</a></li>
+		<li><a href="#index" >活动告警</a></li>
+		</ul>
+	 </div>
+	</div><!-- /header -->
+
+	<div data-role="content"  >
+	   <div data-role="collapsible-set">
+	   <div data-role="collapsible" data-collapse="true">
+	   <h2>第01号车间  2015/1/14 4:42:23</h2>
+	   <ul>  <li> 站号:1	制程:内层前处理线	设备号: 2
+	     <li>异常信息代码:34	异常信息描述:ul34	
+		 <li>发生时间:2015/1/13 4:42:23
+	       
+	   
+	   </ul>
+	   </div>
+	   <div data-role="collapsible" data-collapse="true">
+	   <h2>第02号车间 2015/1/14 4:42:23</h2>
+	   <ul>
+	        <li> 站号:1	制程:外层前处理线	设备号: 2
+	     <li>异常信息代码:35	异常信息描述:ul35	
+		 <li>发生时间:2015/1/14 4:42:23
+	       
+	   
+	   </ul>
+	   </div>
+	   </div>
+	</div> 
+	<div data-role="footer"  >
+	   <div data-role="navbar">
+	    <ul>
+		<li><a href="#index" >设备状态</a></li>
+		<li><a href="#index" >设备详情</a></li>
+		<li><a href="#index" >统计图表</a></li>
+		<li><a href="#index" >活动告警</a></li>
+		</ul>
+	 </div>
+	</div> 
+
+
+</div><!-- /page -->
+
+</body>
+</html>
