@@ -28,50 +28,180 @@
 				</div>  \
 		  </li>'  ;
 		   var liststrs="";
-	    function GetJsonStatus(){
-		   
-	        $.getJSON("/status/",null,function(data){ 
- 
+		 function GetJsonLT(){
+		 
+		     $("#sel2").empty(); 
+			 
+			  
+		
+			 
+  
+			 var option = $("<option>").val(0).text("--请选择制程--");
+			 $("#sel2").append(option);
+			 $("#sel2").selectmenu("refresh",true);
+	
+			 $.getJSON("/info_getlt",null,function(data){ 
+               
 		        $.each(data,function(idx,item){ 
-					if(idx==0){ 
-						 return true;//同countinue，返回false同break 
-					} 
-                    linestr = linestrorig ;
-					//alert("name:"+item.StationID+",value:"+item.Workshop); 
-					linestr = linestr.replace(/\$num\$/g,item.StationID);
-					//alert(linestr)
-					linestr = linestr.replace(/\$workshop\$/g,item.Workshop);
-					linestr = linestr.replace(/\$worktype\$/g,item.StationType);
-					 
-					linestr = linestr.replace(/\$action\$/g,item.StationStatus);
-					
-					 
-					if (item.StationStatus === "自动运行中") {console.log("act");;linestr=linestr.replace(/\$collor\$/g,"green")};
-					//alert(linestr);
-					if (item.StationStatus === "待机") 
-					{
-					 
-					   linestr = linestr.replace(/\$collor\$/g,"orange");
-					}else{
-					 
-					  linestr = linestr.replace(/\$collor\$/g,"red");
-					}
-					
-					
-					//console.log(linestr)
-					liststrs = liststrs + linestr;
+					//if(idx==0){ 
+					//	 return true;//同countinue，返回false同break 
+					//} 
+                   
+				    
+
+                option = $("<option>").val(idx+1).text(item.Linetype);
+				//alert(item.Linetype+idx);
+
+                $("#sel2").append(option);
+				   
 		        }); 
 				 
-				$("#listview").html(liststrs);
+					   
+		    }); 
+			
+		 
+		 };
+	    function GetJsonWS(){
+		    $("#sel2").empty();  
+			var option = $("<option>").val(-1).text("--请选择车间--");
+			$("#sel2").append(option);
+		    $("#sel2").val(-1).attr("selected", true); ;
+			$("#sel2 :selected").text("--请选择车间--");
+			 
+			$("#sel2").selectmenu("refresh",true);
+			$.getJSON("/info_getws",null,function(data){ 
+               
+		        $.each(data,function(idx,item){ 
+					//if(idx==0){ 
+					//	 return true;//同countinue，返回false同break 
+					//} 
+                   
+				    
+
+                option = $("<option>").val(idx+1).text(item.WorkShop);
+				//alert(item.WorkShop+idx);
+
+                $("#sel2").append(option);
+				   
+		        }); 
+				 
+				 
 		    }); 
 			
 			
 
         }
-		//$(document).ready(GetJsonStatus);
-		 
+		
+		function GetJsonSidByWS(){
+		    $("#sel3").empty();
+			var selectedvalue = $("#sel2  :selected").text(); 
+			option = $("<option>").val(0).text("--请选择站点--");			
+            $("#sel3").append(option);
+			$("#sel3").selectmenu("refresh",true);
+			
+		    $.getJSON("/sidbyworkshop?workshop="+selectedvalue,null,function(data){ 
+               
+		        $.each(data,function(idx,item){ 
+					
+
+                option = $("<option>").val(idx+1).text(item.Sid);
+				//alert(item.WorkShop+idx);
+
+                $("#sel3").append(option);
+				   
+		        }); 
+				 
+				 
+		    }); 
+		
+		}
+		function GetJsonSidByLT(){
+		    $("#sel3").empty();
+			var selectedvalue = $("#sel2  :selected").text(); 
+			option = $("<option>").val(0).text("--请选择站点--");			
+            $("#sel3").append(option);
+			$("#sel3").selectmenu("refresh",true);
+		    $.getJSON("/sidbylinetype?linetype="+selectedvalue,null,function(data){ 
+               
+		        $.each(data,function(idx,item){ 
+					
+
+                option = $("<option>").val(idx+1).text(item.Sid);
+				//alert(item.WorkShop+idx);
+
+                $("#sel3").append(option);
+				   
+		        }); 
+				 
+				 
+		    }); 
+		
+		}
+		
+		function  GetJsonInfoBySid(){
+		    selectedvalue = $("#sel3 :selected").text();
+			
+		    $.getJSON("/infoloaderbylineid?lineid="+selectedvalue+"&&loader=1" ,null,function(data){ 
+               
+		        $.each(data,function(idx,item){ 
+					
+
+              //  .............
+				   
+		        }); 
+				 
+				 
+		    }); 
 		
 		
+		}
+		$(document).ready(function(){ 
+         
+		$("#sel1").change(function(){
+		
+		       
+		       var sel1value = $("#sel1").val();
+			  
+			   if (sel1value == "1")
+			   {
+			  
+			      GetJsonWS();
+			      
+			   }
+			   else
+			   {
+			    
+			      GetJsonLT();
+				 
+			   }
+		
+		
+		});
+		
+		$("#sel2").change(function(){
+		     var sel2value = $('#sel2 option:first').val();
+			
+			 if (sel2value == -1)
+			 {
+			    
+			    GetJsonSidByWS();
+			 }
+			 else
+			 {
+			 
+			     GetJsonSidByLT();
+			 
+			 }
+		
+		
+		});
+		
+		$("#sel3").change(function(){
+		     
+		       GetJsonInfoBySid();
+		
+		});
+		});
 	  
 	  </script>
 </head>
@@ -95,21 +225,23 @@
 	      <li data-role="list-divider"> 筛选
 		  
 		 <li> <div class="ui-grid-c">
-		 <select name="" onchange="">
-	<option selected="selected" value="--请选择查询方式--">--请选择查询方式--</option>
-	<option  value="按车间查询">按车间查询</option>
-	<option value="按制程查询">按制程查询</option>
+		 <select   id="sel1">
+	<option selected="selected" value="0" >--请选择查询方式--</option>
+	<option  value="1">按车间查询</option>
+	<option value="2">按制程查询</option>
 
 </select>
- <select name="" onchange="">
+ <select    id="sel2">
 	<option selected="selected" value="0">--请选择车间--</option>
 	<option value="1">第01号车间</option>
 	<option value="2">第03号车间</option>
 	<option value="3">第07号车间</option>
-	<option value="4">第05号车间</option>
+	<option value="4">第15号车间</option>
 
 </select>
-                 <select name="" >
+
+
+                 <select   id="sel3">
 	<option selected="selected" value="0">--请选择站号--</option>
 	<option value="1">21</option>
 	<option value="2">22</option>
