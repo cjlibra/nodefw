@@ -144,9 +144,9 @@
 		    $.getJSON("/infoloaderbylineid?lineid="+selectedvalue+"&&loader=1" ,null,function(data){ 
                
 		        $.each(data,function(idx,item){ 
-					
+					$("#workshop").text(item.Workshop);
 
-              //  .............
+              
 				   
 		        }); 
 				 
@@ -156,7 +156,8 @@
 		
 		}
 		$(document).ready(function(){ 
-         
+        $("#sel2").empty();
+		$("#sel3").empty();
 		$("#sel1").change(function(){
 		
 		       
@@ -257,7 +258,7 @@
 						<p>车间:</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>第01号车间</p>
+						<p id="workshop">第01号车间</p>
 					</div> 
 					 
 				</div>
@@ -266,7 +267,7 @@
 						<p>制程:</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>内层前处理线</p>
+						<p id="linetype">内层前处理线</p>
 					</div> 
 					 
 				</div>
@@ -276,7 +277,7 @@
 						<p>设备名称：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>斜立式放板机350版</p>
+						<p id="MachineName">斜立式放板机350版</p>
 					</div> 
 					 
 				</div>
@@ -285,7 +286,7 @@
 						<p>设备型号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>FW-LD601A</p>
+						<p id="MachineType">FW-LD601A</p>
 					</div> 
 					 
 				</div>
@@ -294,7 +295,7 @@
 						<p>设备号：：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>3</p>
+						<p id="MachineID">3</p>
 					</div> 
 					 
 				</div>
@@ -303,7 +304,7 @@
 						<p>状态：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>通讯中断</p>
+						<p id="LoaderStatus">通讯中断</p>
 					</div> 
 					 
 				</div>
@@ -312,7 +313,7 @@
 						<p>总产量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>500</p>
+						<p id="TotalOutput">500</p>
 					</div> 
 					 
 				</div>
@@ -321,7 +322,7 @@
 						<p>当批已生产数量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>300</p>
+						<p id="CurOutput">300</p>
 					</div> 
 					 
 				</div>
@@ -330,7 +331,7 @@
 						<p>当批总产量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>9999</p>
+						<p id="CurTotalOutput">9999</p>
 					</div> 
 					 
 				</div>
@@ -339,7 +340,7 @@
 						<p>当前料号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>99</p>
+						<p id="CurPartNum">99</p>
 					</div> 
 					 
 				</div>
@@ -348,7 +349,7 @@
 						<p>当前批号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>斜立式放板机350版</p>
+						<p id="CurBatchNum">斜立式放板机350版</p>
 					</div> 
 					 
 				</div>
@@ -357,7 +358,7 @@
 						<p>更新时间：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>99</p>
+						<p id="UpdateTime">99</p>
 					</div> 
 					 
 				</div>
@@ -369,7 +370,7 @@
 						<p>设备名称：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>斜立式放板机350版</p>
+						<p id="MachineName1">斜立式放板机350版</p>
 					</div> 
 					 
 				</div>
@@ -378,7 +379,7 @@
 						<p>设备型号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>FW-LD601A</p>
+						<p id="MachineType1">FW-LD601A</p>
 					</div> 
 					 
 				</div>
@@ -387,7 +388,7 @@
 						<p>设备号：：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>3</p>
+						<p id="MachineID1">3</p>
 					</div> 
 					 
 				</div>
@@ -396,7 +397,7 @@
 						<p>状态：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>通讯中断</p>
+						<p id="UnloaderStatus1">通讯中断</p>
 					</div> 
 					 
 				</div>
@@ -405,7 +406,7 @@
 						<p>总产量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>500</p>
+						<p id="TotalOutput1">500</p>
 					</div> 
 					 
 				</div>
@@ -414,7 +415,7 @@
 						<p>当批已生产数量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>300</p>
+						<p id="CurOutput1">300</p>
 					</div> 
 					 
 				</div>
@@ -423,7 +424,7 @@
 						<p>当批总产量：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>9999</p>
+						<p id="CurTotalOutput1">9999</p>
 					</div> 
 					 
 				</div>
@@ -432,7 +433,7 @@
 						<p>当前料号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>99</p>
+						<p id="CurPartNum1">99</p>
 					</div> 
 					 
 				</div>
@@ -441,7 +442,7 @@
 						<p>当前批号：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>斜立式放板机350版</p>
+						<p id="CurBatchNum1">斜立式放板机350版</p>
 					</div> 
 					 
 				</div>
@@ -450,23 +451,12 @@
 						<p>更新时间：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p>99</p>
+						<p id="UpdateTime1">99</p>
 					</div> 
 					 
 				</div>
 		
-				
-	      <li>  <div class="ui-grid-c">
-					<div class="ui-block-a">
-						<p>1</p>
-					</div> 
-					<div class="ui-block-b">
-						<p>第01号车间</p>
-					</div> 
-					 
-				</div>
-		  </li>
-		  <li>bbbb</li>
+		 
 	   
 	   </ul>
 	</div> 
