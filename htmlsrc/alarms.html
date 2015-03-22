@@ -13,10 +13,13 @@
 	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
 	<script type="text/javascript">
 	   
-	    function GetJsonAlarms(){
+	    function GetJsonAlarms(){                                   
+		
+		
+		
 		     
 		    alarmlistlineorig = '<div data-role="collapsible" data-collapsed="true"  ><h2>{{workshop}}  {{StartTime}}</h2>  \
-	   <ul>  <li> 站号:{{stationid}}</li>	<li>制程:{{linetype}}</li>	<li>设备号: {{machineid}} </li> \
+	   <ul data-role="listview" data-inset="true">  <li> 站号:{{stationid}}</li>	<li>制程:{{linetype}}</li>	<li>设备号: {{machineid}} </li> \
 	               <li>异常信息代码:{{exception}}</li><li>	异常信息描述:{{errortxt}}	</li> \
 		           <li>发生时间:{{StartTime}}  </li>  \
 	               </ul>  \
@@ -69,7 +72,7 @@
 	    <ul>
 		<li><a rel="external" href="/src/index.html" >设备状态</a></li>
 		<li><a rel="external" href="/src/devinfo.html" >设备详情</a></li>
-		<li><a href="#index" >统计图表</a></li>
+		<li><a rel="external" href="/src/dochart.html" >统计图表</a></li>
 		<li><a  rel="external" href="/src/alarms.html" >活动告警</a></li>
 		</ul>
 	 </div>
@@ -115,7 +118,7 @@
 	    <ul>
 		<li><a rel="external" href="/src/index.html" >设备状态</a></li>
 		<li><a rel="external" href="/src/devinfo.html" >设备详情</a></li>
-		<li><a href="#index" >统计图表</a></li>
+		<li><a rel="external" href="/src/dochart.html" >统计图表</a></li>
 		<li><a  rel="external" href="/src/alarms.html" >活动告警</a></li>
 		</ul>
 	 </div>
