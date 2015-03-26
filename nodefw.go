@@ -1,9 +1,10 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native" // Native engine
-	"strconv"
 	//"html"
 	//"log"
 	//"net/url"
@@ -474,7 +475,167 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+type StatusPH struct {
+	StationID int
+	Hours     string
+	S0        int
+	S1        int
+	S2        int
+	S3        int
+	S4        int
+}
+type UPHStation struct {
+	StationID int
+	Hours     string
+	UPH       int
+}
+type RBXS struct {
+	PlanDay     int
+	Statusphs   []StatusPH
+	Uphstations []UPHStation
+}
+
+func datatochart(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	lineid := r.FormValue("lineid")
+	adays := r.FormValue("adays")
+	adate := r.FormValue("adate")
+	aunit := r.FormValue("aunit")
+	atype := r.FormValue("atype")
+	if lineid == "" {
+		w.Write([]byte("error input! no lineid"))
+		return
+	}
+	if adays == "" {
+		w.Write([]byte("error input! no adays"))
+		return
+	}
+	if adate == "" {
+		w.Write([]byte("error input! no adate"))
+		return
+	}
+	if aunit == "" {
+		w.Write([]byte("error input! no aunit"))
+		return
+	}
+	if atype == "" {
+		w.Write([]byte("error input! no atype"))
+		return
+	}
+
+	if atype == "0" && aunit == "0" {
+		db := opendb()
+		defer db.Close()
+		var planday int
+
+		res, err := db.Start("select PlanDay from stations where LineID=%s", lineid)
+		checkError(err)
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			planday = row.Int(res.Map("PlanDay"))
+
+		}
+
+		res, err = db.Start("select * from status_phour where StationID=%s and to_days(Hours) = to_days(\"%s \")", lineid, adate)
+		checkError(err)
+
+		var statusph StatusPH
+		var statusphs []StatusPH
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			statusph.StationID = row.Int(res.Map("StationID"))
+			statusph.Hours = row.Str(res.Map("Hours"))
+			statusph.S0 = row.Int(res.Map("S0"))
+			statusph.S1 = row.Int(res.Map("S1"))
+			statusph.S2 = row.Int(res.Map("S2"))
+			statusph.S3 = row.Int(res.Map("S3"))
+			statusph.S4 = row.Int(res.Map("S4"))
+			statusphs = append(statusphs, statusph)
+		}
+
+		res, err = db.Start("select * from uph_station where StationID=%s and  to_days(Hours) = to_days(\"%s \")", lineid, adate)
+		checkError(err)
+
+		var uphstation UPHStation
+		var uphstations []UPHStation
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			uphstation.StationID = row.Int(res.Map("StationID"))
+			uphstation.Hours = row.Str(res.Map("Hours"))
+			uphstation.UPH = row.Int(res.Map("UPH"))
+			uphstations = append(uphstations, uphstation)
+		}
+		var rbxs RBXS
+		rbxs.PlanDay = planday
+		rbxs.Statusphs = statusphs
+		rbxs.Uphstations = uphstations
+
+		b, err := json.Marshal(rbxs)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+}
 func main() {
+	http.HandleFunc("/datatochart", datatochart)               /*datatochart?atype=0&aunit=0&adate=2014-12-12&adays=0&lineid=1 */
 	http.HandleFunc("/infoloaderbylineid", infoloaderbylineid) /*infoloaderbylineid?lineid=2&&loader=1*/
 	http.HandleFunc("/sidbylinetype", sidbylinetype)           /*sidbylinetype?linetype=" " */
 	http.HandleFunc("/sidbyworkshop", sidbyworkshop)           /*/sidbyworkshop?workshop=" " */
@@ -483,13 +644,13 @@ func main() {
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
-	
-	for {
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		//log.Fatal("ListenAndServer: ", err)
-		fmt.Println("ListenAndServer: ", err)
 
-	}
+	for {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			//log.Fatal("ListenAndServer: ", err)
+			fmt.Println("ListenAndServer: ", err)
+
+		}
 	}
 }
