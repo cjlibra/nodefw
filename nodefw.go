@@ -476,6 +476,12 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 
 }
 
+type PLAN struct {
+	PlanBan   int
+	PlanDay   int
+	PlanMonth int
+}
+
 type StatusPH struct {
 	StationID int
 	Hours     string
@@ -490,12 +496,12 @@ type UPHStation struct {
 	Hours     string
 	UPH       int
 }
-type RBXS struct {
-	PlanDay     int
+type RBXS struct { //日报	小时
+	Plan        PLAN
 	Statusphs   []StatusPH
 	Uphstations []UPHStation
 }
-type StatusPD struct {   
+type StatusPD struct {
 	StationID int
 	Days      string
 	S0        int
@@ -509,8 +515,8 @@ type UPDStation struct {
 	Days      string
 	UPD       int
 }
-type YBRI struct {
-	PlanMonth   int
+type YBRI struct { //月报	日   //自定义1 日
+	Plan        PLAN
 	Statuspds   []StatusPD
 	Updstations []UPDStation
 }
@@ -540,8 +546,8 @@ type UPSStation struct {
 	Shift2    int
 	Shift3    int
 }
-type ZDYB struct {
-	PlanBan     int
+type ZDYB struct { //自定义2  班
+	Plan        PLAN
 	Statuspss   []StatusPS
 	Upsstations []UPSStation
 }
@@ -574,37 +580,40 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if atype == "0" && aunit == "0" {
-		db := opendb()
-		defer db.Close()
-		var planday int
+	db := opendb()
+	defer db.Close()
+	var plan PLAN
 
-		res, err := db.Start("select PlanDay from stations where LineID=%s", lineid)
+	res, err := db.Start("select PlanBan,PlanDay,PlanMonth from stations where LineID=%s", lineid)
+	checkError(err)
+
+	for {
+		row, err := res.GetRow()
 		checkError(err)
 
-		for {
-			row, err := res.GetRow()
-			checkError(err)
-
-			if row == nil {
-				// No more rows
-				break
-			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					fmt.Print("error  col is<NULL>")
-					//return
-				} else {
-					os.Stdout.Write(col.([]byte))
-				}
-				fmt.Print(" ")
-			}
-			fmt.Println()
-			planday = row.Int(res.Map("PlanDay"))
-
+		if row == nil {
+			// No more rows
+			break
 		}
+
+		// Print all cols
+		for _, col := range row {
+			if col == nil {
+				fmt.Print("error  col is<NULL>")
+				//return
+			} else {
+				os.Stdout.Write(col.([]byte))
+			}
+			fmt.Print(" ")
+		}
+		fmt.Println()
+		plan.PlanBan = row.Int(res.Map("PlanBan"))
+		plan.PlanDay = row.Int(res.Map("PlanDay"))
+		plan.PlanMonth = row.Int(res.Map("PlanMonth"))
+
+	}
+	//////////////////////////////////////////////////////////
+	if atype == "0" && aunit == "0" { //日报 小时
 
 		res, err = db.Start("select * from status_phour where StationID=%s and to_days(Hours) = to_days(\"%s \")", lineid, adate)
 		checkError(err)
@@ -672,7 +681,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			uphstations = append(uphstations, uphstation)
 		}
 		var rbxs RBXS
-		rbxs.PlanDay = planday
+		rbxs.Plan = plan
 		rbxs.Statusphs = statusphs
 		rbxs.Uphstations = uphstations
 
@@ -684,37 +693,8 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 	}
 
-	if atype == "1" && aunit == "1" {
-		db := opendb()
-		defer db.Close()
-		var planmonth int
-
-		res, err := db.Start("select PlanMonth from stations where LineID=%s", lineid)
-		checkError(err)
-
-		for {
-			row, err := res.GetRow()
-			checkError(err)
-
-			if row == nil {
-				// No more rows
-				break
-			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					fmt.Print("error  col is<NULL>")
-					//return
-				} else {
-					os.Stdout.Write(col.([]byte))
-				}
-				fmt.Print(" ")
-			}
-			fmt.Println()
-			planmonth = row.Int(res.Map("PlanMonth"))
-
-		}
+	///////////////////////////////////////////////////////
+	if atype == "1" && aunit == "1" { //月报 日
 
 		res, err = db.Start("select * from status_pday where StationID=%s and MONTH(Days) = MONTH(\"%s \") and YEAR(Days) = YEAR(\"%s \")", lineid, adate, adate)
 		checkError(err)
@@ -782,7 +762,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			updstations = append(updstations, updstation)
 		}
 		var ybri YBRI
-		ybri.PlanMonth = planmonth
+		ybri.Plan = plan
 		ybri.Statuspds = statuspds
 		ybri.Updstations = updstations
 
@@ -794,37 +774,8 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 	}
 
-	if atype == "2" && aunit == "1" {
-		db := opendb()
-		defer db.Close()
-		var planmonth int
-
-		res, err := db.Start("select PlanMonth from stations where LineID=%s", lineid)
-		checkError(err)
-
-		for {
-			row, err := res.GetRow()
-			checkError(err)
-
-			if row == nil {
-				// No more rows
-				break
-			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					fmt.Print("error  col is<NULL>")
-					//return
-				} else {
-					os.Stdout.Write(col.([]byte))
-				}
-				fmt.Print(" ")
-			}
-			fmt.Println()
-			planmonth = row.Int(res.Map("PlanMonth"))
-
-		}
+	///////////////////////////////////////////////////////
+	if atype == "2" && aunit == "1" { //自定义1 日
 
 		res, err = db.Start("select * from status_pday where StationID=%s and to_days(Days) - to_days(\"%s \") <= %s", lineid, adate, adays)
 		checkError(err)
@@ -892,7 +843,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			updstations = append(updstations, updstation)
 		}
 		var zdyr YBRI
-		zdyr.PlanMonth = planmonth
+		zdyr.Plan = plan
 		zdyr.Statuspds = statuspds
 		zdyr.Updstations = updstations
 
@@ -904,37 +855,8 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 	}
 
-	if atype == "3" && aunit == "2" {
-		db := opendb()
-		defer db.Close()
-		var planban int
-
-		res, err := db.Start("select PlanBan from stations where LineID=%s", lineid)
-		checkError(err)
-
-		for {
-			row, err := res.GetRow()
-			checkError(err)
-
-			if row == nil {
-				// No more rows
-				break
-			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					fmt.Print("error  col is<NULL>")
-					//return
-				} else {
-					os.Stdout.Write(col.([]byte))
-				}
-				fmt.Print(" ")
-			}
-			fmt.Println()
-			planban = row.Int(res.Map("PlanBan"))
-
-		}
+	//////////////////////////////////////////////////////////
+	if atype == "3" && aunit == "2" { //自定义2 班
 
 		res, err = db.Start("select * from status_pshift where StationID=%s and to_days(Days) - to_days(\"%s \") <= %s", lineid, adate, adays)
 		checkError(err)
@@ -1014,7 +936,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			upsstations = append(upsstations, upsstation)
 		}
 		var zdyb ZDYB
-		zdyb.PlanBan = planban
+		zdyb.Plan = plan
 		zdyb.Statuspss = statuspss
 		zdyb.Upsstations = upsstations
 
