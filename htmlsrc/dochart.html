@@ -504,7 +504,7 @@
         require(
             [
                 'echarts',
-				 'echarts/chart/line' ,
+				'echarts/chart/line' ,
                 'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
             ],
             function (ec) {
@@ -518,6 +518,10 @@
                     legend: {
                         data:['销量','销量1']
                     },
+					grid : {
+					    x : 25 ,
+						x2 : 25
+					},
                     xAxis : [
                         {
                             type : 'category',
@@ -566,6 +570,7 @@
         require(
             [
                 'echarts',
+				'echarts/chart/line' ,
                 'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
             ],
             function (ec) {
@@ -579,10 +584,14 @@
                     legend: {
                         data:['销量']
                     },
+					grid : {
+					    x : 25 ,
+						x2 : 25
+					},
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                            data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
                         }
                     ],
                     yAxis : [

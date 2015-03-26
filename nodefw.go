@@ -1,9 +1,10 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native" // Native engine
-	"strconv"
 	//"html"
 	//"log"
 	//"net/url"
@@ -474,7 +475,559 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+type StatusPH struct {
+	StationID int
+	Hours     string
+	S0        int
+	S1        int
+	S2        int
+	S3        int
+	S4        int
+}
+type UPHStation struct {
+	StationID int
+	Hours     string
+	UPH       int
+}
+type RBXS struct {
+	PlanDay     int
+	Statusphs   []StatusPH
+	Uphstations []UPHStation
+}
+type StatusPD struct {
+	StationID int
+	Days      string
+	S0        int
+	S1        int
+	S2        int
+	S3        int
+	S4        int
+}
+type UPDStation struct {
+	StationID int
+	Days      string
+	UPD       int
+}
+type YBRI struct {
+	PlanMonth   int
+	Statuspds   []StatusPD
+	Updstations []UPDStation
+}
+type StatusPS struct {
+	StationID int
+	Days      string
+	S1_S0     int
+	S1_S1     int
+	S1_S2     int
+	S1_S3     int
+	S1_S4     int
+	S2_S0     int
+	S2_S1     int
+	S2_S2     int
+	S2_S3     int
+	S2_S4     int
+	S3_S0     int
+	S3_S1     int
+	S3_S2     int
+	S3_S3     int
+	S3_S4     int
+}
+type UPSStation struct {
+	StationID int
+	Days      string
+	Shift1    int
+	Shift2    int
+	Shift3    int
+}
+type ZDYB struct {
+	PlanBan     int
+	Statuspss   []StatusPS
+	Upsstations []UPSStation
+}
+
+func datatochart(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	lineid := r.FormValue("lineid")
+	adays := r.FormValue("adays")
+	adate := r.FormValue("adate")
+	aunit := r.FormValue("aunit")
+	atype := r.FormValue("atype")
+	if lineid == "" {
+		w.Write([]byte("error input! no lineid"))
+		return
+	}
+	if adays == "" {
+		w.Write([]byte("error input! no adays"))
+		return
+	}
+	if adate == "" {
+		w.Write([]byte("error input! no adate"))
+		return
+	}
+	if aunit == "" {
+		w.Write([]byte("error input! no aunit"))
+		return
+	}
+	if atype == "" {
+		w.Write([]byte("error input! no atype"))
+		return
+	}
+
+	if atype == "0" && aunit == "0" {
+		db := opendb()
+		defer db.Close()
+		var planday int
+
+		res, err := db.Start("select PlanDay from stations where LineID=%s", lineid)
+		checkError(err)
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			planday = row.Int(res.Map("PlanDay"))
+
+		}
+
+		res, err = db.Start("select * from status_phour where StationID=%s and to_days(Hours) = to_days(\"%s \")", lineid, adate)
+		checkError(err)
+
+		var statusph StatusPH
+		var statusphs []StatusPH
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			statusph.StationID = row.Int(res.Map("StationID"))
+			statusph.Hours = row.Str(res.Map("Hours"))
+			statusph.S0 = row.Int(res.Map("S0"))
+			statusph.S1 = row.Int(res.Map("S1"))
+			statusph.S2 = row.Int(res.Map("S2"))
+			statusph.S3 = row.Int(res.Map("S3"))
+			statusph.S4 = row.Int(res.Map("S4"))
+			statusphs = append(statusphs, statusph)
+		}
+
+		res, err = db.Start("select * from uph_station where StationID=%s and  to_days(Hours) = to_days(\"%s \")", lineid, adate)
+		checkError(err)
+
+		var uphstation UPHStation
+		var uphstations []UPHStation
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			uphstation.StationID = row.Int(res.Map("StationID"))
+			uphstation.Hours = row.Str(res.Map("Hours"))
+			uphstation.UPH = row.Int(res.Map("UPH"))
+			uphstations = append(uphstations, uphstation)
+		}
+		var rbxs RBXS
+		rbxs.PlanDay = planday
+		rbxs.Statusphs = statusphs
+		rbxs.Uphstations = uphstations
+
+		b, err := json.Marshal(rbxs)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+
+	if atype == "1" && aunit == "1" {
+		db := opendb()
+		defer db.Close()
+		var planmonth int
+
+		res, err := db.Start("select PlanMonth from stations where LineID=%s", lineid)
+		checkError(err)
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			planmonth = row.Int(res.Map("PlanMonth"))
+
+		}
+
+		res, err = db.Start("select * from status_pday where StationID=%s and MONTH(Days) = MONTH(\"%s \") and YEAR(Days) = YEAR(\"%s \")", lineid, adate, adate)
+		checkError(err)
+
+		var statuspd StatusPD
+		var statuspds []StatusPD
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			statuspd.StationID = row.Int(res.Map("StationID"))
+			statuspd.Days = row.Str(res.Map("Days"))
+			statuspd.S0 = row.Int(res.Map("S0"))
+			statuspd.S1 = row.Int(res.Map("S1"))
+			statuspd.S2 = row.Int(res.Map("S2"))
+			statuspd.S3 = row.Int(res.Map("S3"))
+			statuspd.S4 = row.Int(res.Map("S4"))
+			statuspds = append(statuspds, statuspd)
+		}
+
+		res, err = db.Start("select * from upd_station where StationID=%s and  MONTH(Days) = MONTH(\"%s \") and YEAR(Days) = YEAR(\"%s \")", lineid, adate, adate)
+		checkError(err)
+
+		var updstation UPDStation
+		var updstations []UPDStation
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			updstation.StationID = row.Int(res.Map("StationID"))
+			updstation.Days = row.Str(res.Map("Days"))
+			updstation.UPD = row.Int(res.Map("UPD"))
+			updstations = append(updstations, updstation)
+		}
+		var ybri YBRI
+		ybri.PlanMonth = planmonth
+		ybri.Statuspds = statuspds
+		ybri.Updstations = updstations
+
+		b, err := json.Marshal(ybri)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+
+	if atype == "2" && aunit == "1" {
+		db := opendb()
+		defer db.Close()
+		var planmonth int
+
+		res, err := db.Start("select PlanMonth from stations where LineID=%s", lineid)
+		checkError(err)
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			planmonth = row.Int(res.Map("PlanMonth"))
+
+		}
+
+		res, err = db.Start("select * from status_pday where StationID=%s and to_days(Days) - to_days(\"%s \") <= %s", lineid, adate, adays)
+		checkError(err)
+
+		var statuspd StatusPD
+		var statuspds []StatusPD
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			statuspd.StationID = row.Int(res.Map("StationID"))
+			statuspd.Days = row.Str(res.Map("Days"))
+			statuspd.S0 = row.Int(res.Map("S0"))
+			statuspd.S1 = row.Int(res.Map("S1"))
+			statuspd.S2 = row.Int(res.Map("S2"))
+			statuspd.S3 = row.Int(res.Map("S3"))
+			statuspd.S4 = row.Int(res.Map("S4"))
+			statuspds = append(statuspds, statuspd)
+		}
+
+		res, err = db.Start("select * from upd_station where StationID=%s and  to_days(Days) - to_days(\"%s \") <= %s ", lineid, adate, adays)
+		checkError(err)
+
+		var updstation UPDStation
+		var updstations []UPDStation
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			updstation.StationID = row.Int(res.Map("StationID"))
+			updstation.Days = row.Str(res.Map("Days"))
+			updstation.UPD = row.Int(res.Map("UPD"))
+			updstations = append(updstations, updstation)
+		}
+		var zdyr YBRI
+		zdyr.PlanMonth = planmonth
+		zdyr.Statuspds = statuspds
+		zdyr.Updstations = updstations
+
+		b, err := json.Marshal(zdyr)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+
+	if atype == "3" && aunit == "2" {
+		db := opendb()
+		defer db.Close()
+		var planban int
+
+		res, err := db.Start("select PlanBan from stations where LineID=%s", lineid)
+		checkError(err)
+
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			planban = row.Int(res.Map("PlanBan"))
+
+		}
+
+		res, err = db.Start("select * from status_pshift where StationID=%s and to_days(Days) - to_days(\"%s \") <= %s", lineid, adate, adays)
+		checkError(err)
+
+		var statusps StatusPS
+		var statuspss []StatusPS
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			statusps.StationID = row.Int(res.Map("StationID"))
+			statusps.Days = row.Str(res.Map("Days"))
+			statusps.S1_S0 = row.Int(res.Map("S1_S0"))
+			statusps.S1_S1 = row.Int(res.Map("S1_S1"))
+			statusps.S1_S2 = row.Int(res.Map("S1_S2"))
+			statusps.S1_S3 = row.Int(res.Map("S1_S3"))
+			statusps.S1_S4 = row.Int(res.Map("S1_S4"))
+			statusps.S2_S0 = row.Int(res.Map("S2_S0"))
+			statusps.S2_S1 = row.Int(res.Map("S2_S1"))
+			statusps.S2_S2 = row.Int(res.Map("S2_S2"))
+			statusps.S2_S3 = row.Int(res.Map("S2_S3"))
+			statusps.S2_S4 = row.Int(res.Map("S2_S4"))
+			statusps.S3_S0 = row.Int(res.Map("S3_S0"))
+			statusps.S3_S1 = row.Int(res.Map("S3_S1"))
+			statusps.S3_S2 = row.Int(res.Map("S3_S2"))
+			statusps.S3_S3 = row.Int(res.Map("S3_S3"))
+			statusps.S3_S4 = row.Int(res.Map("S3_S4"))
+			statuspss = append(statuspss, statusps)
+		}
+
+		res, err = db.Start("select * from ups_station where StationID=%s and  to_days(Days) - to_days(\"%s \") <= %s ", lineid, adate, adays)
+		checkError(err)
+
+		var upsstation UPSStation
+		var upsstations []UPSStation
+		for {
+			row, err := res.GetRow()
+			checkError(err)
+
+			if row == nil {
+				// No more rows
+				break
+			}
+
+			// Print all cols
+			for _, col := range row {
+				if col == nil {
+					fmt.Print("error  col is<NULL>")
+					//return
+				} else {
+					os.Stdout.Write(col.([]byte))
+				}
+				fmt.Print(" ")
+			}
+			fmt.Println()
+			upsstation.StationID = row.Int(res.Map("StationID"))
+			upsstation.Days = row.Str(res.Map("Days"))
+			upsstation.Shift1 = row.Int(res.Map("Shift_1"))
+			upsstation.Shift2 = row.Int(res.Map("Shift_2"))
+			upsstation.Shift3 = row.Int(res.Map("Shift_3"))
+			upsstations = append(upsstations, upsstation)
+		}
+		var zdyb ZDYB
+		zdyb.PlanBan = planban
+		zdyb.Statuspss = statuspss
+		zdyb.Upsstations = upsstations
+
+		b, err := json.Marshal(zdyb)
+		if err != nil {
+			checkError(err)
+		}
+		os.Stdout.Write(b)
+		w.Write(b)
+	}
+}
 func main() {
+	http.HandleFunc("/datatochart", datatochart)               /*datatochart?atype=0&aunit=0&adate=2014-12-12&adays=0&lineid=1 */
 	http.HandleFunc("/infoloaderbylineid", infoloaderbylineid) /*infoloaderbylineid?lineid=2&&loader=1*/
 	http.HandleFunc("/sidbylinetype", sidbylinetype)           /*sidbylinetype?linetype=" " */
 	http.HandleFunc("/sidbyworkshop", sidbyworkshop)           /*/sidbyworkshop?workshop=" " */
@@ -483,13 +1036,13 @@ func main() {
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
-	
-	for {
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		//log.Fatal("ListenAndServer: ", err)
-		fmt.Println("ListenAndServer: ", err)
 
-	}
+	for {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			//log.Fatal("ListenAndServer: ", err)
+			fmt.Println("ListenAndServer: ", err)
+
+		}
 	}
 }
