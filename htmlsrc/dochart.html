@@ -216,10 +216,129 @@
 		
 		}
 		
-		 
+		function SetRadioCheck(){
+		    		 
+			$("#radio-xiaoshi").attr("disabled",true).checkboxradio("refresh");
+			$("#radio-ri").attr("disabled",true).checkboxradio("refresh");				
+			$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
+			
+			$("#radio-ribao").click(function(){
+			    
+				$("#tjdate").text("统计日期：");
+				$("#radio-yuebao").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy1").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy2").attr("checked",false).checkboxradio("refresh");
+				 
+				$("#radio-xiaoshi").attr("disabled",false) ;
+			    $("#radio-xiaoshi").attr("checked","checked").checkboxradio("refresh") ;
+				
+				$("#radio-ri").attr("checked",false);
+				$("#radio-ri").attr("disabled",true).checkboxradio("refresh");
+				$("#radio-ban").attr("checked",false);
+				$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
+				 
+				 //$("#tjts").attr("disabled",true).selectmenu("refresh",true);
+				 $("#tjts").attr("disabled","disabled");
+				// $("#tjts").selectmenu("refresh",true);
+			
+			});
+			
+			$("#radio-yuebao").click(function(){
+			    
+				$("#tjdate").text("统计月份：");
+				$("#radio-ribao").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy1").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy2").attr("checked",false).checkboxradio("refresh");
+				 
+			    $("#radio-xiaoshi").attr("checked",false) ;
+				$("#radio-xiaoshi").attr("disabled",true).checkboxradio("refresh");
+				$("#radio-ri").attr("disabled",false).checkboxradio("refresh");
+				$("#radio-ri").attr("checked",true);
+				
+				$("#radio-ban").attr("checked",false);
+				$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
+				 
+				 //$("#tjts").attr("disabled",true).selectmenu("refresh",true);
+				 $("#tjts").attr("disabled","disabled");
+				// $("#tjts").selectmenu("refresh",true);
+			
+			});
+			
+			$("#radio-zdy1").click(function(){
+			    
+				$("#tjdate").text("开始日期：");
+				$("#radio-yuebao").attr("checked",false).checkboxradio("refresh");
+				$("#radio-ribao").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy2").attr("checked",false).checkboxradio("refresh");
+				 
+			    $("#radio-xiaoshi").attr("checked",false);
+				$("#radio-xiaoshi").attr("disabled",true).checkboxradio("refresh");
+				
+				$("#radio-ri").attr("disabled",false).checkboxradio("refresh");
+				$("#radio-ri").attr("checked",true).checkboxradio("refresh");
+				
+				$("#radio-ban").attr("checked",false);
+				$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
+				 
+				 //$("#tjts").attr("disabled",true).selectmenu("refresh",true);
+				 $("#tjts").attr("disabled",false);
+				// $("#tjts").selectmenu("refresh",true);
+				
+				 $("#tjts").empty(); 
+				 var i=1;
+				 var option;
+				 for (i;i<=31;i++){
+				    if (i == 1 ){
+				      option = $("<option>").val(i).text("--天--");
+					 }else{
+					   option = $("<option>").val(i).text(i+"天");
+					 }
+				    $("#tjts").append(option);
+				}
+				 $("#tjts").selectmenu("refresh",true);
+			
+			});
+			
+			$("#radio-zdy2").click(function(){
+			    
+				$("#tjdate").text("开始日期：");
+				$("#radio-yuebao").attr("checked",false).checkboxradio("refresh");
+				$("#radio-zdy1").attr("checked",false).checkboxradio("refresh");
+				$("#radio-ribao").attr("checked",false).checkboxradio("refresh");
+				 
+			    $("#radio-xiaoshi").attr("checked",false)
+				$("#radio-xiaoshi").attr("disabled",true).checkboxradio("refresh");
+				$("#radio-ri").attr("checked",false)
+				$("#radio-ri").attr("disabled",true).checkboxradio("refresh");
+				$("#radio-ban").attr("disabled",false).checkboxradio("refresh");
+				$("#radio-ban").attr("checked",true).checkboxradio("refresh");
+				
+				 
+				 //$("#tjts").attr("disabled",true).selectmenu("refresh",true);
+				 $("#tjts").attr("disabled",false);
+				// $("#tjts").selectmenu("refresh",true);
+				
+				$("#tjts").empty(); 
+				 var i=1;
+				 var option;
+				 for (i;i<=10;i++){
+				    if (i == 1 ){
+				      option = $("<option>").val(i).text("--天--");
+					 }else{
+					   option = $("<option>").val(i).text(i+"天");
+					 }
+				    $("#tjts").append(option);
+				}
+				 $("#tjts").selectmenu("refresh",true);
+			
+			});
+		
+		
+		
+		}
 		
 		$(document).ready(function(){ 
-		 
+		SetRadioCheck(); 
         $("#sel2").empty();
 		$("#sel3").empty();
 		clearparm();
@@ -321,31 +440,32 @@
 		 <li><form>
     <fieldset data-role="controlgroup"   >
         <legend>统计类型：</legend>
-        <input type="radio" name="radio-choice-h-a2" id="radio-choice-h-a2a" value="on" checked="checked">
-        <label for="radio-choice-h-a2a">日报</label>
-        <input type="radio" name="radio-choice-h-a2" id="radio-choice-h-a2b" value="off">
-        <label for="radio-choice-h-a2b">月报</label>
-        <input type="radio" name="radio-choice-h-a2" id="radio-choice-h-a2c" value="other">
-        <label for="radio-choice-h-a2c">自定义(1)</label>
-        <input type="radio" name="radio-choice-h-a2" id="radio-choice-h-a2d" value="other">
-        <label for="radio-choice-h-a2d">自定义(2)</label>
+        <label for="radio-ribao">日报</label>
+        <input type="radio" name="radio-ribao" id="radio-ribao" value="0" checked="checked">
+        <label for="radio-yuebao">月报</label>
+        <input type="radio" name="radio-yuebao" id="radio-yuebao" value="1">
+        <label for="radio-zdy1">自定义(1)</label>
+        <input type="radio" name="radio-zdy1" id="radio-zdy1" value="2">
+        <label for="radio-zdy2">自定义(2)</label>
+        <input type="radio" name="radio-zdy2" id="radio-zdy2" value="3">
+        
     </fieldset>
 </form></li>
 
 		<li> <form>
     <fieldset data-role="controlgroup" >
         <legend>时间单位：</legend>
-        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
-        <label for="radio-choice-h-2a">小时</label>
-        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
-        <label for="radio-choice-h-2b">日</label> 
-        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="other">
-        <label for="radio-choice-h-2c">班</label>
+        <input type="radio" name="radio-xiaoshi" id="radio-xiaoshi" value="0" checked="checked">
+        <label for="radio-xiaoshi">小时</label>
+        <input type="radio" name="radio-ri" id="radio-ri" value="1">
+        <label for="radio-ri">日</label> 
+        <input type="radio" name="radio-ban" id="radio-ban" value="2">
+        <label for="radio-ban">班</label>
     </fieldset>
      </form> </li>
 	 
 				 <li>  				 
-						<legend>统计日期：</legend>
+						<legend id="tjdate">统计日期：</legend>
 				 
 					 
 				      <!--  <input type="text" id="date-input" data-inline="false" data-role="date">  -->
@@ -357,13 +477,14 @@
 		<li> 	<legend>统计天数：</legend>
 				 
 					 
-					    <select>
+					    <select id="tjts" >
 						   <option selected="selected" value="--天--">--天--</option>
 						</select>
 
 					 
 					 
 				 </li>
+			<li><input type="button"  id="submit"  name="提交"  value="提交"> </li>
 		 <li data-role="list-divider">统计分析
 		 <li> <div class="ui-grid-a">
 					<div class="ui-block-a">
