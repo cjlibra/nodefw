@@ -490,8 +490,7 @@
 			 });
 		
 		
-		     console.log(option1);
-			 console.log(option2);
+		     
 		    drawechart("main2",option2);
 			drawechart("main1",option1);
 			
@@ -554,7 +553,170 @@
 		 }
 		function setechart1(data){
 		
+		 var option1= {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['自动运行时间','日目标产量','每日产量']
+                    },
+					grid : {
+					    x : 45 ,
+						x2 : 45
+					},
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"自动运行时间",
+                            "type":"bar",
+                            "data":[5, 20, 40, 10, 10, 20]
+                        },
+						 {
+                            "name":"日目标产量",
+                            "type":"line",
+                            "data":[15, 30, 30, 10, 20, 20]
+                        },
+						 {
+                            "name":"每日产量",
+                            "type":"line",
+                            "data":[15, 30, 30, 10, 20, 20]
+                        }
+                    ]
+                };
+				var option2 = $.extend(true, {}, option1); 
+				 
+				 
+				var dayval = data.Plan.PlanDay  ;
+				option2.series[0].data=[];
+				option2.series[1].data=[];
+				option2.series[2].data=[];
+				for (var i=0;i<31;i++){
+				   option2.series[1].data.push(dayval);
+				   option2.series[2].data.push(0);
+				   option2.series[0].data.push(0);
+				}
+				
+				
+				option1.legend.data[0]="每日产量";
+				option1.legend.data[1]="月目标产量";
+				option1.legend.data[2]="累计产量";
+				option1.series[0].name=option1.legend.data[0];
+				option1.series[1].name=option1.legend.data[1];
+				option1.series[2].name=option1.legend.data[2];
+				var sumval = data.Plan.PlanMonth  ;
+				option1.series[0].data=[];
+				option1.series[1].data=[];
+				option1.series[2].data=[];
+				for (var i=0;i<31;i++){
+				   option1.series[1].data.push(sumval);
+				   option1.series[2].data.push(0);
+				   option1.series[0].data.push(0);
+				}
+             if (data.Updstations==null || data.Statuspds==null) {
+				drawechart("main0",0);
+				drawechart("main1",0);
+				drawechart("main2",0);
+				 
+				return;
+			}
+		     $.each(data.Updstations,function(idx,item){ 
+			    
+					var  thedays = item.Days.split("-");
+					var theday = parseInt(thedays[2])-1;
+					option2.series[2].data[theday] = item.UPD;
+					option1.series[0].data[theday] = item.UPD;
+					console.log(theday);
+					console.log(item.UPD);
+				     
+		    }); 
+			var sumwhole = 0;
+			for (var i=0;i<31;i++){
+			    sumwhole = sumwhole+option1.series[0].data[i];
+				option1.series[2].data[i] = sumwhole;
+			
+			}
+			var ss=[0,0,0,0,0];
+			 $.each(data.Statuspds,function(idx,item){ 
+			        var  thedays = item.Days.split("-");
+					var theday = parseInt(thedays[2])-1;
+					option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+			        ss[0]=ss[0]+item.S0;
+					ss[1]=ss[1]+item.S1;
+					ss[2]=ss[2]+item.S2;
+					ss[3]=ss[3]+item.S3;
+					ss[4]=ss[4]+item.S4;
+			 });
 		
+		
+		     
+		    drawechart("main2",option2);
+			drawechart("main1",option1);
+			
+			var option0 = {
+						title : {
+							text: '运行状态统计分析',
+							subtext: '',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient : 'vertical',
+							x : 'left',
+							data:['停止','手动','自动运行中','待机','通信中断']
+						},
+						/*toolbox: {
+							show : true,
+							feature : {
+								mark : {show: true},
+								dataView : {show: true, readOnly: false},
+								magicType : {
+									show: true, 
+									type: ['pie', 'funnel'],
+									option: {
+										funnel: {
+											x: '25%',
+											width: '50%',
+											funnelAlign: 'left',
+											max: 1548
+										}
+									}
+								},
+								restore : {show: true},
+								saveAsImage : {show: true}
+							}
+						},*/
+						calculable : true,
+						series : [
+							{
+								name:'运行状态',
+								type:'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+									{value:ss[0], name:'停止'},
+									{value:ss[1], name:'手动'},
+									{value:ss[2], name:'自动运行中'},
+									{value:ss[3], name:'待机'},
+									{value:ss[4], name:'通信中断'}
+								]
+							}
+						]
+					};
+			
+			drawechart("main0",option0);
 		
 		
 		}
