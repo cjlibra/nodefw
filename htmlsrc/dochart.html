@@ -127,6 +127,7 @@
 			option = $("<option>").val(0).text("--请选择站点--");			
             $("#sel3").append(option);
 			$("#sel3").selectmenu("refresh",true);
+			
 		    $.getJSON("/sidbylinetype?linetype="+selectedvalue,null,function(data){ 
                
 		        $.each(data,function(idx,item){ 
@@ -141,7 +142,7 @@
 				 
 				 
 		    }); 
-		
+		     
 		}
 		
 		function  GetJsonInfoBySid(){
@@ -222,6 +223,8 @@
 			$("#radio-ri").attr("disabled",true).checkboxradio("refresh");				
 			$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
 			
+			 $("#tjts").attr("disabled","disabled");
+			
 			$("#radio-ribao").click(function(){
 			    
 				$("#tjdate").text("统计日期：");
@@ -238,7 +241,7 @@
 				$("#radio-ban").attr("disabled",true).checkboxradio("refresh");
 				 
 				 //$("#tjts").attr("disabled",true).selectmenu("refresh",true);
-				 $("#tjts").attr("disabled","disabled");
+				 $("#tjts").attr("disabled",true);
 				// $("#tjts").selectmenu("refresh",true);
 			
 			});
@@ -337,7 +340,238 @@
 		
 		}
 		
+		function submitfunc(){
+		    
+			 
+		    $("#submit").click(function () {
+			
+			    var atype = $('input:radio[name=atype]:checked').val();
+			    var aunit = $('input:radio[name=aunit]:checked').val();
+			    var adate = $("#tjdateinput").val();
+			    var adays = $("#tjts").val();
+				var lineid = $("#sel3 :selected").text();
+				if (adate == ""){
+				    alert("请先选择日期");
+					return;
+				}
+				if (atype == 2 || atype == 3){//如果自定义必须输入天数
+					if (adays == 0){
+						alert("请先选择天数");
+					   return;
+					}
+				}
+			         //datatochart?atype=0&aunit=0&adate=2014-12-12&adays=0&lineid=1
+				url = "/datatochart?atype="+atype+"&aunit="+aunit+"&adate="+adate+"&adays="+adays+"&lineid="+lineid ;
+				console.log(url);
+			    $.getJSON(url,null,function(data){ 
+                    if (atype==0 && aunit==0){
+		               setechart0(data);
+				    }
+					 if (atype==1 && aunit==1){
+		               setechart1(data);
+				    }
+					 if (atype==2 && aunit==1){
+		               setechart2(data);
+				    }
+					 if (atype==3 && aunit==2){
+		               setechart3(data);
+				    }
+				});
+				  
+		    }); 
+			
+			
+			 
+		
+		
+		
+		}
+		function setechart0(data){
+		     var option1= {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['自动运行时间','小时目标产量','每小时产量']
+                    },
+					grid : {
+					    x : 35 ,
+						x2 : 35
+					},
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"自动运行时间",
+                            "type":"bar",
+                            "data":[5, 20, 40, 10, 10, 20]
+                        },
+						 {
+                            "name":"小时目标产量",
+                            "type":"line",
+                            "data":[15, 30, 30, 10, 20, 20]
+                        },
+						 {
+                            "name":"每小时产量",
+                            "type":"line",
+                            "data":[15, 30, 30, 10, 20, 20]
+                        }
+                    ]
+                };
+				var option2 = $.extend(true, {}, option1); 
+				 
+				 
+				var hourval = data.Plan.PlanDay / 24;
+				option2.series[0].data=[];
+				option2.series[1].data=[];
+				option2.series[2].data=[];
+				for (var i=0;i<24;i++){
+				   option2.series[1].data.push(hourval);
+				   option2.series[2].data.push(0);
+				   option2.series[0].data.push(0);
+				}
+				
+				
+				option1.legend.data[0]="每小时产量";
+				option1.legend.data[1]="日目标产量";
+				option1.legend.data[2]="累计产量";
+				option1.series[0].name=option1.legend.data[0];
+				option1.series[1].name=option1.legend.data[1];
+				option1.series[2].name=option1.legend.data[2];
+				var sumval = data.Plan.PlanDay  ;
+				option1.series[0].data=[];
+				option1.series[1].data=[];
+				option1.series[2].data=[];
+				for (var i=0;i<24;i++){
+				   option1.series[1].data.push(sumval);
+				   option1.series[2].data.push(0);
+				   option1.series[0].data.push(0);
+				}
+             if (data.Uphstations==null || data.Statusphs==null) {
+				drawechart("main0",0);
+				drawechart("main1",0);
+				drawechart("main2",0);
+				 
+				return;
+			}
+		     $.each(data.Uphstations,function(idx,item){ 
+			    
+					var  thehours = item.Hours.split(" ");
+					var thehour = thehours[1];
+					option2.series[2].data[thehour] = item.UPH;
+					option1.series[0].data[thehour] = item.UPH;
+				     
+		    }); 
+			var sumwhole = 0;
+			for (var i=0;i<24;i++){
+			    sumwhole = sumwhole+option1.series[0].data[i];
+				option1.series[2].data[i] = sumwhole;
+			
+			}
+			var ss=[0,0,0,0,0];
+			 $.each(data.Statusphs,function(idx,item){ 
+			        var  thehours = item.Hours.split(" ");
+					var thehour = thehours[1];
+					option2.series[0].data[thehour] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+			        ss[0]=ss[0]+item.S0;
+					ss[1]=ss[1]+item.S1;
+					ss[2]=ss[2]+item.S2;
+					ss[3]=ss[3]+item.S3;
+					ss[4]=ss[4]+item.S4;
+			 });
+		
+		
+		     console.log(option1);
+			 console.log(option2);
+		    drawechart("main2",option2);
+			drawechart("main1",option1);
+			
+			var option0 = {
+						title : {
+							text: '运行状态统计分析',
+							subtext: '',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient : 'vertical',
+							x : 'left',
+							data:['停止','手动','自动运行中','待机','通信中断']
+						},
+						/*toolbox: {
+							show : true,
+							feature : {
+								mark : {show: true},
+								dataView : {show: true, readOnly: false},
+								magicType : {
+									show: true, 
+									type: ['pie', 'funnel'],
+									option: {
+										funnel: {
+											x: '25%',
+											width: '50%',
+											funnelAlign: 'left',
+											max: 1548
+										}
+									}
+								},
+								restore : {show: true},
+								saveAsImage : {show: true}
+							}
+						},*/
+						calculable : true,
+						series : [
+							{
+								name:'运行状态',
+								type:'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+									{value:ss[0], name:'停止'},
+									{value:ss[1], name:'手动'},
+									{value:ss[2], name:'自动运行中'},
+									{value:ss[3], name:'待机'},
+									{value:ss[4], name:'通信中断'}
+								]
+							}
+						]
+					};
+			
+			drawechart("main0",option0);
+			
+		 }
+		function setechart1(data){
+		
+		
+		
+		
+		}
+		function setechart2(data){
+		
+		
+		
+		
+		}
+		function setechart3(data){
+		
+		
+		
+		
+		}
 		$(document).ready(function(){ 
+		submitfunc();
 		SetRadioCheck(); 
         $("#sel2").empty();
 		$("#sel3").empty();
@@ -441,13 +675,13 @@
     <fieldset data-role="controlgroup"   >
         <legend>统计类型：</legend>
         <label for="radio-ribao">日报</label>
-        <input type="radio" name="radio-ribao" id="radio-ribao" value="0" checked="checked">
+        <input type="radio" name="atype" id="radio-ribao" value="0" checked="checked">
         <label for="radio-yuebao">月报</label>
-        <input type="radio" name="radio-yuebao" id="radio-yuebao" value="1">
+        <input type="radio" name="atype" id="radio-yuebao" value="1">
         <label for="radio-zdy1">自定义(1)</label>
-        <input type="radio" name="radio-zdy1" id="radio-zdy1" value="2">
+        <input type="radio" name="atype" id="radio-zdy1" value="2">
         <label for="radio-zdy2">自定义(2)</label>
-        <input type="radio" name="radio-zdy2" id="radio-zdy2" value="3">
+        <input type="radio" name="atype" id="radio-zdy2" value="3">
         
     </fieldset>
 </form></li>
@@ -455,12 +689,13 @@
 		<li> <form>
     <fieldset data-role="controlgroup" >
         <legend>时间单位：</legend>
-        <input type="radio" name="radio-xiaoshi" id="radio-xiaoshi" value="0" checked="checked">
-        <label for="radio-xiaoshi">小时</label>
-        <input type="radio" name="radio-ri" id="radio-ri" value="1">
+        <label for="radio-xiaoshi">小时</label>
+        <input type="radio" name="aunit" id="radio-xiaoshi" value="0" checked="checked">
         <label for="radio-ri">日</label> 
-        <input type="radio" name="radio-ban" id="radio-ban" value="2">
+        <input type="radio" name="aunit" id="radio-ri" value="1">
         <label for="radio-ban">班</label>
+        <input type="radio" name="aunit" id="radio-ban" value="2">
+        
     </fieldset>
      </form> </li>
 	 
@@ -469,7 +704,7 @@
 				 
 					 
 				      <!--  <input type="text" id="date-input" data-inline="false" data-role="date">  -->
-					  <input type="date" />
+					  <input type="date" id="tjdateinput"/>
                          
 					 
 					 
@@ -478,7 +713,7 @@
 				 
 					 
 					    <select id="tjts" >
-						   <option selected="selected" value="--天--">--天--</option>
+						   <option selected="selected"   value=0>--天--</option>
 						</select>
 
 					 
@@ -491,7 +726,7 @@
 						<p>稼动率：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="MachineName">{54%</p>
+						<p id="jiadonglv">{54%</p>
 					</div> 
 					 
 				</div></li>
@@ -500,7 +735,7 @@
 						<p>平均产能：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="MachineType">{5000</p>
+						<p id="canneng">{5000</p>
 					</div> 
 					 
 				</div></li>
@@ -509,7 +744,7 @@
 						<p>产量偏差：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="MachineID">{3</p>
+						<p id="pianchachan">{3</p>
 					</div> 
 					 
 				</div></li>
@@ -518,7 +753,7 @@
 						<p>进度偏差：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="LoaderStatus">{3456</p>
+						<p id="pianchajin">{3456</p>
 					</div> 
 					 
 				</div></li>
@@ -529,9 +764,10 @@
 		 <div id="main0" style="height:400px"></div>
     <!-- ECharts单文件引入 -->
     <script src="./jmobile/echarts-2.2.1/build/dist/echarts.js"></script>
-    <script type="text/javascript">
-        // 路径配置
-        require.config({
+	<script type="text/javascript">
+	   function drawechart(id_div,optionset){
+	   
+	         require.config({
             paths: {
                 echarts: './jmobile/echarts-2.2.1/build/dist'
             }
@@ -541,13 +777,29 @@
         require(
             [
                 'echarts',
-                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/pie' ,// 使用柱状图就加载bar模块，按需加载
+				'echarts/chart/line' ,
+				'echarts/chart/bar' ,
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('main0')); 
+                var myChart = ec.init(document.getElementById(id_div)); 
                 
-              var option = {
+                var option = optionset;
+        
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+        );
+	   
+	   
+	   
+	   };
+	
+	
+	</script>
+    <script type="text/javascript">
+	    var option = {
 						title : {
 							text: '某站点用户访问来源',
 							subtext: '纯属虚构',
@@ -600,11 +852,7 @@
 							}
 						]
 					};
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
-            }
-        );
+            // drawechart("main0",option);
     </script>
 		 
 		 
@@ -612,26 +860,9 @@
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main1" style="height:400px"></div>
     <!-- ECharts单文件引入 -->
-    <script src="./jmobile/echarts-2.2.1/build/dist/echarts.js"></script>
+    
     <script type="text/javascript">
-        // 路径配置
-        require.config({
-            paths: {
-                echarts: './jmobile/echarts-2.2.1/build/dist'
-            }
-        });
-        
-        // 使用
-        require(
-            [
-                'echarts',
-				'echarts/chart/line' ,
-                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
-            ],
-            function (ec) {
-                // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('main1')); 
-                
+       
                 var option = {
                     tooltip: {
                         show: true
@@ -668,10 +899,8 @@
                     ]
                 };
         
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
-            }
-        );
+             //   drawechart("main1",option);
+           
     </script>
 		 
 		 <li data-role="list-divider">单位产量图</li>
@@ -681,23 +910,7 @@
    
     <script type="text/javascript">
         
-         // 路径配置
-        require.config({
-            paths: {
-                echarts: './jmobile/echarts-2.2.1/build/dist'
-            }
-        });
-        // 使用
-        require(
-            [
-                'echarts',
-				'echarts/chart/line' ,
-                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
-            ],
-            function (ec) {
-                // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('main2')); 
-                
+                    
                 var option = {
                     tooltip: {
                         show: true
@@ -729,10 +942,7 @@
                     ]
                 };
         
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
-            }
-        );
+             //    drawechart("main2",option);
 		
 		 
 	    </script>
