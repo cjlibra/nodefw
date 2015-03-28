@@ -18,29 +18,10 @@
 	
 	
 	<script type="text/javascript">
-	    var linestrorig = '<li>  <div class="ui-grid-a"> \
-		                <div class="ui-block-a">   \
-						<p>$num$</p>  \
-					</div>   \
-					<div class="ui-block-b">  \
-						<p>$workshop$</p>   \
-					</div>   \
-					<div class="ui-block-c">  \
-						<p>$worktype$</p>  \
-					</div>   \
-					<div class="ui-block-d"  style = "background-color: $collor$ ">  \
-						<p>$action$</p>  \
-					</div>  \
-				</div>  \
-		  </li>'  ;
-		   var liststrs="";
+	   
 		 function GetJsonLT(){
 		 
 		     $("#sel2").empty(); 
-			 
-			  
-		
-			 
   
 			 var option = $("<option>").val(0).text("--请选择制程--");
 			 $("#sel2").append(option);
@@ -355,7 +336,7 @@
 					return;
 				}
 				if (atype == 2 || atype == 3){//如果自定义必须输入天数
-					if (adays == 0){
+					if (adays < 2){
 						alert("请先选择天数");
 					   return;
 					}
@@ -477,6 +458,14 @@
 				option1.series[2].data[i] = sumwhole;
 			
 			}
+			
+			var pingjunsum = sumwhole/24;
+			$("#canneng").text(pingjunsum);
+			var pianchachan = sumwhole - data.Plan.PlanDay;
+			$("#pianchachan").text(pianchachan);
+			 var pianchajin = data.Plan.PlanDay/pingjunsum-24;
+			$("#pianchajin").text(pianchajin);
+			
 			var ss=[0,0,0,0,0];
 			 $.each(data.Statusphs,function(idx,item){ 
 			        var  thehours = item.Hours.split(" ");
@@ -488,7 +477,10 @@
 					ss[3]=ss[3]+item.S3;
 					ss[4]=ss[4]+item.S4;
 			 });
-		
+		      
+			 var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+			 $("#jiadonglv").text(jiadonglv);
+			 
 		
 		     
 		    drawechart("main2",option2);
@@ -635,8 +627,7 @@
 					var theday = parseInt(thedays[2])-1;
 					option2.series[2].data[theday] = item.UPD;
 					option1.series[0].data[theday] = item.UPD;
-					console.log(theday);
-					console.log(item.UPD);
+					 
 				     
 		    }); 
 			var sumwhole = 0;
@@ -645,6 +636,13 @@
 				option1.series[2].data[i] = sumwhole;
 			
 			}
+			var pingjunsum = sumwhole/31;
+			$("#canneng").text(pingjunsum);
+			var pianchachan = sumwhole - data.Plan.PlanMonth;
+			$("#pianchachan").text(pianchachan);
+			var pianchajin = data.Plan.PlanMonth/pingjunsum-31;
+			$("#pianchajin").text(pianchajin);
+			
 			var ss=[0,0,0,0,0];
 			 $.each(data.Statuspds,function(idx,item){ 
 			        var  thedays = item.Days.split("-");
@@ -656,7 +654,8 @@
 					ss[3]=ss[3]+item.S3;
 					ss[4]=ss[4]+item.S4;
 			 });
-		
+		     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+			 $("#jiadonglv").text(jiadonglv);
 		
 		     
 		    drawechart("main2",option2);
@@ -720,13 +719,380 @@
 		
 		
 		}
-		function setechart2(data){
 		
+		
+		function setechart2(data){
+			var option1= {
+						tooltip: {
+							show: true
+						},
+						legend: {
+							data:['自动运行时间','日目标产量','每日产量']
+						},
+						grid : {
+							x : 45 ,
+							x2 : 45
+						},
+						xAxis : [
+							{
+								type : 'category',
+								data : ["1","2"]
+							}
+						],
+						yAxis : [
+							{
+								type : 'value'
+							}
+						],
+						series : [
+							{
+								"name":"自动运行时间",
+								"type":"bar",
+								"data":[5, 20, 40, 10, 10, 20]
+							},
+							 {
+								"name":"日目标产量",
+								"type":"line",
+								"data":[15, 30, 30, 10, 20, 20]
+							},
+							 {
+								"name":"每日产量",
+								"type":"line",
+								"data":[15, 30, 30, 10, 20, 20]
+							}
+						]
+					};
+					option1.xAxis[0].data = [];
+					var daycount = $("#tjts").val();
+					var startday = parseInt($("#tjdateinput").val().split("-")[2]);
+					for (var i=0;i < daycount; i++){
+					   option1.xAxis[0].data.push(startday+i);
+					}
+					
+					
+					var option2 = $.extend(true, {}, option1); 
+					 
+					 
+					var dayval = data.Plan.PlanDay  ;
+					option2.series[0].data=[];
+					option2.series[1].data=[];
+					option2.series[2].data=[];
+					for (var i=0;i < daycount ; i++){
+					   option2.series[1].data.push(dayval);
+					   option2.series[2].data.push(0);
+					   option2.series[0].data.push(0);
+					}
+					
+					
+					option1.legend.data[0]="每日产量";
+					option1.legend.data[1]="月目标产量";
+					option1.legend.data[2]="累计产量";
+					option1.series[0].name=option1.legend.data[0];
+					option1.series[1].name=option1.legend.data[1];
+					option1.series[2].name=option1.legend.data[2];
+					var sumval = data.Plan.PlanMonth  ;
+					option1.series[0].data=[];
+					option1.series[1].data=[];
+					option1.series[2].data=[];
+					for (var i=0;i < daycount ; i++){
+					   option1.series[1].data.push(sumval);
+					   option1.series[2].data.push(0);
+					   option1.series[0].data.push(0);
+					}
+				 if (data.Updstations==null || data.Statuspds==null) {
+					drawechart("main0",0);
+					drawechart("main1",0);
+					drawechart("main2",0);
+					 
+					return;
+				}
+				 $.each(data.Updstations,function(idx,item){ 
+					
+						var  thedays = item.Days.split("-");
+						var theday = parseInt(thedays[2])-startday;
+						option2.series[2].data[theday] = item.UPD;
+						option1.series[0].data[theday] = item.UPD;
+						 
+						 
+				}); 
+				var sumwhole = 0;
+				for (var i=0;i < daycount;i++){
+					sumwhole = sumwhole+option1.series[0].data[i];
+					option1.series[2].data[i] = sumwhole;
+				
+				}
+				var pingjunsum = sumwhole/daycount;
+			    $("#canneng").text(pingjunsum);
+				var pianchachan = sumwhole - data.Plan.PlanDay*daycount;
+			    $("#pianchachan").text(pianchachan);
+				var pianchajin = data.Plan.PlanDay*daycount/pingjunsum-daycount;
+			    $("#pianchajin").text(pianchajin);
+			
+				var ss=[0,0,0,0,0];
+				 $.each(data.Statuspds,function(idx,item){ 
+						var  thedays = item.Days.split("-");
+						var theday = parseInt(thedays[2])-startday;
+						option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+						ss[0]=ss[0]+item.S0;
+						ss[1]=ss[1]+item.S1;
+						ss[2]=ss[2]+item.S2;
+						ss[3]=ss[3]+item.S3;
+						ss[4]=ss[4]+item.S4;
+				 });
+			     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+			     $("#jiadonglv").text(jiadonglv);
+			
+				 
+				drawechart("main2",option2);
+				drawechart("main1",option1);
+				
+				var option0 = {
+							title : {
+								text: '运行状态统计分析',
+								subtext: '',
+								x:'center'
+							},
+							tooltip : {
+								trigger: 'item',
+								formatter: "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend: {
+								orient : 'vertical',
+								x : 'left',
+								data:['停止','手动','自动运行中','待机','通信中断']
+							},
+							/*toolbox: {
+								show : true,
+								feature : {
+									mark : {show: true},
+									dataView : {show: true, readOnly: false},
+									magicType : {
+										show: true, 
+										type: ['pie', 'funnel'],
+										option: {
+											funnel: {
+												x: '25%',
+												width: '50%',
+												funnelAlign: 'left',
+												max: 1548
+											}
+										}
+									},
+									restore : {show: true},
+									saveAsImage : {show: true}
+								}
+							},*/
+							calculable : true,
+							series : [
+								{
+									name:'运行状态',
+									type:'pie',
+									radius : '55%',
+									center: ['50%', '60%'],
+									data:[
+										{value:ss[0], name:'停止'},
+										{value:ss[1], name:'手动'},
+										{value:ss[2], name:'自动运行中'},
+										{value:ss[3], name:'待机'},
+										{value:ss[4], name:'通信中断'}
+									]
+								}
+							]
+						};
+				
+				drawechart("main0",option0);
 		
 		
 		
 		}
 		function setechart3(data){
+			var option1= {
+						tooltip: {
+							show: true
+						},
+						legend: {
+							data:['自动运行时间','班目标产量','每班产量']
+						},
+						grid : {
+							x : 45 ,
+							x2 : 45
+						},
+						xAxis : [
+							{
+								type : 'category',
+								data : ["1","2"]
+							}
+						],
+						yAxis : [
+							{
+								type : 'value'
+							}
+						],
+						series : [
+							{
+								"name":"自动运行时间",
+								"type":"bar",
+								"data":[5, 20, 40, 10, 10, 20]
+							},
+							 {
+								"name":"班目标产量",
+								"type":"line",
+								"data":[15, 30, 30, 10, 20, 20]
+							},
+							 {
+								"name":"每班产量",
+								"type":"line",
+								"data":[15, 30, 30, 10, 20, 20]
+							}
+						]
+					};
+					option1.xAxis[0].data = [];
+					var daycount = $("#tjts").val();
+					var startday = parseInt($("#tjdateinput").val().split("-")[2]);
+					for (var i=0;i < daycount; i++){
+					   option1.xAxis[0].data.push(startday+i+"早");
+					   option1.xAxis[0].data.push(startday+i+"中");
+					   option1.xAxis[0].data.push(startday+i+"晚");
+					}
+					
+					
+					var option2 = $.extend(true, {}, option1); 
+					 
+					 
+					var banval = data.Plan.PlanBan  ;
+					option2.series[0].data=[];
+					option2.series[1].data=[];
+					option2.series[2].data=[];
+					for (var i=0;i < daycount*3 ; i++){
+					   option2.series[1].data.push(banval);
+					   option2.series[2].data.push(0);
+					   option2.series[0].data.push(0);
+					}
+					
+					
+					option1.legend.data[0]="每班产量";
+					option1.legend.data[1]="月目标产量";
+					option1.legend.data[2]="累计产量";
+					option1.series[0].name=option1.legend.data[0];
+					option1.series[1].name=option1.legend.data[1];
+					option1.series[2].name=option1.legend.data[2];
+					var sumval = data.Plan.PlanMonth  ;
+					option1.series[0].data=[];
+					option1.series[1].data=[];
+					option1.series[2].data=[];
+					for (var i=0;i < daycount*3 ; i++){
+					   option1.series[1].data.push(sumval);
+					   option1.series[2].data.push(0);
+					   option1.series[0].data.push(0);
+					}
+				 if (data.Upsstations==null || data.Statuspss==null) {
+					drawechart("main0",0);
+					drawechart("main1",0);
+					drawechart("main2",0);
+					 
+					return;
+				}
+				 $.each(data.Upsstations,function(idx,item){ 
+					
+						var  thedays = item.Days.split("-");
+						var theday = parseInt(thedays[2])-startday;
+						option2.series[2].data[theday] = item.Shift1;
+						option2.series[2].data[theday+1] = item.Shift2;
+						option2.series[2].data[theday+2] = item.Shift3;
+						option1.series[0].data[theday] = item.Shift1;
+						option1.series[0].data[theday+1] = item.Shift2;
+						option1.series[0].data[theday+2] = item.Shift3;
+						 
+						 
+				}); 
+				var sumwhole = 0;
+				for (var i=0;i < daycount*3;i++){
+					sumwhole = sumwhole+option1.series[0].data[i];
+					option1.series[2].data[i] = sumwhole;
+				
+				}
+				var pingjunsum = sumwhole/(daycount*3);
+			    $("#canneng").text(pingjunsum);
+				var pianchachan = sumwhole - data.Plan.PlanDay*daycount;
+			    $("#pianchachan").text(pianchachan);
+				var pianchajin = data.Plan.PlanBan/pingjunsum-daycount*3;
+			    $("#pianchajin").text(pianchajin);
+			   
+				var ss=[0,0,0,0,0];
+				 $.each(data.Statuspss,function(idx,item){ 
+						var  thedays = item.Days.split("-");
+						var theday = parseInt(thedays[2])-startday;
+						option2.series[0].data[theday] = item.S1_S2/(item.S1_S0+item.S1_S1+item.S1_S2+item.S1_S3+item.S1_S4)*60;
+						option2.series[0].data[theday+1] = item.S2_S2/(item.S2_S0+item.S2_S1+item.S2_S2+item.S2_S3+item.S2_S4)*60;
+						option2.series[0].data[theday+2] = item.S3_S2/(item.S3_S0+item.S3_S1+item.S3_S2+item.S3_S3+item.S3_S4)*60;
+						ss[0]=ss[0]+item.S1_S0+item.S2_S0+item.S3_S0;
+						ss[1]=ss[1]+item.S1_S1+item.S2_S1+item.S3_S1;
+						ss[2]=ss[2]+item.S1_S2+item.S2_S2+item.S3_S2;
+						ss[3]=ss[3]+item.S1_S3+item.S2_S3+item.S3_S3;
+						ss[4]=ss[4]+item.S1_S4+item.S2_S4+item.S3_S4;
+				 });
+			     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+			     $("#jiadonglv").text(jiadonglv);
+			
+				 
+				drawechart("main2",option2);
+				drawechart("main1",option1);
+				
+				var option0 = {
+							title : {
+								text: '运行状态统计分析',
+								subtext: '',
+								x:'center'
+							},
+							tooltip : {
+								trigger: 'item',
+								formatter: "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend: {
+								orient : 'vertical',
+								x : 'left',
+								data:['停止','手动','自动运行中','待机','通信中断']
+							},
+							/*toolbox: {
+								show : true,
+								feature : {
+									mark : {show: true},
+									dataView : {show: true, readOnly: false},
+									magicType : {
+										show: true, 
+										type: ['pie', 'funnel'],
+										option: {
+											funnel: {
+												x: '25%',
+												width: '50%',
+												funnelAlign: 'left',
+												max: 1548
+											}
+										}
+									},
+									restore : {show: true},
+									saveAsImage : {show: true}
+								}
+							},*/
+							calculable : true,
+							series : [
+								{
+									name:'运行状态',
+									type:'pie',
+									radius : '55%',
+									center: ['50%', '60%'],
+									data:[
+										{value:ss[0], name:'停止'},
+										{value:ss[1], name:'手动'},
+										{value:ss[2], name:'自动运行中'},
+										{value:ss[3], name:'待机'},
+										{value:ss[4], name:'通信中断'}
+									]
+								}
+							]
+						};
+				
+				drawechart("main0",option0);
 		
 		
 		
@@ -881,7 +1247,7 @@
 					 
 					 
 				 </li>
-			<li><input type="button"  id="submit"  name="提交"  value="提交"> </li>
+			<li><input type="button"  id="submit"  name="提交"  value="开始统计"> </li>
 		 <li data-role="list-divider">统计分析
 		 <li> <div class="ui-grid-a">
 					<div class="ui-block-a">
