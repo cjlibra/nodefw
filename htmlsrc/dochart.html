@@ -1043,13 +1043,14 @@
 			    $("#pianchajin").text(pianchajin);
 			   
 				var ss=[0,0,0,0,0];
-				 if (  data.Statuspds==null) {
+				 if (  data.Statuspss==null) {
 				    drawechart("main0",0);
 				  
 			    }else{
 				 $.each(data.Statuspss,function(idx,item){ 
 						var  thedays = item.Days.split("-");
 						var theday = parseInt(thedays[2])-startday;
+						theday  = theday  *3;
 						option2.series[0].data[theday] = item.S1_S2/(item.S1_S0+item.S1_S1+item.S1_S2+item.S1_S3+item.S1_S4)*60;
 						option2.series[0].data[theday+1] = item.S2_S2/(item.S2_S0+item.S2_S1+item.S2_S2+item.S2_S3+item.S2_S4)*60;
 						option2.series[0].data[theday+2] = item.S3_S2/(item.S3_S0+item.S3_S1+item.S3_S2+item.S3_S3+item.S3_S4)*60;

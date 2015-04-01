@@ -27,9 +27,9 @@
 					</div>  \
 				</div> </a> \
 		  </li>'  ;
-		   var liststrs="";
-	    function GetJsonStatus(){
 		   
+	    function GetJsonStatus(){
+		     var liststrs="";
 	        $.getJSON("/status/",null,function(data){ 
  
 		        $.each(data,function(idx,item){ 
@@ -66,12 +66,22 @@
 		        }); 
 				 
 				$("#listview").html(liststrs);
+				
+				setTimeout("GetJsonStatus()", 30000 );
 		    }); 
 			
 			
 
         }
-		$(document).ready(GetJsonStatus);
+		$(document).ready(function () {
+		      GetJsonStatus();
+
+		      
+		
+		
+		
+		
+		});
 		 
 		
 		
