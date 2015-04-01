@@ -28,6 +28,26 @@
 				</div>  \
 		  </li>'  ;
 		   var liststrs="";
+		   
+		 function getUrlRequest(){
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    if (str.indexOf("&") != -1) {
+                        strs = str.split("&");
+                        for (var i = 0; i < strs.length; i++) {
+                            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                        }
+                    } else {
+                        var key = str.substring(0,str.indexOf("="));
+                        var value = str.substr(str.indexOf("=")+1);
+                        theRequest[key] = decodeURI(value);
+                    }
+                }
+                return theRequest;
+        }
+		
 		 function GetJsonLT(){
 		 
 		     $("#sel2").empty(); 
@@ -138,12 +158,15 @@
 		
 		}
 		
+		var selectedvalue1="";
 		function  GetJsonInfoBySid(){
-		    selectedvalue = $("#sel3 :selected").text();
-			
+		   
+			var selectedvalue = selectedvalue1;
+			$("#lineidinfo").text(selectedvalue1+"号站信息" );
+			clearparm();
 		    $.getJSON("/infoloaderbylineid?lineid="+selectedvalue+"&&loader=1" ,null,function(data){ 
                	        
-				    clearparm();
+				     
 					$("#workshop").text(data.Workshop);
 					$("#linetype").text(data.LineType);
 					$("#MachineID").text(data.MachineID);
@@ -213,6 +236,18 @@
         $("#sel2").empty();
 		$("#sel3").empty();
 		clearparm();
+		var parm = getUrlRequest();
+		
+		if ( parm["lineid"] != null) {
+		  // console.log(parm["lineid"]); 
+		   selectedvalue1 = parm["lineid"];
+		    
+		   GetJsonInfoBySid();
+		   
+		   
+		   
+		
+		}
 		$("#sel1").change(function(){
 		
 		       
@@ -254,6 +289,7 @@
 		
 		$("#sel3").change(function(){
 		     
+			   selectedvalue1 = $("#sel3 :selected").text();
 		       GetJsonInfoBySid();
 		
 		});
@@ -307,7 +343,7 @@
 	<option value="6">{26</option>
          </select>
 		 </div>
-		 <li data-role="list-divider">站信息
+		 <li data-role="list-divider" id="lineidinfo">站信息 </li>
 		 <li> <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>车间:</p>

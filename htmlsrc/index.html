@@ -12,7 +12,7 @@
 	<script src="./jmobile/demos/_assets/js/index.js"></script>
 	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
 	<script type="text/javascript">
-	    var linestrorig = '<li>  <div class="ui-grid-c"> \
+	    var linestrorig = '<li> <a  rel="external" href="/src/devinfo.html?lineid=$num$"> <div class="ui-grid-c"> \
 		                <div class="ui-block-a">   \
 						<p>$num$</p>  \
 					</div>   \
@@ -25,7 +25,7 @@
 					<div class="ui-block-d"  style = "background-color: $collor$ ">  \
 						<p>$action$</p>  \
 					</div>  \
-				</div>  \
+				</div> </a> \
 		  </li>'  ;
 		   var liststrs="";
 	    function GetJsonStatus(){
@@ -33,9 +33,9 @@
 	        $.getJSON("/status/",null,function(data){ 
  
 		        $.each(data,function(idx,item){ 
-					if(idx==0){ 
+					/*if(idx==0){ 
 						 return true;//同countinue，返回false同break 
-					} 
+					}  */
                     linestr = linestrorig ;
 					//alert("name:"+item.StationID+",value:"+item.Workshop); 
 					linestr = linestr.replace(/\$num\$/g,item.StationID);
@@ -46,7 +46,10 @@
 					linestr = linestr.replace(/\$action\$/g,item.StationStatus);
 					
 					 
-					if (item.StationStatus === "自动运行中") {console.log("act");;linestr=linestr.replace(/\$collor\$/g,"green")};
+					if (item.StationStatus === "自动运行中") {
+					   // console.log("act");
+						linestr=linestr.replace(/\$collor\$/g,"green")
+					};
 					//alert(linestr);
 					if (item.StationStatus === "待机") 
 					{
@@ -93,7 +96,7 @@
 	<div data-role="content"  >
 	   <ul data-role="listview"  id="listview">
 	   
-	      <li>  <div class="ui-grid-c">
+	    <!--  <li>  <div class="ui-grid-c">
 					<div class="ui-block-a">
 						<p>1</p>
 					</div> 
@@ -107,8 +110,8 @@
 						<p>自动运行中</p>
 					</div>
 				</div>
-		  </li>
-		  <li>bbbb</li>
+		  </li>-->
+		 
 	   
 	   </ul>
 	</div> 

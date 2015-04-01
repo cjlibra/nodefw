@@ -382,7 +382,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                            data : ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23" ]
                         }
                     ],
                     yAxis : [
@@ -437,8 +437,8 @@
 				   option1.series[2].data.push(0);
 				   option1.series[0].data.push(0);
 				}
-             if (data.Uphstations==null || data.Statusphs==null) {
-				drawechart("main0",0);
+             if (data.Uphstations==null  ) {
+				 
 				drawechart("main1",0);
 				drawechart("main2",0);
 				 
@@ -447,7 +447,7 @@
 		     $.each(data.Uphstations,function(idx,item){ 
 			    
 					var  thehours = item.Hours.split(" ");
-					var thehour = thehours[1];
+					var thehour = parseInt(thehours[1]);
 					option2.series[2].data[thehour] = item.UPH;
 					option1.series[0].data[thehour] = item.UPH;
 				     
@@ -467,9 +467,17 @@
 			$("#pianchajin").text(pianchajin);
 			
 			var ss=[0,0,0,0,0];
+			if (  data.Statusphs==null) {
+				drawechart("main0",0);
+				//drawechart("main2",option2);
+			    //drawechart("main1",option1);
+				 
+				//return;
+			}else{
+			
 			 $.each(data.Statusphs,function(idx,item){ 
 			        var  thehours = item.Hours.split(" ");
-					var thehour = thehours[1];
+					var thehour = parseInt(thehours[1]);
 					option2.series[0].data[thehour] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
 			        ss[0]=ss[0]+item.S0;
 					ss[1]=ss[1]+item.S1;
@@ -477,7 +485,7 @@
 					ss[3]=ss[3]+item.S3;
 					ss[4]=ss[4]+item.S4;
 			 });
-		      
+		     } 
 			 var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 			 $("#jiadonglv").text(jiadonglv);
 			 
@@ -485,6 +493,9 @@
 		     
 		    drawechart("main2",option2);
 			drawechart("main1",option1);
+			
+			
+			
 			
 			var option0 = {
 						title : {
@@ -614,8 +625,8 @@
 				   option1.series[2].data.push(0);
 				   option1.series[0].data.push(0);
 				}
-             if (data.Updstations==null || data.Statuspds==null) {
-				drawechart("main0",0);
+             if (data.Updstations==null  ) {
+				 
 				drawechart("main1",0);
 				drawechart("main2",0);
 				 
@@ -644,6 +655,10 @@
 			$("#pianchajin").text(pianchajin);
 			
 			var ss=[0,0,0,0,0];
+			 if ( data.Statuspds==null) {
+				drawechart("main0",0);
+				
+			}else{
 			 $.each(data.Statuspds,function(idx,item){ 
 			        var  thedays = item.Days.split("-");
 					var theday = parseInt(thedays[2])-1;
@@ -654,6 +669,7 @@
 					ss[3]=ss[3]+item.S3;
 					ss[4]=ss[4]+item.S4;
 			 });
+			 }
 		     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 			 $("#jiadonglv").text(jiadonglv);
 		
@@ -799,8 +815,8 @@
 					   option1.series[2].data.push(0);
 					   option1.series[0].data.push(0);
 					}
-				 if (data.Updstations==null || data.Statuspds==null) {
-					drawechart("main0",0);
+				 if (data.Updstations==null  ) {
+					 
 					drawechart("main1",0);
 					drawechart("main2",0);
 					 
@@ -829,6 +845,10 @@
 			    $("#pianchajin").text(pianchajin);
 			
 				var ss=[0,0,0,0,0];
+				if ( data.Statuspds==null) {
+				   drawechart("main0",0);
+				 
+			    }else{
 				 $.each(data.Statuspds,function(idx,item){ 
 						var  thedays = item.Days.split("-");
 						var theday = parseInt(thedays[2])-startday;
@@ -839,6 +859,7 @@
 						ss[3]=ss[3]+item.S3;
 						ss[4]=ss[4]+item.S4;
 				 });
+				 }
 			     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 			     $("#jiadonglv").text(jiadonglv);
 			
@@ -985,23 +1006,26 @@
 					   option1.series[2].data.push(0);
 					   option1.series[0].data.push(0);
 					}
-				 if (data.Upsstations==null || data.Statuspss==null) {
-					drawechart("main0",0);
+				 if (data.Upsstations==null  ) {
+					 
 					drawechart("main1",0);
 					drawechart("main2",0);
 					 
 					return;
 				}
+				 
 				 $.each(data.Upsstations,function(idx,item){ 
 					
 						var  thedays = item.Days.split("-");
 						var theday = parseInt(thedays[2])-startday;
+						theday = 3*theday;
 						option2.series[2].data[theday] = item.Shift1;
 						option2.series[2].data[theday+1] = item.Shift2;
 						option2.series[2].data[theday+2] = item.Shift3;
 						option1.series[0].data[theday] = item.Shift1;
 						option1.series[0].data[theday+1] = item.Shift2;
 						option1.series[0].data[theday+2] = item.Shift3;
+						 
 						 
 						 
 				}); 
@@ -1019,6 +1043,10 @@
 			    $("#pianchajin").text(pianchajin);
 			   
 				var ss=[0,0,0,0,0];
+				 if (  data.Statuspds==null) {
+				    drawechart("main0",0);
+				  
+			    }else{
 				 $.each(data.Statuspss,function(idx,item){ 
 						var  thedays = item.Days.split("-");
 						var theday = parseInt(thedays[2])-startday;
@@ -1031,6 +1059,7 @@
 						ss[3]=ss[3]+item.S1_S3+item.S2_S3+item.S3_S3;
 						ss[4]=ss[4]+item.S1_S4+item.S2_S4+item.S3_S4;
 				 });
+				 }
 			     var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 			     $("#jiadonglv").text(jiadonglv);
 			
@@ -1254,7 +1283,7 @@
 						<p>稼动率：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="jiadonglv">{54%</p>
+						<p id="jiadonglv">   </p>
 					</div> 
 					 
 				</div></li>
@@ -1263,7 +1292,7 @@
 						<p>平均产能：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="canneng">{5000</p>
+						<p id="canneng"> </p>
 					</div> 
 					 
 				</div></li>
@@ -1272,7 +1301,7 @@
 						<p>产量偏差：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="pianchachan">{3</p>
+						<p id="pianchachan"> </p>
 					</div> 
 					 
 				</div></li>
@@ -1281,7 +1310,7 @@
 						<p>进度偏差：</p>
 					</div> 
 					<div class="ui-block-b">
-						<p id="pianchajin">{3456</p>
+						<p id="pianchajin"> </p>
 					</div> 
 					 
 				</div></li>
