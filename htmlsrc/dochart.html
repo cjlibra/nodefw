@@ -447,7 +447,7 @@
 		     $.each(data.Uphstations,function(idx,item){ 
 			    
 					var  thehours = item.Hours.split(" ");
-					var thehour = parseInt(thehours[1]);
+					var thehour = parseInt(thehours[1])+1;
 					option2.series[2].data[thehour] = item.UPH;
 					option1.series[0].data[thehour] = item.UPH;
 				     
@@ -477,7 +477,7 @@
 			
 			 $.each(data.Statusphs,function(idx,item){ 
 			        var  thehours = item.Hours.split(" ");
-					var thehour = parseInt(thehours[1]);
+					var thehour = parseInt(thehours[1])+1;
 					option2.series[0].data[thehour] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
 			        ss[0]=ss[0]+item.S0;
 					ss[1]=ss[1]+item.S1;
