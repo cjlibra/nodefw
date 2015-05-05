@@ -50,23 +50,32 @@ func opendb() mysql.Conn {
 	err := db.Connect()
 	if err != nil {
 		glog.Errorln("数据库无法连接")
+		return nil
 	}
 	return db
 
 }
 func statusfunc(w http.ResponseWriter, r *http.Request) {
+
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("设备状态")
+
 	db := opendb()
+	if db == nil {
+		return
+	}
 	defer db.Close()
 	res, err := db.Start("select * from stations_status")
 	checkError(err)
 
 	// Print fields names
+	var logstr string
 	for _, field := range res.Fields() {
 		//fmt.Print(field.Name, " ")
-		glog.V(1).Info(field.Name + " ")
+		logstr += field.Name + " "
 
 	}
-	glog.V(1).Infoln()
+	//glog.V(1).Infoln(logstr)
 
 	// Print all rows
 	var status Status
@@ -80,19 +89,6 @@ func statusfunc(w http.ResponseWriter, r *http.Request) {
 			// No more rows
 			break
 		}
-
-		// Print all cols
-		for _, col := range row {
-			if col == nil {
-				glog.Errorln("error col is <null>")
-				return
-			} else {
-				//os.Stdout.Write(col.([]byte))
-				glog.V(1).Info(col.([]byte))
-			}
-			glog.V(1).Info(" ")
-		}
-		glog.V(1).Infoln()
 
 		status.StationID = row.Int(res.Map("StationID"))
 		status.Workshop = row.Str(res.Map("Workshop"))
@@ -114,7 +110,11 @@ func statusfunc(w http.ResponseWriter, r *http.Request) {
 
 }
 func alarmfunc(w http.ResponseWriter, r *http.Request) {
+
 	r.ParseForm() //解析参数，默认是不会解析的
+
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("活动告警", " ", r.FormValue("stationid"))
 	//fmt.Fprintf(w, "Hi, I love you %s", html.EscapeString(r.URL.Path[1:]))
 	if r.Method == "GET" {
 		//fmt.Println("method:", r.Method) //获取请求的方法
@@ -134,6 +134,9 @@ func alarmfunc(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			db := opendb()
+			if db == nil {
+				return
+			}
 			defer db.Close()
 			res, err := db.Start("select * from alarms_active where StationID = %s", stationid)
 			checkError(err)
@@ -147,20 +150,6 @@ func alarmfunc(w http.ResponseWriter, r *http.Request) {
 					// No more rows
 					break
 				}
-
-				// Print all cols
-				for _, col := range row {
-					if col == nil {
-						//fmt.Print("error  col is<NULL>")
-						glog.Errorln("error  col is<NULL>")
-						return
-					} else {
-						//os.Stdout.Write(col.([]byte))
-						glog.V(1).Info(col.([]byte))
-					}
-					glog.V(1).Info(" ")
-				}
-				glog.V(1).Infoln()
 
 				alarm.AlarmID = row.Int(res.Map("AlarmID"))
 				alarm.Workshop = row.Str(res.Map("Workshop"))
@@ -189,7 +178,12 @@ type WorkShop struct {
 
 func infogetwshopfunc(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取车间")
 	db := opendb()
+	if db == nil {
+		return
+	}
 	defer db.Close()
 	res, err := db.Start("SELECT DISTINCT Workshop FROM stations")
 	checkError(err)
@@ -203,20 +197,6 @@ func infogetwshopfunc(w http.ResponseWriter, r *http.Request) {
 			// No more rows
 			break
 		}
-
-		// Print all cols
-		for _, col := range row {
-			if col == nil {
-				//fmt.Print("error  col is<NULL>")
-				glog.Errorln("error  col is<NULL>")
-				return
-			} else {
-				//os.Stdout.Write(col.([]byte))
-				glog.V(1).Info(col.([]byte))
-			}
-			glog.V(1).Info(" ")
-		}
-		glog.V(1).Infoln()
 
 		workshop.WorkShop = row.Str(res.Map("Workshop"))
 
@@ -238,7 +218,12 @@ type LineType struct {
 
 func infogetltypefunc(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取制程")
 	db := opendb()
+	if db == nil {
+		return
+	}
 	defer db.Close()
 	res, err := db.Start("SELECT DISTINCT LineType FROM stations")
 	checkError(err)
@@ -252,20 +237,6 @@ func infogetltypefunc(w http.ResponseWriter, r *http.Request) {
 			// No more rows
 			break
 		}
-
-		// Print all cols
-		for _, col := range row {
-			if col == nil {
-				//fmt.Print("error  col is<NULL>")
-				glog.Errorln("error  col is<NULL>")
-				return
-			} else {
-				//os.Stdout.Write(col.([]byte))
-				glog.V(1).Info(col.([]byte))
-			}
-			glog.V(1).Info(" ")
-		}
-		glog.V(1).Infoln()
 
 		linetype.Linetype = row.Str(res.Map("LineType"))
 
@@ -287,11 +258,16 @@ type SID struct {
 func sidbyworkshop(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	workshop := r.FormValue("workshop")
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取车间号", " ", workshop)
 	if workshop == "" {
 		w.Write([]byte("error input! no  workshop"))
 		return
 	} else {
 		db := opendb()
+		if db == nil {
+			return
+		}
 		defer db.Close()
 		res, err := db.Start("select LineID from stations where Workshop = \"%s\" ", workshop)
 		checkError(err)
@@ -305,20 +281,6 @@ func sidbyworkshop(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			sid.Sid = row.Int(res.Map("LineID"))
 
@@ -339,12 +301,17 @@ func sidbyworkshop(w http.ResponseWriter, r *http.Request) {
 func sidbylinetype(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	linetype := r.FormValue("linetype")
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取制程号", linetype)
 	if linetype == "" {
 		//w.Write([]byte("error input! no  linetype"))
 		glog.Errorln("error input! no  linetype")
 		return
 	} else {
 		db := opendb()
+		if db == nil {
+			return
+		}
 		defer db.Close()
 		res, err := db.Start("select LineID from stations where LineType = \"%s\" ", linetype)
 		checkError(err)
@@ -358,20 +325,6 @@ func sidbylinetype(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			sid.Sid = row.Int(res.Map("LineID"))
 
@@ -420,6 +373,8 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	lineid := r.FormValue("lineid")
 	loader := r.FormValue("loader")
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("设备详情", " ", "站号：", lineid, "收放板机标示：", loader)
 	_, err := strconv.Atoi(loader)
 	if err != nil {
 		//w.Write([]byte("error input loader! no num"))
@@ -439,6 +394,9 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		db := opendb()
+		if db == nil {
+			return
+		}
 		defer db.Close()
 		var loadername string
 		if loader == "1" {
@@ -461,20 +419,6 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			infomachine.MachineID = row.Int(res.Map("MachineID"))
 			infomachine.MachineClass = row.Str(res.Map("MachineClass"))
@@ -590,9 +534,17 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 	adate := r.FormValue("adate")
 	aunit := r.FormValue("aunit")
 	atype := r.FormValue("atype")
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("统计图表", " ", "站号：", lineid, "统计天数： ", adays, "统计日期：", adate, " ", aunit, " ", atype)
 	if lineid == "" {
 		//w.Write([]byte("error input! no lineid"))
 		glog.Errorln("error input! no lineid")
+		return
+	}
+	_, err := strconv.Atoi(lineid)
+	if err != nil {
+		//w.Write([]byte("error input! no num"))
+		glog.Errorln("lineid error input! no num")
 		return
 	}
 	if adays == "" {
@@ -617,6 +569,9 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 	}
 
 	db := opendb()
+	if db == nil {
+		return
+	}
 	defer db.Close()
 	var plan PLAN
 
@@ -631,20 +586,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			// No more rows
 			break
 		}
-
-		// Print all cols
-		for _, col := range row {
-			if col == nil {
-				//fmt.Print("error  col is<NULL>")
-				glog.Errorln("error  col is<NULL>")
-				//return
-			} else {
-				//os.Stdout.Write(col.([]byte))
-				glog.V(1).Info(col.([]byte))
-			}
-			glog.V(1).Info(" ")
-		}
-		glog.V(1).Infoln()
 
 		plan.PlanBan = row.Int(res.Map("PlanBan"))
 		plan.PlanDay = row.Int(res.Map("PlanDay"))
@@ -667,20 +608,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			statusph.StationID = row.Int(res.Map("StationID"))
 			statusph.Hours = row.Str(res.Map("Hours"))
@@ -705,20 +632,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			uphstation.StationID = row.Int(res.Map("StationID"))
 			uphstation.Hours = row.Str(res.Map("Hours"))
@@ -756,20 +669,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
-
 			statuspd.StationID = row.Int(res.Map("StationID"))
 			statuspd.Days = row.Str(res.Map("Days"))
 			statuspd.S0 = row.Int(res.Map("S0"))
@@ -793,20 +692,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			updstation.StationID = row.Int(res.Map("StationID"))
 			updstation.Days = row.Str(res.Map("Days"))
@@ -844,20 +729,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
-
 			statuspd.StationID = row.Int(res.Map("StationID"))
 			statuspd.Days = row.Str(res.Map("Days"))
 			statuspd.S0 = row.Int(res.Map("S0"))
@@ -881,20 +752,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			updstation.StationID = row.Int(res.Map("StationID"))
 			updstation.Days = row.Str(res.Map("Days"))
@@ -932,20 +789,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
-
 			statusps.StationID = row.Int(res.Map("StationID"))
 			statusps.Days = row.Str(res.Map("Days"))
 			statusps.S1_S0 = row.Int(res.Map("S1_S0"))
@@ -979,20 +822,6 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 				// No more rows
 				break
 			}
-
-			// Print all cols
-			for _, col := range row {
-				if col == nil {
-					//fmt.Print("error  col is<NULL>")
-					glog.Errorln("error  col is<NULL>")
-					//return
-				} else {
-					//os.Stdout.Write(col.([]byte))
-					glog.V(1).Info(col.([]byte))
-				}
-				glog.V(1).Info(" ")
-			}
-			glog.V(1).Infoln()
 
 			upsstation.StationID = row.Int(res.Map("StationID"))
 			upsstation.Days = row.Str(res.Map("Days"))
@@ -1036,12 +865,17 @@ func main() {
 		glog.Flush()
 		fmt.Println("exit")
 	}()
-	for {
-		err := http.ListenAndServe(":8080", nil)
-		if err != nil {
-			//log.Fatal("ListenAndServer: ", err)
-			fmt.Println("ListenAndServer: ", err)
 
+	var str chan string
+	go func() {
+		for {
+			err := http.ListenAndServe(":8080", nil)
+			if err != nil {
+				//log.Fatal("ListenAndServer: ", err)
+				fmt.Println("ListenAndServer: ", err)
+
+			}
 		}
-	}
+	}()
+	<-str
 }
