@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"os"
+	"os/signal"
 	"strconv"
 
 	"github.com/ziutek/mymysql/mysql"
@@ -862,11 +864,11 @@ func main() {
 
 	glog.Info("程序启动，开始监听8080端口")
 	defer func() {
+		glog.Infoln("成功退出")
 		glog.Flush()
-		fmt.Println("exit")
 	}()
 
-	var str chan string
+	cstr := make(chan os.Signal, 1)
 	go func() {
 		for {
 			err := http.ListenAndServe(":8080", nil)
@@ -877,5 +879,6 @@ func main() {
 			}
 		}
 	}()
-	<-str
+	signal.Notify(cstr)
+	glog.Infoln("收到信号：", <-cstr)
 }
