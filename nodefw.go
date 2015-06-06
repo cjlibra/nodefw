@@ -15,8 +15,9 @@ import (
 
 	"encoding/json"
 	"fmt"
-	"github.com/golang/glog"
 	"net/http"
+
+	"github.com/golang/glog"
 	//"os"
 )
 
@@ -111,8 +112,89 @@ func statusfunc(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 
 }
-func alarmfunc(w http.ResponseWriter, r *http.Request) {
 
+func statusbyfunc(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm() //解析参数，默认是不会解析的
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("设备状态by")
+	val := r.FormValue("val")
+	which := r.FormValue("which")
+	intwhich, err := strconv.Atoi(which)
+	if err != nil {
+		//w.Write([]byte("error input which! no num"))
+		glog.Errorln("error input which! no num")
+		return
+	}
+	if val == "" {
+		//w.Write([]byte("error input! no val"))
+		glog.Errorln("error val! no val")
+		return
+	}
+
+	db := opendb()
+	if db == nil {
+		return
+	}
+	defer db.Close()
+	var sqlstring string
+	if intwhich == 0 {
+		sqlstring = "select * from stations_status where Workshop = \"" + val + "\""
+
+	}
+	if intwhich == 1 {
+		sqlstring = "select * from stations_status where StationType =  \"" + val + "\""
+
+	}
+	if intwhich == 99 {
+		sqlstring = "select * from stations_status "
+
+	}
+	//os.Stdout.Write([]byte(sqlstring))
+	res, err := db.Start(sqlstring)
+	checkError(err)
+	// Print fields names
+	var logstr string
+	for _, field := range res.Fields() {
+		//fmt.Print(field.Name, " ")
+		logstr += field.Name + " "
+
+	}
+	//glog.V(1).Infoln(logstr)
+
+	// Print all rows
+	var status Status
+	var statuses []Status
+
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		status.StationID = row.Int(res.Map("StationID"))
+		status.Workshop = row.Str(res.Map("Workshop"))
+		status.StationType = row.Str(res.Map("StationType"))
+		status.LoaderID = row.Int(res.Map("LoaderID"))
+		status.UnLoaderId = row.Int(res.Map("UnloaderID"))
+		status.StationStatus = row.Str(res.Map("StationStatus"))
+
+		statuses = append(statuses, status)
+	}
+
+	b, err := json.Marshal(statuses)
+	if err != nil {
+		checkError(err)
+	}
+	//os.Stdout.Write(b)
+	glog.V(2).Infoln(string(b))
+	w.Write(b)
+
+}
+func alarmfunc(w http.ResponseWriter, r *http.Request) {
+	var stringsql string
 	r.ParseForm() //解析参数，默认是不会解析的
 
 	glog.Info(r.RemoteAddr)
@@ -121,7 +203,23 @@ func alarmfunc(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		//fmt.Println("method:", r.Method) //获取请求的方法
 		stationid := r.FormValue("stationid")
+		sortint := r.FormValue("sort")
 		//w.Write([]byte(stationid[0]))
+		if sortint == "" {
+			//w.Write([]byte("error input! no stationid"))
+			glog.Errorln("error input! no sort")
+			return
+		} else {
+			//fmt.Println(stationid)
+
+			_, err := strconv.Atoi(sortint)
+			if err != nil {
+				//w.Write([]byte("error input! no num"))
+
+				glog.Errorln("error sort input! no num")
+				return
+			}
+		}
 
 		if stationid == "" {
 			//w.Write([]byte("error input! no stationid"))
@@ -129,18 +227,34 @@ func alarmfunc(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			//fmt.Println(stationid)
+
 			_, err := strconv.Atoi(stationid)
 			if err != nil {
 				//w.Write([]byte("error input! no num"))
-				glog.Errorln("error input! no num")
-				return
+				if stationid != "*" {
+					glog.Errorln("error input! no num")
+					return
+				}
+			}
+
+			if stationid == "*" {
+				stringsql = "select * from alarms_active"
+
+			} else {
+				stringsql = "select * from alarms_active where StationID = " + stationid
+			}
+			if sortint == "1" {
+				stringsql = stringsql + " order by StartTime DESC"
+			}
+			if sortint == "2" {
+				stringsql = stringsql + " order by StartTime ASC"
 			}
 			db := opendb()
 			if db == nil {
 				return
 			}
 			defer db.Close()
-			res, err := db.Start("select * from alarms_active where StationID = %s", stationid)
+			res, err := db.Start(stringsql)
 			checkError(err)
 			var alarm Alarm
 			var alarms []Alarm
@@ -408,7 +522,7 @@ func infoloaderbylineid(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		res, err := db.Start("select * from machines left join stations on stations.%s = machines.MachineID where LineID = %s", loadername, lineid)
+		res, err := db.Start("select * from machines right join stations on stations.%s = machines.MachineID where LineID = %s", loadername, lineid)
 
 		checkError(err)
 		var infomachine InfoMachine
@@ -860,6 +974,7 @@ func main() {
 	http.HandleFunc("/info_getws", infogetwshopfunc)
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
+	http.HandleFunc("/statusby", statusbyfunc)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")

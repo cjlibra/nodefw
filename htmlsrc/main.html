@@ -7,14 +7,20 @@
 	<link rel="shortcut icon" href="./favicon.ico">
    <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">   -->
 	<link rel="stylesheet" type="text/css" href="./jmobile/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" type="text/css" href="./jmobile/demos/css/themes/default/jquery.mobile.theme-1.4.5.min.css" >
 	
 	<link rel="stylesheet" type="text/css" href="./css/css.css">
  	<script src="./js/jquery.js"></script>
 	
 	<script src="./js/jquery.mobile-1.4.5.min.js"></script>  
+	<script src="./js/layer.js"></script>  
+	<script src="./js/action.js"></script>  
 	
 </head>
 <body   >
+  
+				
+				
 <div data-role="page" id="login">
 <div data-role="content">
     <div class="titlename"><div class="p1"> 上海飞为自动化系统有限公司 </div>
@@ -22,10 +28,10 @@
 	 
 	 <div  class="divlogo"><div class="logo"><img src="./img/logo-01.png"  /></div></div>
 	 
-	  <div class="passdiv"> <input  type="text"  name="name"  class="passwen"  />    </div>
+	  <div class="passdiv"> <input  type="text"  name="name"    />    </div>
 	
 	
-	 <div class="loginbtn"> <a href="#mainpage">Log In</a> </div>
+	 <div  class="passdiv" > <a href="#mainpage" data-role="button" style="background-color:#336666;color:white; margin: 0 auto; ;">Log In</a> </div>
      <div  class="lastline"><div  class="forget"> 忘记密码 ？ </div> <div class="regist"> 马上注册 </div></div>
 </div>
 </div><!-- /page -->
@@ -34,7 +40,15 @@
  <div  data-role="header" class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png" /> </a>  
     <h1>上海飞为自动化系统有限公司 </h1>  
-     
+  <a href="#"  class="mainmenu"> <img src="./img/top-02.png" class="caidantop" /> </a>  
+ <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()" style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
+              
+				 
  </div>
  
  <div data-role="content" >
@@ -53,12 +67,20 @@
  <div  data-role="header" class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png" /> </a>  
     <h1>设备状态选择 </h1>  
+	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()" style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
+               
      
  </div>
  <div data-role="content">
     <div class="kuang">
 	   <div class="xuantu">
-	      <div class="titilehead"><img src = "./img/ckqb1-1.PNG" class="ckqb1_1"/> <a href="#sbztmain">查看全部</a><img src = "./img/ckqb1-2.PNG" class="ckqb1_2"/></div>
+	      <div class="titilehead"><img src = "./img/ckqb1-1.PNG" class="ckqb1_1"/> <a href="#sbztmain?val=aaa&which=99" onclick="clickqbck()">查看全部</a><img src = "./img/ckqb1-2.PNG" class="ckqb1_2"/></div>
 		  <div class="xuantufirst"><img src = "./img/tjcx1-1.PNG" class="tjcx1_1"/> <a  >条件查询</a><img src = "./img/tjcx1-2.PNG" class="tjcx1_2"/></div>
 		  
 		  <div id="selects" >
@@ -66,22 +88,22 @@
 		        <div id="vsel1">
 		       <select   id="sel1"  >
 					<option selected="selected" value="0" >--请选择查询方式--</option>
-					<option  value="1">{按车间查询</option>
-					<option value="2">{按制程查询</option>
+					<option  value="1">按车间查询</option>
+					<option value="2">按制程查询</option>
 
 				</select> </div>
 				 <div id="vsel2">
 				<select    id="sel2"  >
 					<option selected="selected" value="0">--请选择车间--</option>
-					<option value="1">{第01号车间</option>
+					<!--<option value="1">{第01号车间</option>
 					<option value="2">{第03号车间</option>
 					<option value="3">{第07号车间</option>
-					<option value="4">{第15号车间</option>
+					<option value="4">{第15号车间</option>-->
 
 				</select> </div>
 			
 				 
-				 <div data-role="none" class="submitimg"  ><a href="#"><img src="./img/submit.png" /> </a></div>
+				 <div data-role="none" class="submitimg"  ><a href="#" onclick="checkselectinput();"><img src="./img/submit.png" /> </a></div>
 		  
 		    
 		  
@@ -117,6 +139,14 @@
  <div  data-role="header"  class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png"  class="headimg"/> </a>  
     <h1>设备状态 </h1>  
+	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()" style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
+             
      
  </div>
  <div class="linehead2">
@@ -132,17 +162,31 @@
  
  
  </div>
- <div class="statusinfo">
-  <a href="#" > <img src="./img/yunx-01.png" /img class="statusimg1">  <p class="statuswords">  第一号车间 内线前处理线 </p> <img class="statusimg2" src="./img/jt2.png"   /img> </a>
- 
- </div>
-  <div class="statusinfo">
+ <div id="statuslines"> 
+ <a href="#" > 
+	 <div class="statusinfo">
+	 <img src="./img/yunx-01.png" class="statusimg1" /> 
+	 <p class="statuswords">  第一号车间 内线前处理线 </p> 
+	 <img class="statusimg2" src="./img/jt2.png"   /> 
+	 
+	 </div>
+ </a>
+ <a href="#" > 
+	 <div class="statusinfo">
+	 <img src="./img/yunx-01.png" class="statusimg1" /> 
+	 <p class="statuswords">  第一号车间 内线前处理线 </p> 
+	 <img class="statusimg2" src="./img/jt2.png"   /> 
+	 
+	 </div>
+ </a>
+  <!-- <div class="statusinfo">
   <a href="#sbxqall" > <img src="./img/zd-01.png" /img class="statusimg1">  <p class="statuswords">  第一号车间 内线前处理线 </p> <img class="statusimg2" src="./img/jt2.png"   /img> </a>
  
  </div>
   <div class="statusinfo">
   <a href="#" > <img src="./img/dj-01.png" /img class="statusimg1">  <p class="statuswords">  第一号车间 内线前处理线 </p> <img class="statusimg2" src="./img/jt2.png"   /img> </a>
  
+ </div> -->
  </div>
  
  </div> <!-- sbzt-->
@@ -151,15 +195,21 @@
  <div  data-role="header" class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png"  class="headimg"/> </a>  
     <h1>设备详情 </h1>  
-     
+      <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()" style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
  </div>
  <div class="sblineone" data-role="none">
     <div class="sbline1-1" data-role="none"><p>第一号车间 内线前处理线 </p> </div>
 	
 	
 	<div class="sbline2-1" data-role="none">  
-        <img src="./img/line.png" class="vertiline" /img> 	
-	   <a href="#tjtubiao"> <img src="./img/tjchart.PNG" class="tjchartstyle" /img>   </a>
+        <img src="./img/line.png" class="vertiline" /> 	
+	   <a href="#tjtubiao" id="tjtubiaoid" onclick="alert('hello i am not');"> <img src="./img/tjchart.PNG" class="tjchartstyle" /img>   </a>
 	</div>
  
  
@@ -209,7 +259,171 @@
 						<p id="MachineType">{FW-LD601A</p>
 					</div> 
 					 
-				</div></li></ul>
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineID">{3</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>状态：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="LoaderStatus">{通讯中断</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="TotalOutput">{500</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批已生产数量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurOutput">{300</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurTotalOutput">{9999</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前料号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurPartNum">{99</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前批号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurBatchNum">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>更新时间：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UpdateTime">{99</p>
+					</div> 
+					 
+				</div></li>
+		 <li data-role="list-divider" style="text-align:center; color:rgb(16,162,159); background-color:white;border-top:none">收板机
+				<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备名称：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineName1">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备型号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineType1">{FW-LD601A</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineID1">{3</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>状态：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UnloaderStatus1">{通讯中断</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="TotalOutput1">{500</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批已生产数量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurOutput1">{300</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurTotalOutput1">{9999</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前料号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurPartNum1">{99</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前批号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurBatchNum1">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>更新时间：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UpdateTime1">{99</p>
+					</div> 
+					 
+				</div></li>
+				</ul>
 				
 				 
 </div><!--sbxqall -->
@@ -217,19 +431,27 @@
 <div  data-role="header"  class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png"   class="headimg"  /> </a>  
     <h1 >活动告警</h1>  
+	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()"  style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
+               
      
  </div>
  <div class="paixuhang0" >
  <div class="paixuhang1">    <div    >   
  
  
- <select  data-role="none" >
+ <select  data-role="none" id="selpaixuid">
 	 
                    <option>综合排序</option>
-					<option value="1">{排序1</option>
-					<option value="2">{排序2</option>
-					<option value="3">{排序3</option>
-					<option value="4">{排序4</option>
+					<option value="1">时间正序</option>
+					<option value="2">时间反序</option>
+					<!--<option value="3">{排序3</option>
+					<option value="4">{排序4</option>-->
 				</select> </div>
  </div>
  <div class="paixuhang2">
@@ -244,6 +466,7 @@
  
  
  </div>
+ <div id="alarmlists">
   <div data-role="collapsible" data-collapsed="true"  ><h2>站号：{{stationid}}  异常信息描述：{{errortxt}}</h2> 
 	   <ul data-role="listview" data-inset="true"  >  
 	   <li> 站号:{{stationid}}</li>
@@ -253,7 +476,7 @@
 		 <li>	异常信息描述:{{errortxt}}	</li> 
 		 <li>发生时间:{{StartTime}}  </li>  
 	    </ul> 				 
- </div>
+ </div></div>
 
 <div   class="gjtail">
 <a href="#sbztqt" ><img src="./img/hdgjtail1.png" class="gjtaill1" /> </a>
@@ -271,10 +494,18 @@
 <div  data-role="header"  class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png"   class="headimg"  /> </a>  
     <h1 >关于我们我们我们</h1>  
+	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog"  onclick="hidediv()" style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()"  style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
+             
      
  </div>
- <div style="color:green;text-align:center; background-image:url(./img/backimg.png) ; background-repeat:no-repeat;">
- <div style="width:80%!important; height:500px; text-align:center;margin-left:calc(20% / 2); padding-top:30px; font-size:30px;">
+ <div style="color:green;text-align:center; background-image:url(./img/backimg.png) ; background-repeat: repeat;">
+ <div style="width:100%!important; height:500px; text-align:center ; padding-top:30px; font-size:30px;">
  我们是一家如何的公司。。。
  
  </div>
@@ -288,6 +519,13 @@
  <div  data-role="header" class="headdiv" > 
  <a href="javascript:history.go(-1);"   > <img src="./img/top-01.png"  class="headimg"/> </a>  
     <h1>设备详情 </h1>  
+	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
+  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
+                    <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span> 设备状态</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()"  style="text-decoration:none"><span>活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()"  style="text-decoration:none"><span>关于我们</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#sbztmain" onclick="hidediv()"  style="text-decoration:none"><span>查看全部</span></a></h3></li>
+                </div>  
      
  </div>
  <div class="sblineone" data-role="none">
@@ -296,65 +534,74 @@
 	
 	<div class="sbline2-1" data-role="none">  
         <img src="./img/line.png" class="vertiline" /img> 	
-	   <a href="#tjtubiao"> <img src="./img/tjchart.PNG" class="tjchartstyle" /img>   </a>
+	   <a href="#sbztmain"> <img src="./img/xitjpage.png" class="tjchartstyle" /img>   </a>
 	</div>
  
  
  </div>
  <div data-role="content"  >
+   
+
 	   <ul data-role="listview"  id="listview">
 	     
-		 <li data-role="list-divider" class="backgroundlay">统计定义
-		 <li> 
-    <fieldset data-role="controlgroup"   >
-        <legend>统计类型：</legend>
-        <label for="radio-ribao">日报</label>
-        <input type="radio" name="atype" id="radio-ribao" value="0" checked="checked">
-        <label for="radio-yuebao">月报</label>
-        <input type="radio" name="atype" id="radio-yuebao" value="1">
-        <label for="radio-zdy1">自定义(1)</label>
-        <input type="radio" name="atype" id="radio-zdy1" value="2">
-        <label for="radio-zdy2">自定义(2)</label>
-        <input type="radio" name="atype" id="radio-zdy2" value="3">
+		 <li data-role="list-divider" class="backgroundlay">统计定义 </li>
+		 <li>
+		  <legend>统计类型：</legend>
+		  <div data-role="controlgroup" style="background-color:green;  "   data-type="horizontal">
+    
+      	 <label for="radio-ribao" >日报</label> 
+        <input type="radio" name="atype" id="radio-ribao" value="0" checked="checked"  > 
+        <label for="radio-yuebao">月报</label> 
+        <input type="radio" name="atype" id="radio-yuebao" value="1"   >
+         <label for="radio-zdy1">自定义1</label> 
+        <input type="radio" name="atype" id="radio-zdy1" value="2"  > 
+         <label for="radio-zdy2">自定义2</label> 
+        <input type="radio" name="atype" id="radio-zdy2" value="3" >
+      
         
-    </fieldset>
+     
+</div>
  </li>
 
 		<li>  
-    <fieldset data-role="controlgroup" >
+    <fieldset data-role="controlgroup" data-type="horizontal"  style="background-color:green;  ">
         <legend>时间单位：</legend>
-        <label for="radio-xiaoshi">小时</label>
-        <input type="radio" name="aunit" id="radio-xiaoshi" value="0" checked="checked">
-        <label for="radio-ri">日</label> 
-        <input type="radio" name="aunit" id="radio-ri" value="1">
-        <label for="radio-ban">班</label>
-        <input type="radio" name="aunit" id="radio-ban" value="2">
+        <label for="radio-xiaoshi" style="width:12px;height:12px;">小时</label>
+        <input type="radio" name="aunit" id="radio-xiaoshi" value="0" checked="checked"  >
+        <label for="radio-ri" style="width:12px;height:12px;">日</label> 
+        <input type="radio" name="aunit" id="radio-ri" value="1"  >
+        <label for="radio-ban"  style="width:12px;height:12px;">班</label>
+        <input type="radio" name="aunit" id="radio-ban" value="2"   >
         
     </fieldset>
        </li>
 	 
 				 <li>  				 
-						<legend id="tjdate">统计日期：</legend>
+					<div  style="float:left;width:48%; ">	<legend id="tjdate">统计日期：</legend>
 				 
 					 
 				      <!--  <input type="text" id="date-input" data-inline="false" data-role="date">  -->
-					  <input type="date" id="tjdateinput"/>
+					  <input type="date" id="tjdateinput"/> </div>
                          
 					 
 					 
-				 </li>
-		<li> 	<legend>统计天数：</legend>
+				<div style="float:right;width:48%;  "><legend>统计天数：</legend>
 				 
 					 
 					    <select id="tjts" >
 						   <option selected="selected"   value=0>--天--</option>
 						    <option     value="1">--1天--</option>
-						</select>
+						</select><div >
 
 					 
 					 
 				 </li>
-			<li><input type="button"  id="submit"  name="提交"  value="开始统计"> </li>
+			<!--<li><input type="button"  id="submit"  name="提交"  value="开始统计" style="background-color:blue !important; color:white!important"> </li> -->
+			<li >
+				<div style="text-align:center;width:50%;margin-left:calc(50% / 2 );"  >
+				<a href="javascript:begintongji()" data-role="button" style="background-color:blue;color:white;">开始统计</a>
+				</div>
+			</li>
 		 <li data-role="list-divider" class="backgroundlay">统计分析
 		 <li> <div class="ui-grid-a">
 					<div class="ui-block-a">
