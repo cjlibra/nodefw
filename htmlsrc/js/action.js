@@ -50,7 +50,22 @@ $(document).ready(function(){
 	$(document).on("pageshow", "#sbztmain", function(){
             
 			tout = 0;
+			if (typeof val == 'undefined' || typeof which =='undefined'){
+			    val = "aaaa";
+	            which = 99;
+			}
+	
 			sbztmainact(val, which);
+			
+    });
+	$(document).on("pageshow", "#sbxqall", function(){
+            
+			 
+			if (typeof funcflag == 'undefined'  ){
+			     window.location.href = "#sbztqt";
+			}
+	
+			 
 			
     });
 	
@@ -62,6 +77,9 @@ $(document).ready(function(){
     });
 	$(document).on("pageshow", "#tjtubiao", function(){
             SetRadioCheck();
+			if (typeof nowlineid === 'undefined'){
+				 window.location.href = "#sbztqt";
+			}
 			
     });
 	$(document).on("pageshow", "#hdgjlog", function(){
@@ -101,6 +119,18 @@ $(document).ready(function(){
 	 
 });
 
+function login(){
+	
+	if ($("#password").val() != "passpass"){
+		 window.location.href = "#login";
+		 
+	}else{
+		 
+		 window.location.href = "#mainpage";
+	}
+	
+	
+}
 function changeimgsbbj(){
 	$(".paixuhang2 a img").prop("src","./img/sbxq.png");
 	$(".paixuhang2 a").prop("href","#sbxqall");
@@ -167,6 +197,7 @@ function begintongji(){
 			   setechart1(data);
 			}
 			 if (atype==2 && aunit==1){
+			    console.log("this is 2 setchart");
 			   setechart2(data);
 			}
 			 if (atype==3 && aunit==2){
@@ -725,7 +756,7 @@ function setechart1(data){
 	 $.each(data.Statuspds,function(idx,item){ 
 			var  thedays = item.Days.split("-");
 			var theday = parseInt(thedays[2]);
-			option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+			option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60*24;
 			ss[0]=ss[0]+item.S0;
 			ss[1]=ss[1]+item.S1;
 			ss[2]=ss[2]+item.S2;
@@ -990,7 +1021,9 @@ function setechart2(data){
 				var  thedays = item.Days.split("-");
 				var theday = parseInt(thedays[2])-startday;
 				if (theday < 0) {theday = theday + daysofthemonth };
-				option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+				option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60*24;
+				console.log("my is "+theday);
+				console.log(option2.series[0].data[theday] );
 				ss[0]=ss[0]+item.S0;
 				ss[1]=ss[1]+item.S1;
 				ss[2]=ss[2]+item.S2;
@@ -1001,7 +1034,7 @@ function setechart2(data){
 		 });
 		 
 		// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
-		
+		console.log(option2.series[0].data);
 		 var jiadonglv = 0;
 		 console.log(data.Statuspds[0].Days);
 		 var dateindb = new Date(data.Statuspds[0].Days	);
@@ -1041,6 +1074,11 @@ function setechart2(data){
 			      
 		}
 		
+		 console.log("sumyunxin is " +sumyunxingcustom1);
+		 console.log("daycount is "+ daycount);
+		 console.log("diffdays1 is" + diffdays1);
+		 console.log("diffdays is" + diffdays);
+		 
 		 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
 	}
 		 
@@ -1299,9 +1337,9 @@ function setechart3(data){
 				var theday = parseInt(thedays[2])-startday;
 				if (theday < 0) {theday = theday + daysofthemonth };
 				theday  = theday  *3;
-				option2.series[0].data[theday] = item.S1_S2/(item.S1_S0+item.S1_S1+item.S1_S2+item.S1_S3+item.S1_S4)*60;
-				option2.series[0].data[theday+1] = item.S2_S2/(item.S2_S0+item.S2_S1+item.S2_S2+item.S2_S3+item.S2_S4)*60;
-				option2.series[0].data[theday+2] = item.S3_S2/(item.S3_S0+item.S3_S1+item.S3_S2+item.S3_S3+item.S3_S4)*60;
+				option2.series[0].data[theday] = item.S1_S2/(item.S1_S0+item.S1_S1+item.S1_S2+item.S1_S3+item.S1_S4)*60*8;
+				option2.series[0].data[theday+1] = item.S2_S2/(item.S2_S0+item.S2_S1+item.S2_S2+item.S2_S3+item.S2_S4)*60*8;
+				option2.series[0].data[theday+2] = item.S3_S2/(item.S3_S0+item.S3_S1+item.S3_S2+item.S3_S3+item.S3_S4)*60*8;
 				ss[0]=ss[0]+item.S1_S0+item.S2_S0+item.S3_S0;
 				ss[1]=ss[1]+item.S1_S1+item.S2_S1+item.S3_S1;
 				ss[2]=ss[2]+item.S1_S2+item.S2_S2+item.S3_S2;
@@ -1418,6 +1456,7 @@ function setechart3(data){
 
 function getAllInfo(lineid,statusimgpath){
 	//alert("getallinfo" + lineid+"  "+statusimgpath);
+	funcflag = 0;
 	$(".dqztxian img").attr("src",statusimgpath);
 	
 	
@@ -1517,6 +1556,11 @@ function sbztmainact(val, which){
 					{
 					 
 					   linestr = linestr.replace(/\$collor\$/g,"./img/zd-01.png");
+					} 
+						if (item.StationStatus === "停止") 
+					{
+					 
+					   linestr = linestr.replace(/\$collor\$/g,"./img/tz-01.png");
 					} 
 					 
 					

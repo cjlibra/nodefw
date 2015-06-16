@@ -299,11 +299,11 @@ a:hover img{filter:alpha(Opacity=60);-moz-opacity:0.6;opacity: 0.6;}
 }
 .submitimg{
    
-   text-align:center !important;
+ /*  text-align:center !important;*/
    
    height:60px;
-   padding-left:calc(50% - 50px);
-   padding-right:60px;
+   /*padding-left:calc(50% - 50px);
+   padding-right:60px;*/
    
    
    
@@ -352,6 +352,7 @@ a:hover img{filter:alpha(Opacity=60);-moz-opacity:0.6;opacity: 0.6;}
 
 
 }
+ 
 .bottomimg a img {
     
    height:100px !important;
@@ -691,7 +692,7 @@ a:hover img{filter:alpha(Opacity=60);-moz-opacity:0.6;opacity: 0.6;}
 
 } 
 .gjtaill1 {
-  margin-left:calc((8% - 10px) / 2);
+   margin-left:calc((8% - 10px) / 2); 
 
 
 }

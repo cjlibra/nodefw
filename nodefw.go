@@ -831,7 +831,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 	///////////////////////////////////////////////////////
 	if atype == "2" && aunit == "1" { //自定义1 日
 
-		res, err = db.Start("select * from status_pday where StationID=%s and to_days(Days) - to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") <= %s order by Days ASC", lineid, adate, adate, adays)
+		res, err = db.Start("select * from status_pday where StationID=%s and to_days(Days) - to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") < %s order by Days ASC", lineid, adate, adate, adays)
 		checkError(err)
 
 		var statuspd StatusPD
@@ -855,7 +855,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			statuspds = append(statuspds, statuspd)
 		}
 
-		res, err = db.Start("select * from upd_station where StationID=%s and  to_days(Days)- to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") <= %s order by Days ASC", lineid, adate, adate, adays)
+		res, err = db.Start("select * from upd_station where StationID=%s and  to_days(Days)- to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") < %s order by Days ASC", lineid, adate, adate, adays)
 		checkError(err)
 
 		var updstation UPDStation
@@ -891,7 +891,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 	//////////////////////////////////////////////////////////
 	if atype == "3" && aunit == "2" { //自定义2 班
 
-		res, err = db.Start("select * from status_pshift where StationID=%s and  to_days(Days) - to_days(\"%s \") >= 0 and   to_days(Days) - to_days(\"%s \") <= %s order by Days ASC", lineid, adate, adate, adays)
+		res, err = db.Start("select * from status_pshift where StationID=%s and  to_days(Days) - to_days(\"%s \") >= 0 and   to_days(Days) - to_days(\"%s \") < %s order by Days ASC", lineid, adate, adate, adays)
 		checkError(err)
 
 		var statusps StatusPS
@@ -925,7 +925,7 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 			statuspss = append(statuspss, statusps)
 		}
 
-		res, err = db.Start("select * from ups_station where StationID=%s and to_days(Days) - to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") <= %s order by Days ASC", lineid, adate, adate, adays)
+		res, err = db.Start("select * from ups_station where StationID=%s and to_days(Days) - to_days(\"%s \") >= 0 and to_days(Days) - to_days(\"%s \") < %s order by Days ASC", lineid, adate, adate, adays)
 		checkError(err)
 
 		var upsstation UPSStation
