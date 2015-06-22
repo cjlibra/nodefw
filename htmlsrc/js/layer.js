@@ -16,6 +16,11 @@ $(document).ready(function(){
 	      centerelement();
 	});
 	
+	$(document).on("pageshow", "#mainpage", function(){
+		var width = $("#guwm").width();
+	    $("#guwm a img").css("margin-left",width /2 - 50 + "px");
+	});
+	
 	$(document).on("pageshow", "#hdgjlog", function(){
 	      var width = $(".gjtail").width();
 		  var offset = (width*8/100-10)/2;

@@ -347,7 +347,7 @@ function SetRadioCheck(){
 	}
 
 function setechart0(data){
-	 var option1= {
+	var option1= {
 			tooltip: {
 				show: true
 			},
@@ -373,17 +373,35 @@ function setechart0(data){
 				{
 					"name":"自动运行时间",
 					"type":"bar",
-					"data":[5, 20, 40, 10, 10, 20]
+					"data":[5, 20, 40, 10, 10, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				},
 				 {
 					"name":"小时目标产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20]
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				},
 				 {
 					"name":"每小时产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20]
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				}
 			]
 		};
@@ -391,6 +409,7 @@ function setechart0(data){
 		 
 		 
 		var hourval = data.Plan.PlanDay / 24;
+		hourval = Math.round(hourval*100)/100;
 		option2.series[0].data=[];
 		option2.series[1].data=[];
 		option2.series[2].data=[];
@@ -416,7 +435,11 @@ function setechart0(data){
 		   option1.series[2].data.push(0);
 		   option1.series[0].data.push(0);
 		}
-	 if (data.Uphstations==null  ) {
+	var adate = $("#tjdateinput").val();
+	var datesel = new Date(adate);
+	var datenow = new Date();
+	
+	if (data.Uphstations==null  ) {
 		 
 		drawechart("main1",0);
 		drawechart("main2",0);
@@ -425,79 +448,76 @@ function setechart0(data){
 		$("#pianchajin").text("无数据");
 		 
 		 
-		return;
-	}
-	var zongsu = 0;
-	var sumofhours = 0;
-	 $.each(data.Uphstations,function(idx,item){ 
-		
-			var  thehours = item.Hours.split(" ");
-			var thehour = parseInt(thehours[1]);
-			option2.series[2].data[thehour] = item.UPH;
-			option1.series[0].data[thehour] = item.UPH;
-			sumofhours++ ;
-			zongsu = zongsu +  item.UPH;
-			 
-	}); 
-	
-	var beginhour = parseInt(data.Uphstations[0].Hours.split(" ")[1]);
-	console.log(beginhour);
-	var sumwhole = 0;
-	for (var i=0;i<24;i++){
-		sumwhole = sumwhole+option1.series[0].data[i];
-		option1.series[2].data[i] = sumwhole;
-
-	}
-	var adate = $("#tjdateinput").val();
-	var datesel = new Date(adate);
-	console.log(datesel);
-	var datenow = new Date();
-	
-	
-
-	var pingjunsum = zongsu/sumofhours;
-	pingjunsum = Math.round(pingjunsum*100)/100;
-	$("#canneng").text(pingjunsum);
-	
-	var lefthours = 0;
-	if (datesel > datenow){
-		alert("请正确选择时间，你把时间选择在未来了");
-		return;
+		 
 	}else{
-	  if (datesel.getDate() == datenow.getDate() && datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
-			lefthours = 24 - datenow.getHours() + 1;
-			var pianchachan = pingjunsum*lefthours + zongsu - data.Plan.PlanDay;
-			pianchachan = Math.round(pianchachan*100)/100 ;
-			if ( pianchachan >= 0){
-				pianchachan = "超产" + pianchachan;
-			}else{
-				pianchachan = "减产" + (0-pianchachan);
-			}
-	        $("#pianchachan").text(pianchachan);
-		}else{
-			lefthours = 24-beginhour-sumofhours;
-			var pianchachan = pingjunsum*lefthours + zongsu  - data.Plan.PlanDay;
-			pianchachan = Math.round(pianchachan*100)/100 ;
-			if ( pianchachan >= 0){
-				pianchachan = "超产" + pianchachan;
-			}else{
-				pianchachan = "减产" + (0-pianchachan);
-			}
-	        $("#pianchachan").text(pianchachan);
+			var zongsu = 0;
+			var sumofhours = 0;
+			$.each(data.Uphstations,function(idx,item){ 
+				
+					var  thehours = item.Hours.split(" ");
+					var thehour = parseInt(thehours[1]);
+					option2.series[2].data[thehour] = item.UPH;
+					option1.series[0].data[thehour] = item.UPH;
+					sumofhours++ ;
+					zongsu = zongsu +  item.UPH;
+					 
+			}); 
 			
-		}
-		
-	}
-	
-	 var pianchajin = data.Plan.PlanDay/pingjunsum-24;
-	 pianchajin = Math.round(pianchajin*100)/100 ;
-	 if (pianchajin >= 0 ){
-		 pianchajin = "落后"+pianchajin+"小时";
-	 }else{
-		 pianchajin = "超前"+(0-pianchajin)+"小时";
-	 }
-	$("#pianchajin").text(pianchajin);
+			var beginhour = parseInt(data.Uphstations[0].Hours.split(" ")[1]);
+			console.log(beginhour);
+			var sumwhole = 0;
+			for (var i=0;i<24;i++){
+				sumwhole = sumwhole+option1.series[0].data[i];
+				option1.series[2].data[i] = sumwhole;
 
+			}
+			
+			
+			
+
+			var pingjunsum = zongsu/sumofhours;
+			pingjunsum = Math.round(pingjunsum*100)/100;
+			$("#canneng").text(pingjunsum);
+			
+			var lefthours = 0;
+			if (datesel > datenow){
+				alert("请正确选择时间，你把时间选择在未来了");
+				return;
+			}else{
+			  if (datesel.getDate() == datenow.getDate() && datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
+					lefthours = 24 - datenow.getHours() + 1;
+					var pianchachan = pingjunsum*lefthours + zongsu - data.Plan.PlanDay;
+					pianchachan = Math.round(pianchachan*100)/100 ;
+					if ( pianchachan >= 0){
+						pianchachan = "超产" + pianchachan;
+					}else{
+						pianchachan = "减产" + (0-pianchachan);
+					}
+					$("#pianchachan").text(pianchachan);
+				}else{
+					lefthours = 24-beginhour-sumofhours;
+					var pianchachan = pingjunsum*lefthours + zongsu  - data.Plan.PlanDay;
+					pianchachan = Math.round(pianchachan*100)/100 ;
+					if ( pianchachan >= 0){
+						pianchachan = "超产" + pianchachan;
+					}else{
+						pianchachan = "减产" + (0-pianchachan);
+					}
+					$("#pianchachan").text(pianchachan);
+					
+				}
+				
+			}
+			
+			var pianchajin = data.Plan.PlanDay/pingjunsum-24;
+			pianchajin = Math.round(pianchajin*100)/100 ;
+			if (pianchajin >= 0 ){
+				 pianchajin = "落后"+pianchajin+"小时";
+			}else{
+				 pianchajin = "超前"+(0-pianchajin)+"小时";
+			}
+			$("#pianchajin").text(pianchajin);
+    }
 	var ss=[0,0,0,0,0];
 	var zidongxunxingsum = 0;
 	var sumofzidongxunxing = 0;
@@ -510,39 +530,41 @@ function setechart0(data){
 	}else{
 
 	
-	 $.each(data.Statusphs,function(idx,item){ 
-			var  thehours = item.Hours.split(" ");
-			var thehour = parseInt(thehours[1]);
-			option2.series[0].data[thehour] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
-			ss[0]=ss[0]+item.S0;
-			ss[1]=ss[1]+item.S1;
-			ss[2]=ss[2]+item.S2;
-			ss[3]=ss[3]+item.S3;
-			ss[4]=ss[4]+item.S4;
-			zidongxunxingsum = zidongxunxingsum + option2.series[0].data[thehour];
-			sumofzidongxunxing++;
-	 });
-	  
-	 
-	var beginhourofstatusphs = parseInt(data.Statusphs[0].Hours.split(" ")[1]);
-	var jiadonglv  = 0;
-	var doinghours = 0;
-   if (datesel.getDate() == datenow.getDate() && datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
-		doinghours = datenow.getHours() - 1 - beginhourofstatusphs ;
-		jiadonglv = zidongxunxingsum / (doinghours * 60);
-	}else{
-		doinghours = 24 - beginhourofstatusphs;
-		jiadonglv = zidongxunxingsum / (doinghours * 60);
-		
-	}
-	// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
-	 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
+		 $.each(data.Statusphs,function(idx,item){ 
+				var  thehours = item.Hours.split(" ");
+				var thehour = parseInt(thehours[1]);
+				option2.series[0].data[thehour] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60;
+				ss[0]=ss[0]+item.S0;
+				ss[1]=ss[1]+item.S1;
+				ss[2]=ss[2]+item.S2;
+				ss[3]=ss[3]+item.S3;
+				ss[4]=ss[4]+item.S4;
+				zidongxunxingsum = zidongxunxingsum + option2.series[0].data[thehour];
+				sumofzidongxunxing++;
+		 });
+		  
+		 
+		var beginhourofstatusphs = parseInt(data.Statusphs[0].Hours.split(" ")[1]);
+		var jiadonglv  = 0;
+		var doinghours = 0;
+	   if (datesel.getDate() == datenow.getDate() && datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
+			doinghours = datenow.getHours() - 1 - beginhourofstatusphs ;
+			jiadonglv = zidongxunxingsum / (doinghours * 60);
+		}else{
+			doinghours = 24 - beginhourofstatusphs;
+			jiadonglv = zidongxunxingsum / (doinghours * 60);
+			
+		}
+		// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+		 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
 	 
     }
 	 
-	drawechart("main2",option2);
-	drawechart("main1",option1);
-
+	 
+	if (data.Uphstations!=null  ){
+		drawechart("main2",option2);
+		drawechart("main1",option1);
+	}
 
 
 
@@ -596,6 +618,7 @@ function setechart0(data){
 							{value:ss[3], name:'待机'},
 							{value:ss[4], name:'通信中断'}
 						]
+						
 					}
 				]
 			};
@@ -605,7 +628,7 @@ function setechart0(data){
 }
 function setechart1(data){
 
- var option1= {
+    var option1= {
 			tooltip: {
 				show: true
 			},
@@ -631,17 +654,35 @@ function setechart1(data){
 				{
 					"name":"自动运行时间",
 					"type":"bar",
-					"data":[5, 20, 40, 10, 10, 20]
+					"data":[5, 20, 40, 10, 10, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				},
 				 {
 					"name":"日目标产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20]
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				},
 				 {
 					"name":"每日产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20]
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 				}
 			]
 		};
@@ -674,7 +715,12 @@ function setechart1(data){
 		   option1.series[2].data.push(0);
 		   option1.series[0].data.push(0);
 		}
-	 if (data.Updstations==null  ) {
+		
+	var adate = $("#tjdateinput").val();
+	var datesel = new Date(adate);
+	var datenow = new Date();
+	
+	if (data.Updstations==null  ) {
 		 
 		drawechart("main1",0);
 		drawechart("main2",0);
@@ -683,65 +729,63 @@ function setechart1(data){
 		$("#pianchajin").text("无数据");
 		 
 		 
-		return;
-	}
-	var zongsudays = 0;
-	var sumofdays = 0;
-	 $.each(data.Updstations,function(idx,item){ 
 		
-			var  thedays = item.Days.split("-");
-			var theday = parseInt(thedays[2]);
-			option2.series[2].data[theday] = item.UPD;
-			option1.series[0].data[theday] = item.UPD;
-			zongsudays = zongsudays + item.UPD;
-			sumofdays++;
-			 
-			 
-	}); 
-	var sumwhole = 0;
-	for (var i=0;i<31;i++){
-		sumwhole = sumwhole+option1.series[0].data[i];
-		option1.series[2].data[i] = sumwhole;
-	
-	}
-	var beginday = parseInt(data.Updstations[0].Days.split("-")[2]);
-	var pingjunsum = zongsudays/sumofdays;
-	 pingjunsum = Math.round(pingjunsum*100)/100 ;
-	$("#canneng").text(pingjunsum);
-	
-	var adate = $("#tjdateinput").val();
-	var datesel = new Date(adate);
-	console.log(datesel);
-	var datenow = new Date();
-	
-	var daysofthemonth = DaysOfMonth(datesel);
-	var leftdays = 0;
-	
-	var pianchachan = 0;
-	if (datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
-        leftdays = daysofthemonth - datesel.getDate() -1;
-		pianchachan = zongsudays + pingjunsum*leftdays - data.Plan.PlanMonth;
-
-    } else{
-        pianchachan = zongsudays  - data.Plan.PlanMonth;
-
-
-   }  	
-    pianchachan = Math.round(pianchachan*100)/100 ;
-	if ( pianchachan >= 0){
-		pianchachan = "超产" + pianchachan;
 	}else{
-		pianchachan = "减产" + (0-pianchachan);
-	} 
-	$("#pianchachan").text(pianchachan);
-	var pianchajin = data.Plan.PlanMonth/pingjunsum-daysofthemonth;
-	pianchajin = Math.round(pianchajin*100)/100 ;
-	 if (pianchajin >= 0 ){
-		 pianchajin = "落后"+pianchajin+"天";
-	 }else{
-		 pianchajin = "超前"+(0-pianchajin)+"天";
-	 }
-	$("#pianchajin").text(pianchajin);
+		var zongsudays = 0;
+		var sumofdays = 0;
+		$.each(data.Updstations,function(idx,item){ 
+			
+				var  thedays = item.Days.split("-");
+				var theday = parseInt(thedays[2]);
+				option2.series[2].data[theday] = item.UPD;
+				option1.series[0].data[theday] = item.UPD;
+				zongsudays = zongsudays + item.UPD;
+				sumofdays++;
+				 
+				 
+		}); 
+		var sumwhole = 0;
+		for (var i=0;i<31;i++){
+			sumwhole = sumwhole+option1.series[0].data[i];
+			option1.series[2].data[i] = sumwhole;
+		
+		}
+		var beginday = parseInt(data.Updstations[0].Days.split("-")[2]);
+		var pingjunsum = zongsudays/sumofdays;
+		pingjunsum = Math.round(pingjunsum*100)/100 ;
+		$("#canneng").text(pingjunsum);
+		
+		
+		
+		var daysofthemonth = DaysOfMonth(datesel);
+		var leftdays = 0;
+		
+		var pianchachan = 0;
+		if (datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
+			leftdays = daysofthemonth - datesel.getDate() -1;
+			pianchachan = zongsudays + pingjunsum*leftdays - data.Plan.PlanMonth;
+
+		} else{
+			pianchachan = zongsudays  - data.Plan.PlanMonth;
+
+
+	    }  	
+		pianchachan = Math.round(pianchachan*100)/100 ;
+		if ( pianchachan >= 0){
+			pianchachan = "超产" + pianchachan;
+		}else{
+			pianchachan = "减产" + (0-pianchachan);
+		} 
+		$("#pianchachan").text(pianchachan);
+		var pianchajin = data.Plan.PlanMonth/pingjunsum-daysofthemonth;
+		pianchajin = Math.round(pianchajin*100)/100 ;
+		 if (pianchajin >= 0 ){
+			 pianchajin = "落后"+pianchajin+"天";
+		 }else{
+			 pianchajin = "超前"+(0-pianchajin)+"天";
+		 }
+		$("#pianchajin").text(pianchajin);
+	}
 	
 	var ss=[0,0,0,0,0];
 	var yunxingdaysum = 0;
@@ -753,37 +797,40 @@ function setechart1(data){
 		 
 		
 	}else{
-	 $.each(data.Statuspds,function(idx,item){ 
-			var  thedays = item.Days.split("-");
-			var theday = parseInt(thedays[2]);
-			option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60*24;
-			ss[0]=ss[0]+item.S0;
-			ss[1]=ss[1]+item.S1;
-			ss[2]=ss[2]+item.S2;
-			ss[3]=ss[3]+item.S3;
-			ss[4]=ss[4]+item.S4;
-			yunxingdaysum = yunxingdaysum + option2.series[0].data[theday];
-			sumofdayyunxing++ ;
-	 });
-	 
-	 var begindaysofstatuspds = parseInt(data.Statuspds[0].Days.split("-")[2]);
-	 console.log(begindaysofstatuspds);
-	 var totledaysofstatuspds = 0;
-	 if (datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
-	    totledaysofstatuspds =  datenow.getDate() - 1 - begindaysofstatuspds ;
-	 
-	 }else{
-	    totledaysofstatuspds  = daysofthemonth - begindaysofstatuspds + 1;
-	 
-	 }
-	// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
-	var jiadonglv = yunxingdaysum / (totledaysofstatuspds *24*60 );
-	 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
+		 $.each(data.Statuspds,function(idx,item){ 
+				var  thedays = item.Days.split("-");
+				var theday = parseInt(thedays[2]);
+				option2.series[0].data[theday] = item.S2/(item.S0+item.S1+item.S2+item.S3+item.S4)*60*24;
+				ss[0]=ss[0]+item.S0;
+				ss[1]=ss[1]+item.S1;
+				ss[2]=ss[2]+item.S2;
+				ss[3]=ss[3]+item.S3;
+				ss[4]=ss[4]+item.S4;
+				yunxingdaysum = yunxingdaysum + option2.series[0].data[theday];
+				sumofdayyunxing++ ;
+		 });
+		 
+		 var begindaysofstatuspds = parseInt(data.Statuspds[0].Days.split("-")[2]);
+		 console.log(begindaysofstatuspds);
+		 var totledaysofstatuspds = 0;
+		 if (datesel.getMonth() == datenow.getMonth() && datesel.getFullYear() == datenow.getFullYear() ){
+			totledaysofstatuspds =  datenow.getDate() - 1 - begindaysofstatuspds ;
+		 
+		 }else{
+			totledaysofstatuspds  = daysofthemonth - begindaysofstatuspds + 1;
+		 
+		 }
+		// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
+		var jiadonglv = yunxingdaysum / (totledaysofstatuspds *24*60 );
+		 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
 
-	 }
-	drawechart("main2",option2);
-	drawechart("main1",option1);
-	
+	}
+	 
+	if (data.Updstations!=null  ) {
+		drawechart("main2",option2);
+		drawechart("main1",option1);
+	}
+	 
 	var option0 = {
 				title : {
 					text: '运行状态统计分析',
@@ -833,7 +880,8 @@ function setechart1(data){
 							{value:ss[2], name:'自动运行中'},
 							{value:ss[3], name:'待机'},
 							{value:ss[4], name:'通信中断'}
-						]
+						] 
+						 
 					}
 				]
 			};
@@ -871,17 +919,35 @@ function setechart2(data){
 					{
 						"name":"自动运行时间",
 						"type":"bar",
-						"data":[5, 20, 40, 10, 10, 20]
+						"data":[5, 20, 40, 10, 10, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					},
 					 {
 						"name":"日目标产量",
 						"type":"line",
-						"data":[15, 30, 30, 10, 20, 20]
+						"data":[15, 30, 30, 10, 20, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					},
 					 {
 						"name":"每日产量",
 						"type":"line",
-						"data":[15, 30, 30, 10, 20, 20]
+						"data":[15, 30, 30, 10, 20, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					}
 				]
 			};
@@ -940,7 +1006,7 @@ function setechart2(data){
 			   option1.series[2].data.push(0);
 			   option1.series[0].data.push(0);
 			}
-		 if (data.Updstations==null  ) {
+	if (data.Updstations==null  ) {
 			 
 			drawechart("main1",0);
 			drawechart("main2",0);
@@ -949,8 +1015,8 @@ function setechart2(data){
 			$("#pianchajin").text("无数据");
 			 
 			 
-			return;
-		}
+			 
+	}else{
 		var zongsucustom1 = 0;
 		var sumofcustom1 = 0;
 		 $.each(data.Updstations,function(idx,item){ 
@@ -1006,17 +1072,18 @@ function setechart2(data){
 			pianchajin = "超前"+(0-pianchajin)+"天";
 		}
 		$("#pianchajin").text(pianchajin);
+	}
 	
-		var ss=[0,0,0,0,0];
-		var sumyunxingcustom1 = 0;
-		var sumofyunxingcustom1 = 0;
-		if ( data.Statuspds==null) {
-		   drawechart("main0",0);
-		   
-		   $("#jiadonglv").text("无数据");
-		   
-		 
-		}else{
+	var ss=[0,0,0,0,0];
+	var sumyunxingcustom1 = 0;
+	var sumofyunxingcustom1 = 0;
+	if ( data.Statuspds==null) {
+	   drawechart("main0",0);
+	   
+	   $("#jiadonglv").text("无数据");
+	   
+	 
+	}else{
 		 $.each(data.Statuspds,function(idx,item){ 
 				var  thedays = item.Days.split("-");
 				var theday = parseInt(thedays[2])-startday;
@@ -1035,9 +1102,9 @@ function setechart2(data){
 		 
 		// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 		console.log(option2.series[0].data);
-		 var jiadonglv = 0;
-		 console.log(data.Statuspds[0].Days);
-		 var dateindb = new Date(data.Statuspds[0].Days	);
+		var jiadonglv = 0;
+		console.log(data.Statuspds[0].Days);
+		var dateindb = new Date(data.Statuspds[0].Days	);
 		
 		 console.log(dateindb);
 		if (compdate(datesel,daycount,datenow) == 1 || compdate(datesel,daycount,datenow) == 0){
@@ -1081,10 +1148,12 @@ function setechart2(data){
 		 
 		 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
 	}
-		 
+	
+    if (data.Updstations!=null  ) {	
 		drawechart("main2",option2);
 		drawechart("main1",option1);
-		
+	}
+	
 		var option0 = {
 					title : {
 						text: '运行状态统计分析',
@@ -1171,17 +1240,35 @@ function setechart3(data){
 					{
 						"name":"自动运行时间",
 						"type":"bar",
-						"data":[5, 20, 40, 10, 10, 20]
+						"data":[5, 20, 40, 10, 10, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					},
 					 {
 						"name":"班目标产量",
 						"type":"line",
-						"data":[15, 30, 30, 10, 20, 20]
+						"data":[15, 30, 30, 10, 20, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					},
 					 {
 						"name":"每班产量",
 						"type":"line",
-						"data":[15, 30, 30, 10, 20, 20]
+						"data":[15, 30, 30, 10, 20, 20],
+						markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
 					}
 				]
 			};
@@ -1244,7 +1331,7 @@ function setechart3(data){
 			   option1.series[2].data.push(0);
 			   option1.series[0].data.push(0);
 			}
-		 if (data.Upsstations==null  ) {
+	if (data.Upsstations==null  ) {
 			 
 			drawechart("main1",0);
 			drawechart("main2",0);
@@ -1253,8 +1340,8 @@ function setechart3(data){
 			$("#pianchajin").text("无数据");
 		 
 			 
-			return;
-		}
+			 
+	}else{
 		 var sumshifts = 0;
 		 var sumofshifts = 0;
 		 $.each(data.Upsstations,function(idx,item){ 
@@ -1321,17 +1408,19 @@ function setechart3(data){
 			pianchajin = "超前"+(0-pianchajin)+"班";
 		}
 		$("#pianchajin").text(pianchajin);
-	   
+	}
+
+	
 		var ss=[0,0,0,0,0];
 		var sumyunxingcustom2 = 0;
 		var sumofyunxingcustom2 = 0;
-		 if (  data.Statuspss==null) {
+	if (  data.Statuspss==null) {
 			drawechart("main0",0);
 			 
 		    $("#jiadonglv").text("无数据");
 			 
 		  
-		}else{
+	}else{
 		 $.each(data.Statuspss,function(idx,item){ 
 				var  thedays = item.Days.split("-");
 				var theday = parseInt(thedays[2])-startday;
@@ -1388,11 +1477,12 @@ function setechart3(data){
 		}
 		// var jiadonglv = ss[2]/(ss[0]+ss[1]+ss[2]+ss[3]+ss[4]);
 		 $("#jiadonglv").text(~~(Math.abs(jiadonglv*100))+"%");
-	     }
-		 
+	}
+	if ( data.Upsstations!=null  ) {	 
 		drawechart("main2",option2);
 		drawechart("main1",option1);
-		
+	}
+	
 		var option0 = {
 					title : {
 						text: '运行状态统计分析',
