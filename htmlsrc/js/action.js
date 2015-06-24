@@ -137,8 +137,10 @@ function changeimgsbbj(){
 	
 }
 function chakanqubu(val ,which){
-	console.log(ttout);
-	clearTimeout(ttout);
+	if ( typeof(ttout) != "undefined" ){
+	   console.log(ttout);
+	   clearTimeout(ttout);
+	}
 	tout = 0;
 	sbztmainact(val, which);
 	

@@ -16,6 +16,18 @@ $(document).ready(function(){
 	      centerelement();
 	});
 	
+	$(document).on("pageshow", "#tjtubiao", function(){
+	       var width = $("#kaisitongji").width();
+		   width = document.body.clientWidth ;
+		   $("#kaisitongji").css({
+			   "width" : "50%" ,
+			   "margin-left" : width / 4 +"px" 
+		   
+		   });
+		   console.log(width);
+	});
+	
+	
 	$(document).on("pageshow", "#mainpage", function(){
 		var width = $("#guwm").width();
 	    $("#guwm a img").css("margin-left",width /2 - 50 + "px");
@@ -51,10 +63,15 @@ function centerelement(){
 	$("#vsel1").css("margin-left",width*0.1+"px");
 	$("#vsel2").css("margin-left",width*0.1+"px");
 	
-	width = $(".bottomimg").width();
-	$(".bottomimg").css("padding-left", (width *(100-23-23-46)/100-16)/2 +"px");
-	console.log((width *(100-23-23-46)/100-16)/2);
+	width = $("#contentid").width();
+	//width = document.body.clientWidth ;
+	//$(".bottomimg").css("padding-left", (width - 150 -140 -4)/2 +"px");
+	var padleft = $(".bottomimg").css("padding-left");
+	$(".bottomimg").css("padding-left" ,   (width - 150 -140 -4  )/2 +"px");
+	//$(".bottomimg").css("padding-left" ,   "0px");
+	console.log((width - 150 -140 -4)/2);
 	console.log(width );
+	console.log(padleft);
 	
 	
 }
