@@ -67,11 +67,9 @@ function centerelement(){
 	//width = document.body.clientWidth ;
 	//$(".bottomimg").css("padding-left", (width - 150 -140 -4)/2 +"px");
 	var padleft = $(".bottomimg").css("padding-left");
-	$(".bottomimg").css("padding-left" ,   (width - 150 -140 -4  )/2 +"px");
+	$(".bottomimg").css("padding-left" ,   (width - 140 -130 -4  )/2 +"px");
 	//$(".bottomimg").css("padding-left" ,   "0px");
-	console.log((width - 150 -140 -4)/2);
-	console.log(width );
-	console.log(padleft);
+	 
 	
 	
 }

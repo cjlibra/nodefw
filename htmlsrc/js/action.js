@@ -80,6 +80,7 @@ $(document).ready(function(){
 			if (typeof nowlineid === 'undefined'){
 				 window.location.href = "#sbztqt";
 			}
+			cleartubiaopage();
 			
     });
 	$(document).on("pageshow", "#hdgjlog", function(){
@@ -118,7 +119,17 @@ $(document).ready(function(){
 	 
 	 
 });
-
+function cleartubiaopage(){
+		$("#canneng").text("");
+		$("#pianchachan").text("");
+		$("#pianchajin").text("");
+		$("#jiadonglv").text("");
+		
+		drawechart("main0",{});
+		drawechart("main1",{});
+		drawechart("main2",{});
+	
+}
 function login(){
 	
 	if ($("#password").val() != "passpass"){
@@ -160,6 +171,8 @@ function tjtubiaoact(lineid){
 }
 
 function begintongji(){
+	    cleartubiaopage();
+		
 		var atype = $('input:radio[name=atype]:checked').val();
 		var aunit = $('input:radio[name=aunit]:checked').val();
 		var adate = $("#tjdateinput").val();
@@ -1557,7 +1570,7 @@ function getAllInfo(lineid,statusimgpath){
 				
 			$(".sbline1-1").html("<p >站台"+lineid+ "</p>");// +" " + data.Workshop + " " +data.LineType + "</p>");
 			$("#tjtubiaoid").attr("onclick","tjtubiaoact("+lineid+")");
-			//alert("kkkk");
+			 
 			wstitle = data.Workshop;
 			lttitle = data.LineType;
 			$("#workshop").text(data.Workshop);
