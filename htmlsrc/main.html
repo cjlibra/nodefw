@@ -47,7 +47,7 @@
   <a href="#"  class="mainmenu"> <img src="./img/top-02.png" class="caidantop" /> </a>  
  <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;"><span style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none;" ><span style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv();hdgjallaction();" style="text-decoration:none;" ><span style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  
@@ -74,7 +74,7 @@
 	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hdgjallaction();hidediv() " style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
 					 </div>  
@@ -123,7 +123,7 @@
   <div  data-role="none" class="bottomimg"   >
 	
 	   <a> <img src="./img/hdgjtail1.png" class="bimg1"/> </a>
-	   <a href="#hdgjlog" ><img src="./img/dibu2.png" class="bimg2"/> </a>
+	   <a href="#hdgjlog" ><img src="./img/dibu2.png" onclick="hdgjallaction()"  class="bimg2"/> </a>
 	  
 	   <a href="#aboutus" ><img src="./img/dibu3.png" class="bimg3"/> </a>
 	
@@ -147,7 +147,7 @@
 	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv();hdgjallaction();" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  
@@ -203,7 +203,7 @@
       <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv();hdgjallaction();" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  
@@ -439,7 +439,7 @@
 	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv();hdgjallaction();" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  
@@ -502,7 +502,7 @@
 	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog"  onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog"  onclick="hidediv();hdgjallaction();" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()" style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  
@@ -527,7 +527,7 @@
 	 <a href="#"  class="mainmenu" > <img src="./img/top-02.png" class="caidantop"/> </a>  
   <div class="subnav" style="position:absolute;right:0px; display:none;width:100px;border:1px solid green;text-align:center;background-color:rgb(227,242,245);z-index:999;">
                     <li style="list-style:none"><h3><a href="#sbztqt" onclick="hidediv()" style="text-decoration:none;background-color:rgb(227,242,245)"><span  style="background-color:rgb(227,242,245)"> 设备状态</span></a></h3></li>
-                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv()"  style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
+                    <li style="list-style:none"><h3><a href="#hdgjlog" onclick="hidediv();hdgjallaction();"  style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">活动告警</span></a></h3></li>
                     <li style="list-style:none"><h3><a href="#aboutus" onclick="hidediv()"  style="text-decoration:none"><span  style="background-color:rgb(227,242,245)">关于我们</span></a></h3></li>
                      <li style="list-style:none"><h3><a href="#sbztmain"  onclick="hidediv();chakanqubu('aaa' ,99);" style="text-decoration:none"><span style="background-color:rgb(227,242,245)">查看全部</span></a></h3></li>
                 </div>  

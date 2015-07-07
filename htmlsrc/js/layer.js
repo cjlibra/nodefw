@@ -1,7 +1,15 @@
 var o = 0;
 $(document).ready(function(){
-	
-    $(".caidantop").click(function(){
+	$("body").click(function(){
+		/*  console.log( $('.subnav').css('display'));
+		  var showstate =  $('.subnav').css('display');
+		  if (showstate == "block" && o == 0){
+			  hidediv();
+		  }*/
+		 
+		   
+	});
+    $(".mainmenu").click(function(){
 		 
 	    if(o == 0) {
 		    $(".subnav").show();
@@ -50,6 +58,13 @@ function hidediv(){
 
 
 }
+function hdgjallaction(){
+	nowlineid = "*";
+	console.log("clcik");
+ 
+	
+	
+}
  
 function centerelement(){
 	var width = 0;
@@ -60,8 +75,10 @@ function centerelement(){
 	$("#selects .submitimg a img").css("margin-left",offset);
 	
 	width = $("#vsel1").width();
-	$("#vsel1").css("margin-left",width*0.1+"px");
-	$("#vsel2").css("margin-left",width*0.1+"px");
+	var width1 = $("#selects .submitimg").width() ;
+	var leftmargin = (width1-width)/2;
+	$("#vsel1").css("margin-left",leftmargin+"px");
+	$("#vsel2").css("margin-left",leftmargin+"px");
 	
 	width = $("#contentid").width();
 	//width = document.body.clientWidth ;

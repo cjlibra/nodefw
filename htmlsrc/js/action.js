@@ -1,6 +1,6 @@
 $(document).ready(function(){ 
   //  $("#sel2").empty();
-	 
+	
 	$("#sel1").change(function(){
 		
 		       
@@ -72,7 +72,7 @@ $(document).ready(function(){
 	$(document).on("pagehide", "#sbztmain", function(){
             
 			tout  = 99;
-			 
+			console.log("sbztmain is hide");
 			clearTimeout(ttout);
     });
 	$(document).on("pageshow", "#tjtubiao", function(){
@@ -87,6 +87,7 @@ $(document).ready(function(){
 		    var lineid;
 			if (typeof nowlineid === 'undefined'){
 				lineid="*";
+				nowlineid = "*";
 			}else{
 				lineid = nowlineid;
 			}
@@ -100,13 +101,13 @@ $(document).ready(function(){
 			   if (sel1value == "1")
 			   {
 			  
-			     GetJsonAlarms(lineid,1);
+			     GetJsonAlarms(nowlineid,1);
 			      
 			   }
 			    if (sel1value == "2")
 			   {
 			    
-			     GetJsonAlarms(lineid,2);
+			     GetJsonAlarms(nowlineid,2);
 				 
 			   }
 		
@@ -148,12 +149,17 @@ function changeimgsbbj(){
 	
 }
 function chakanqubu(val ,which){
+	 
 	if ( typeof(ttout) != "undefined" ){
+	   console.log("thread is stop ");
 	   console.log(ttout);
 	   clearTimeout(ttout);
 	}
+	 
 	tout = 0;
-	sbztmainact(val, which);
+	this.val = val;
+	this.which = which;
+	//sbztmainact(val, which);
 	
 	
 }
@@ -163,6 +169,7 @@ function clickqbck(){
 	
 	
 }
+
 function tjtubiaoact(lineid){
 	
 	 
@@ -1674,9 +1681,11 @@ function sbztmainact(val, which){
 		        }); 
 				 
 				$("#statuslines").html(liststrs);
-				
+				 
 				if (tout != 99) {
-					ttout = setTimeout("sbztmainact(val, which)", 30000 );
+					ttout = setTimeout("sbztmainact(\""+val+"\","+ which+")", 3000 );
+					
+					 
 					console.log(ttout);
 					 
 				}
