@@ -1683,7 +1683,7 @@ function sbztmainact(val, which){
 				$("#statuslines").html(liststrs);
 				 
 				if (tout != 99) {
-					ttout = setTimeout("sbztmainact(\""+val+"\","+ which+")", 3000 );
+					ttout = setTimeout("sbztmainact(\""+val+"\","+ which+")", 30000 );
 					
 					 
 					console.log(ttout);

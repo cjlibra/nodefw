@@ -1,10 +1,17 @@
 package main
 
 import (
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
 	"flag"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
+	"syscall"
+	"time"
 
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native" // Native engine
@@ -13,6 +20,7 @@ import (
 	//"net/url"
 	// _ "github.com/ziutek/mymysql/thrsafe" // Thread safe engine
 
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -46,9 +54,22 @@ func checkError(error error) {
 		glog.Errorln("ERROR: " + error.Error())
 	}
 }
+
+type DbInfo struct {
+	Proto  string
+	Ip     string
+	Port   string
+	Dbuser string
+	Dbpass string
+	Dbname string
+}
+
+var dbinfo *DbInfo
+
 func opendb() mysql.Conn {
 
-	db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
+	//db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
+	db := mysql.New(dbinfo.Proto, "", dbinfo.Ip+":"+dbinfo.Port, dbinfo.Dbuser, dbinfo.Dbpass, dbinfo.Dbname)
 
 	err := db.Connect()
 	if err != nil {
@@ -962,6 +983,11 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 }
 
 var _ = fmt.Println
+var lasting int = 0
+var inputFile = "./htmlsrc/js/config.js"
+var key = []byte("1234567gnimeznay")
+var Input_testaes = flag.Int("testaes", 20, "input testaes doorkey")
+var Input_testdate = flag.String("testdate", "2017-11-11", "input test date")
 
 func main() {
 	flag.Parse()
@@ -995,5 +1021,192 @@ func main() {
 		}
 	}()
 	signal.Notify(cstr)
+	go Signalstop(&cstr)
 	glog.Infoln("收到信号：", <-cstr)
+}
+func Signalstop(sig *chan os.Signal) {
+
+	if 0 != checkconfig() {
+		glog.Infoln("出现config未知错误，退出")
+		*sig <- syscall.SIGINT
+		return
+
+	}
+
+	time.Sleep(time.Hour * time.Duration(lasting*20))
+	//time.Sleep(time.Second * time.Duration(lasting/10))
+
+	glog.Infoln("出现未知错误，退出")
+	err := ioutil.WriteFile(inputFile, []byte("{host:127.0.0.1}"), 0x644)
+	if err != nil {
+		panic(err.Error())
+	}
+	*sig <- syscall.SIGINT
+
+}
+
+type Conf struct {
+	Host   string
+	Date   string
+	User   string
+	Length int
+	Pass   int
+	Db     DbInfo
+}
+
+func checkconfig() int {
+
+	buf, err := ioutil.ReadFile(inputFile)
+	if err != nil {
+		//fmt.Fprintf(os.Stderr, "File Error: %s\n", err)
+		glog.Infoln("conf读取失败")
+		return -1
+	}
+	var sconf Conf
+	err = json.Unmarshal([]byte(buf), &sconf)
+	if err != nil {
+		glog.Infoln("conf解析失败")
+		//fmt.Fprintf(os.Stderr, "config parse Error: %s\n", err)
+		return -2
+	}
+	if sconf.Pass*30 != sconf.Length {
+		glog.Infoln("conf内容不对")
+		fmt.Fprintf(os.Stderr, "config content Error: %s\n", err)
+		return -3
+
+	}
+
+	lasting = sconf.Length
+
+	dbinfo = &(sconf.Db)
+
+	ret := compdate(sconf.User)
+
+	if *Input_testaes == 24 {
+		testAes(*Input_testdate)
+		fmt.Println("compdate return is", ret)
+	}
+
+	if 0 != ret {
+		return -4
+	}
+
+	return 0
+
+}
+func compdate(cypteddate string) int {
+	plaindatestr, err := base64.StdEncoding.DecodeString(cypteddate)
+	if err != nil {
+		return -1
+	}
+	origdate, err := AesDecrypt(plaindatestr, key)
+	if err != nil {
+		return -2
+	}
+	//fmt.Println(string(origdate))
+
+	datas := strings.Split(string(origdate), "-")
+	if len(datas) != 3 {
+		return -3
+	}
+
+	/*
+		dyear, err := strconv.Atoi(datas[0])
+		if err != nil {
+			return -4
+		}
+		dmongth, err := strconv.Atoi(datas[1])
+		if err != nil {
+			return -5
+		}
+		dday, err := strconv.Atoi(datas[2])
+		if err != nil {
+			return -6
+		}
+		year,mon,day := time.t.Date()
+	*/
+
+	tm2, err := time.Parse("2006-01-02", string(origdate))
+	if err != nil {
+		return -7
+	}
+	a := tm2.After(time.Now())
+
+	if a != true {
+		return -8
+
+	}
+
+	return 0
+
+}
+func testAes(limitdate string) {
+	// AES-128。key长度：16, 24, 32 bytes 对应 AES-128, AES-192, AES-256
+
+	result, err := AesEncrypt([]byte(limitdate), key)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(base64.StdEncoding.EncodeToString(result))
+	origData, err := AesDecrypt(result, key)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(origData))
+}
+
+func AesEncrypt(origData, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	blockSize := block.BlockSize()
+	origData = PKCS5Padding(origData, blockSize)
+	// origData = ZeroPadding(origData, block.BlockSize())
+	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])
+	crypted := make([]byte, len(origData))
+	// 根据CryptBlocks方法的说明，如下方式初始化crypted也可以
+	// crypted := origData
+	blockMode.CryptBlocks(crypted, origData)
+	return crypted, nil
+}
+
+func AesDecrypt(crypted, key []byte) ([]byte, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	blockSize := block.BlockSize()
+	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	origData := make([]byte, len(crypted))
+	// origData := crypted
+	blockMode.CryptBlocks(origData, crypted)
+	origData = PKCS5UnPadding(origData)
+	// origData = ZeroUnPadding(origData)
+	return origData, nil
+}
+
+func ZeroPadding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padtext := bytes.Repeat([]byte{0}, padding)
+	return append(ciphertext, padtext...)
+}
+
+func ZeroUnPadding(origData []byte) []byte {
+	length := len(origData)
+	unpadding := int(origData[length-1])
+	return origData[:(length - unpadding)]
+}
+
+func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, padtext...)
+}
+
+func PKCS5UnPadding(origData []byte) []byte {
+	length := len(origData)
+	// 去掉最后一个字节 unpadding 次
+	unpadding := int(origData[length-1])
+	return origData[:(length - unpadding)]
 }
