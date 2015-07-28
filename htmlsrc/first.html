@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>流水线管理系统</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Pragma" content="no-cache">
+    <!--meta http-equiv="Cache-control" content="no-cache"-->
+    <meta http-equiv="Expires" content="Mon,1 Jan 2001 0:0:0 UTC">   
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+  <link rel="stylesheet" href="js/jtheme/themes/jcust.css" />
+  <link rel="stylesheet" href="js/jtheme/themes/jquery.mobile.icons.min.css" />
+  <link rel="stylesheet" href="jmobile/jquery.mobile.structure-1.4.5.min.css" /> 
+  <link rel="stylesheet" type="text/css" href="./css/jcss.css">
+  
+
+  <script src="js/jquery-1.11.2.min.js"></script> 
+  <script src="jmobile/jquery.mobile-1.4.5.min.js"></script> 
+  <script src="js/jaction.js"></script> 
+  
+  <script src="./jmobile/echarts-2.2.1/build/dist/echarts.js"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="login"> 
+<div data-role="none">  
+  
+<div id="mainpic">  	 
+	 <div class="logopic"> <img src="img/logo-01.png"  class="logo" /> </div>
+	 <div class="wordpic">
+	 <div class="p1"> FINDWAY </div>
+	 <div class="p2"> AUTOMATION SYSTEMS </div>
+	 </div>
+	 <div class="space1"></div>
+	 <div class="p3"> 上海飞为自动化系统有限公司 </div>
+	
+</div>	
+	
+  
+</div>
+</div><!-- /page -->
+
+
+
+<div data-role="page" id="workshoplist"   >
+  <div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 style="background-color:white">车间列表</h1>
+	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	  <a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
+	 
+    <div data-role="navbar" data-iconpos="left"   >
+      <ul > 
+        <li ><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#" data-icon="info">车间名称</a></li>
+        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">产量</a></li>
+        <li><a style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">完成度</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">状态</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">生产速度</a></li>
+      </ul>
+    </div>
+  </div>
+  <div data-role="none" style="background-color:rgb(228,243,248)">
+<a href="javascript:gotostationlist();">  
+<div class="ui-grid-d  tablesolidbottomline " > 
+  <div class="ui-block-a "> <div class="ui-bar  workshopinftext  tabledotrightline" >第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline  ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline  " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline   "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline   " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
+	 
+</div><!-- /grid-d --></a>
+<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    " >3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     " style="color:green" > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
+</div>	
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " style="color:green">10%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+
+ <div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
+</div>	
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
+</div>	
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+	<div class="ui-grid-d tablesolidbottomline" id=""> 
+  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
+  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
+  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
+   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
+    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+
+</div> <!--content-->
+
+
+</div>
+
+
+<div data-role="page" id="stationlist"   >
+  <div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 style="background-color:white">流水线列表<span style="float:right"> 第01车间</span></h1> 
+	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
+	 
+   <!-- <div data-role="none"   data-iconpos="left"  class="ullicss"  >
+      <ul >  
+        <li ><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#" data-icon="info">流水线代码</a></li>
+        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">产量</a></li>
+        <li><a style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">完成度</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">生产速度</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">状态</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">时间</a></li>
+		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">异常信息</a></li>
+      </ul>
+    </div> -->
+	<TABLE class="tableheaderlist"   > 
+       <TR>
+            <TH >流水线代码</TH>
+			<TH >产量</TH>
+			<TH  >完成度</TH>
+			<TH  >生产速度</TH>
+			<TH  >状态</TH>
+			<TH >时间</TH>
+			<TH >异常信息</TH>
+     </TR>
+
+</TABLE>
+	 
+  </div>
+  <div data-role="none" style="background-color:rgb(228,243,248)">
+ <a href="javascript:gotoshebeixiangqing();">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/yunxl.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+
+ <a href="javascript:alert('lll');">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/tingzhil.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+ <a href="javascript:alert('lll');">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+
+ <a href="javascript:alert('lll');">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+ <a href="javascript:alert('lll');">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+ <a href="javascript:alert('lll');">  
+  <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >1</TH>
+			<TH >3400</TH>
+			<TH  >30%</TH>
+			<TH  >200</TH>
+			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH >2015-11-12 10:12:13</TH>
+			<TH >500</TH> 
+     </TR>
+
+</TABLE></a>
+
+
+</div>
+
+</div>
+
+<div data-role="page" id="shebeixiangqing"   >
+<div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 style="background-color:white">设备详情</h1> 
+	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
+	
+	<div data-role="none" class="headerleftname">
+		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headercurrstate">当前状态：</span>
+	</div>
+	
+	<div class="headerrightpic"><img src="img/duanxianstate.png" /> </div>
+	
+</div>
+<div data-role="none" >
+<ul data-role="listview"  id="listview">
+ 	 
+				<div data-role="none" style="height:20px;background-color:white "></div>
+		 <li data-role="list-divider" style="text-align:center; color:rgb(16,162,159); background-color:white;border-top:none">放板机
+		 <li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备名称：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineName">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备型号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineType">{FW-LD601A</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineID">{3</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>状态：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="LoaderStatus">{通讯中断</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="TotalOutput">{500</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批已生产数量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurOutput">{300</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurTotalOutput">{9999</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前料号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurPartNum">{99</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前批号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurBatchNum">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>更新时间：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UpdateTime">{99</p>
+					</div> 
+					 
+				</div></li>
+		 <li data-role="list-divider" style="text-align:center; color:rgb(16,162,159); background-color:white;border-top:none">收板机
+				<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备名称：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineName1">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备型号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineType1">{FW-LD601A</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>设备号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="MachineID1">{3</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>状态：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UnloaderStatus1">{通讯中断</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="TotalOutput1">{500</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批已生产数量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurOutput1">{300</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当批总产量：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurTotalOutput1">{9999</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前料号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurPartNum1">{99</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>当前批号：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="CurBatchNum1">{斜立式放板机350版</p>
+					</div> 
+					 
+				</div></li>
+		<li> <div class="ui-grid-a">
+					<div class="ui-block-a">
+						<p>更新时间：</p>
+					</div> 
+					<div class="ui-block-b">
+						<p id="UpdateTime1">{99</p>
+					</div> 
+					 
+				</div></li>
+				</ul>
+
+
+
+</div>	
+
+<div data-role="none" class="floatpicbuts">
+
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+
+</div>
+	
+	
+</div>
+
+<div data-role="page" id="shebeitongjitubiao"   >
+ 
+	 
+<div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 style="background-color:white">统计图表</h1> 
+	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
+	
+	<div data-role="none" class="headerleftname backgreen">
+		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headercurrstate">当前状态：</span>
+	</div>
+	
+	<div class="headerrightpic backgreen"><img src="img/yunxingstate.png" /> </div>
+	
+</div>
+<div>
+ <div class="centerechartname">单位产量图</div>
+		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main2" style="height:250px"></div>
+    <!-- ECharts单文件引入 -->
+	 
+   
+      
+
+
+
+
+
+ <div id="main1" style="height:250px"></div>
+    <!-- ECharts单文件引入 -->
+	 
+   
+       
+</div>
+<div data-role="none" class="floatpicbuts">
+
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+
+</div>
+
+</div>
+
+
+
+
+</div>
+
+
+
+<div data-role="page" id="huodongbaojing"   >
+<div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 style="background-color:white">活动告警</h1> 
+	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
+	
+	<div data-role="none" class="headerleftname backorange">
+		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headercurrstate">当前状态：</span>
+	</div>
+	
+	<div class="headerrightpic backorange"><img src="img/duanxianstate.png" /> </div>
+	
+</div>
+<div class="loglines">站号:1
+制程:内层前处理线
+设备号: 1 <br/>
+异常信息代码:17
+异常信息描述:未定义
+发生时间:2015-01-13 04:42:20 </p></div>
+<div class="loglines">站号:1
+制程:内层前处理线
+设备号: 1<br/>
+异常信息代码:17
+异常信息描述:未定义
+发生时间:2015-01-13 04:42:19 </div>
+<div class="loglines">站号:1
+制程:内层前处理线
+设备号: 1<br/>
+异常信息代码:17
+异常信息描述:未定义
+发生时间:2015-01-13 04:42:18 </div>
+
+
+
+<div data-role="none" class="floatpicbuts">
+
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+				

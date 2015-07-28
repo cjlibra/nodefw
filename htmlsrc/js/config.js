@@ -1,0 +1,1 @@
+{"host":"127.0.0.1" , "date" : "7.7" , "user" : "W9G+HM87VFK30p0y7hXPCw==" , "length" :90  , "pass" : 3 ,"db" :{ "proto":"tcp" , "ip":"127.0.0.1" , "port":"3306", "dbuser":"manager" , "dbpass" :"system" ,"dbname":"nodefw"} }  
