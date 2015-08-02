@@ -1,0 +1,211 @@
+#login  ,#log_on {
+   background-image:url(../img/backimg.png) ;
+   background-repeat:no-repeat;
+   background-size: 100% 100%;   
+   -moz-background-size:100% 100%;
+   background-size:100% 100%;
+}
+#mainpic {
+    margin-top:50px;
+	margin-left:50px;
+	 
+   
+
+}
+.logiconpng{
+   margin-left:10px;
+   margin-top:10px;
+
+}
+a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
+.noshadowdiy{
+
+ background-color:white !important; 
+ border:0px solid white;
+ box-shadow: 0px 0px 0px white;
+ width : 20px;
+ height : 20px;
+
+}
+.tablesolidbottomline{
+
+ border-bottom:1px solid rgb(25,155,171);
+
+}
+.tabledotrightline{
+  
+  border-right:1px dashed rgb(25,155,171);
+
+}
+.tableheaderlist{
+	background-color:rgb(25,155,171)  ;
+	width: 100%  ;
+    table-layout:fixed ;
+    color:white ;
+}
+.tableheaderlistcontent{
+	
+	 
+	width: 100%  ;
+    table-layout:fixed ;
+    border: 1px solid rgb(25,155,171);
+	
+}
+.tableheaderlistcontent  tr th{
+	border-right : 1px dashed rgb(25,155,171) !important;
+	
+	
+}
+.tableheaderlist > tr{ 
+  
+}
+.tableheaderlist > tr > td {
+     
+	
+
+
+}	
+.headerleftname{
+	
+	float:left;
+	background-color:red;
+	color:white;
+	height:38px;
+	width:90%;
+	
+}
+.backgreen{
+	background-color:green !important;
+	
+	
+}
+.backorange{
+    background-color:orange !important;
+
+}
+.loglines{
+   border-bottom : 1px solid rgb(25,155,171);
+   text-align:center;
+   height:50px;
+   padding-top:5px;
+
+}
+.centerechartname{
+	margin-top:5px;
+	text-align:center;
+	
+}
+.headernameword{
+	margin-left:40px;
+	margin-top:8px;
+	float:left;
+	
+}
+.headercurrstate{
+	float:right;
+	margin-top:8px;
+}
+.headerrightpic{
+	float:right;
+	width:10%;
+	background-color:red;
+	
+	
+}
+.headerrightpic img {
+	float:left;
+	
+}
+.floatpicbuts{
+	position: fixed; 
+	right:5px; 
+	bottom:50px;
+	//background-color:red;
+	
+}
+.floatpicbuts img{
+	 float:right;
+	 clear:both;
+	 margin-top:10px;
+	 margin-bottom:10px;
+	 
+	
+}
+.ui-block-a p {
+	
+	margin-left:50px !important;
+}
+.workshopinftext{
+
+    text-align:center !important;
+	color:black;
+
+}
+.logo {
+    WIDTH:  150px;
+    height: 150px;
+    float :right ;
+
+}
+.logopic{
+
+    float :left ;
+   
+    
+}
+.wordpic{
+    float :left ;
+    height :150px;
+    
+	 
+	padding-top: 0px !important;
+	padding-bottom : 0px !important;
+}
+
+.p1{
+   color : red ;
+   float :left ;
+   font-size : 80px;
+   margin-top : 1px;
+   font-weight:bold;
+   font-style:italic ;
+}
+.p2 {
+   clear:left;
+   float :left ;
+   color : rgb(0,91,171) ;
+   
+   font-size : 20px;
+   margin-bottom : 1px;
+   font-weight:bold;
+   font-style:italic ;
+   
+
+}
+.p3 {
+   color : black ;
+   font-weight: bold;
+   font-size : 25px;
+   margin-top: 10px;
+
+}
+ 
+.space1{
+
+   height : 20px;
+   clear:left;
+    
+
+}
+#completestate{
+   color : red ;
+  // background-color:red;
+
+
+}
+.tableheaderlistcontent tr th{
+ 
+  height : 30px !important;
+ // background-color:red !important;
+
+}

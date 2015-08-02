@@ -6,6 +6,26 @@ $(document).on("pageshow", "#login", function(){
 	  
 	  
 });
+$(document).on("pageshow", "#log_on", function(){
+	
+	 $("#fullname").click(function(){
+		 if ( $("#fullname").val() == "用户名"){
+			$("#fullname").val("");
+			$("#mima").val("");
+		 }
+      });
+	  
+	   $("#mima").click(function(){
+		  if ( $("#mima").val() == "密码"){
+			$("#fullname").val("");
+			$("#mima").val("");
+		  }
+      });
+	
+	   
+	  
+});
+
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	 var divbutheight = $(".floatpicbuts").height();
 	 var winheight = $(window).height() ;
@@ -20,7 +40,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			show: true
 		},
 		legend: {
-			data:['销量']
+			data:['日产量','目标产量','产量累计线']
 		},
 		grid : {
 			x : 25 ,
@@ -39,10 +59,20 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 		],
 		series : [
 			{
-				"name":"销量",
+				"name":"日产量",
 				"type":"bar",
 				"data":[1, 30, 50, 20, 20, 30]
-			}
+			},
+			 {
+						"name":"目标产量",
+						"type":"line",
+						"data":[50, 50,50, 50, 50, 50]
+			 },
+			  {
+						"name":"产量累计线",
+						"type":"line",
+						"data":[150, 200, 220, 240, 300, 320]
+			  }
 		]
 	};
 
@@ -55,7 +85,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			show: true
 		},
 		legend: {
-			data:['产量']
+			data:['小时产量','目标产量','产量累计线']
 		},
 		grid : {
 			x : 25 ,
@@ -74,10 +104,21 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 		],
 		series : [
 			{
-				"name":"产量",
+				"name":"小时产量",
 				"type":"bar",
-				"data":[15, 10, 20, 50, 20, 30]
+				"data":[15, 5, 2, 2, 6, 2]
 			}
+			,
+			 {
+						"name":"目标产量",
+						"type":"line",
+						"data":[15, 15,15, 15, 15, 15]
+			 },
+			  {
+						"name":"产量累计线",
+						"type":"line",
+						"data":[15, 20, 22, 24, 30, 32]
+			  }
 		]
 	};
 
@@ -91,7 +132,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	    
 		  $("#main2").hide();
 		  $("#main1").show();
-		   drawechart("main1",option1);
+		  drawechart("main1",option1);
+		  $(".centerechartname").text("当日产量统计图-小时产量");
 		 	 
 	});
 
@@ -100,6 +142,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 		$("#main1").hide();
 		$("#main2").show();
 		drawechart("main2",option2);
+		$(".centerechartname").text("本月产量统计图-日产量");
   
 	});
 	  
@@ -149,7 +192,7 @@ $.mobile.loadingMessageTextVisible = true;
   $.mobile.loading('show', {  
         text: '加载中...', //加载器中显示的文字  
         textVisible: true, //是否显示文字  
-        theme: 'a',        //加载器主题样式a-e  
+        theme: 'b',        //加载器主题样式a-e  
         textonly: false,   //是否只显示文字  
         html: ""           //要显示的html内容，如图片等  
     }); 
@@ -160,7 +203,15 @@ function hideLoading(){
 
  $.mobile.loading('hide');
 } 	
- 
+function dengluto(){
+	 
+	if ( $("#mima").val() == "passpass"  && $("#fullname").val() == "admin") {
+		   
+		   
+		   document.location.href="#workshoplist";
+	   }
+	
+}
 function changetowslist(){
 	 hideLoading();
 	document.location.href="#workshoplist";
@@ -168,7 +219,7 @@ function changetowslist(){
 	
 }
 function gotostationlist(){
-	
+	 
 	document.location.href='#stationlist';
 	
 }
@@ -184,7 +235,8 @@ function gotomainpage(){
 }
 function inputpassword(){
 	
-	 
+	document.location.href="#log_on";
+	return;
 	var password = prompt("请输入登录密码");
 	if ( password == "passpass" ) {
 		showLoading();

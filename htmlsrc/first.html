@@ -27,6 +27,7 @@
 <div data-role="page" id="login"> 
 <div data-role="none">  
   
+  
 <div id="mainpic">  	 
 	 <div class="logopic"> <img src="img/logo-01.png"  class="logo" /> </div>
 	 <div class="wordpic">
@@ -43,6 +44,26 @@
 </div><!-- /page -->
 
 
+<div data-role="page" id="log_on"> 
+ <div data-role="none" class="logiconpng"><img src="img/logicon.png" /> </div>
+ 
+  
+ <div style=" text-align:center; margin-top:40px;margin-left:150px;margin-right:150px; ">
+    
+    <input type="text" name="fullname" value="用户名" id="fullname">
+
+    
+    <input type="password" name="mima" value="密码" id="mima">
+
+    
+  </div> 
+ <div style="text-align:center;">
+ <a href="javascript:dengluto();"  data-role="button" data-inline="true" style="background-color:rgb(25,155,171);color:white">&nbsp&nbsp登录&nbsp&nbsp</a>
+ <a href="#" data-role="button" data-inline="true" style="background-color:rgb(231,42,22);color:white">密码修改</a>
+
+ </div>
+</div><!-- /log_on -->
+
 
 <div data-role="page" id="workshoplist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white">
@@ -50,161 +71,249 @@
 	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	  <a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	 
-    <div data-role="navbar" data-iconpos="left"   >
+   <!-- <div data-role="navbar" data-iconpos="left"   >
       <ul > 
         <li ><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#" data-icon="info">车间名称</a></li>
-        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">产量</a></li>
+        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">当日产量</a></li>
         <li><a style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">完成度</a></li>
 		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">状态</a></li>
 		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">生产速度</a></li>
       </ul>
-    </div>
+    </div>-->
+	<TABLE class="tableheaderlist"   > 
+       <TR>
+            <TH >车间名称</TH>
+			<TH >当日产量</TH>
+			<TH  >完成度</TH>
+			 
+			<TH  >状态</TH>
+			 
+			<TH >生产速度</TH>
+     </TR>
+
+</TABLE>
   </div>
   <div data-role="none" style="background-color:rgb(228,243,248)">
 <a href="javascript:gotostationlist();">  
-<div class="ui-grid-d  tablesolidbottomline " > 
-  <div class="ui-block-a "> <div class="ui-bar  workshopinftext  tabledotrightline" >第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline  ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline  " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline   "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline   " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
-	 
-</div><!-- /grid-d --></a>
-<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    " >3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     " style="color:green" > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
-</div>	
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " style="color:green">10%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH style="color:red" >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
 
- <div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
-</div>	
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div>
-</div>	
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
-	<div class="ui-grid-d tablesolidbottomline" id=""> 
-  <div class="ui-block-a"> <div class="ui-bar  workshopinftext  tabledotrightline    ">第01车间</div></div>
-  <div class="ui-block-b"> <div class="ui-bar  workshopinftext  tabledotrightline    ">3400</div></div>
-  <div class="ui-block-c"> <div class="ui-bar  workshopinftext  tabledotrightline    " id="completestate">30%</div></div>
-   <div class="ui-block-d"> <div class="ui-bar  workshopinftext  tabledotrightline     "  > 运行</div></div>
-    <div class="ui-block-e"> <div  class="ui-bar  workshopinftext  tabledotrightline    " ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</div></div></div>
+</TABLE></a>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH style="color:green" >14%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
 
-</div> <!--content-->
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH style="color:white" >15%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  style="color:red">16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
+<TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  style="color:green">14%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+</TABLE>
 
 
-</div>
+</div></div>
 
 
 <div data-role="page" id="stationlist"   >
@@ -226,12 +335,12 @@
     </div> -->
 	<TABLE class="tableheaderlist"   > 
        <TR>
-            <TH >流水线代码</TH>
-			<TH >产量</TH>
+            <TH >流水线</TH>
+			<TH >当日产量</TH>
 			<TH  >完成度</TH>
-			<TH  >生产速度</TH>
+			<TH  >产速</TH>
 			<TH  >状态</TH>
-			<TH >时间</TH>
+			<TH >持续时长</TH>
 			<TH >异常信息</TH>
      </TR>
 
@@ -243,13 +352,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L01</TH>
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/yunxl.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx秒</TH>
+			<TH >0</TH> 
      </TR>
 
 </TABLE></a>
@@ -258,13 +367,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L11</TH>
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/tingzhil.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx分</TH>
+			<TH >1</TH> 
      </TR>
 
 </TABLE></a>
@@ -272,13 +381,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L15</TH>
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/shoudongl.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx小时</TH>
+			<TH >2</TH> 
      </TR>
 
 </TABLE></a>
@@ -287,13 +396,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L07</TH>
 			<TH >3400</TH>
-			<TH  >30%</TH>
+			<TH  >20%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/shoudongl.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx天</TH>
+			<TH >3</TH> 
      </TR>
 
 </TABLE></a>
@@ -301,13 +410,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L09</TH>
 			<TH >3400</TH>
-			<TH  >30%</TH>
+			<TH  >16%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/shoudongl.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx天</TH>
+			<TH >4</TH> 
      </TR>
 
 </TABLE></a>
@@ -315,13 +424,13 @@
   <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
-            <TH  >1</TH>
+            <TH  >L21</TH>
 			<TH >3400</TH>
-			<TH  >30%</TH>
+			<TH  >18%</TH>
 			<TH  >200</TH>
 			<TH  ><img src="img/shoudongl.png" /></TH>
-			<TH >2015-11-12 10:12:13</TH>
-			<TH >500</TH> 
+			<TH >xx秒</TH>
+			<TH >5</TH> 
      </TR>
 
 </TABLE></a>
@@ -338,7 +447,7 @@
 	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	
 	<div data-role="none" class="headerleftname">
-		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headernameword">第01车间  L01 内层前处理线</span>  
 		<span class="headercurrstate">当前状态：</span>
 	</div>
 	
@@ -539,9 +648,9 @@
 
 <div data-role="none" class="floatpicbuts">
 
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
 
 </div>
 	
@@ -557,7 +666,7 @@
 	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	
 	<div data-role="none" class="headerleftname backgreen">
-		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headernameword">第01车间  L01 内层前处理线</span>  
 		<span class="headercurrstate">当前状态：</span>
 	</div>
 	
@@ -565,7 +674,7 @@
 	
 </div>
 <div>
- <div class="centerechartname">单位产量图</div>
+ <div class="centerechartname">当日产量统计图-小时产量</div>
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main2" style="height:250px"></div>
     <!-- ECharts单文件引入 -->
@@ -585,9 +694,9 @@
 </div>
 <div data-role="none" class="floatpicbuts">
 
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
 
 </div>
 
@@ -607,39 +716,130 @@
 	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	
 	<div data-role="none" class="headerleftname backorange">
-		<span class="headernameword">第01车间 内线处理线</span>  
+		<span class="headernameword">第01车间  L01 内层前处理线</span>  
 		<span class="headercurrstate">当前状态：</span>
 	</div>
 	
 	<div class="headerrightpic backorange"><img src="img/duanxianstate.png" /> </div>
-	
+		<TABLE class="tableheaderlist"   > 
+       <TR>
+            <TH > 设备类型</TH>
+			<TH > 异常代码</TH>
+			<TH  >异常描述 </TH>
+			<TH  >发生时间</TH>
+			 
+     </TR>
+
+</TABLE>
 </div>
-<div class="loglines">站号:1
-制程:内层前处理线
-设备号: 1 <br/>
-异常信息代码:17
-异常信息描述:未定义
-发生时间:2015-01-13 04:42:20 </p></div>
-<div class="loglines">站号:1
-制程:内层前处理线
-设备号: 1<br/>
-异常信息代码:17
-异常信息描述:未定义
-发生时间:2015-01-13 04:42:19 </div>
-<div class="loglines">站号:1
-制程:内层前处理线
-设备号: 1<br/>
-异常信息代码:17
-异常信息描述:未定义
-发生时间:2015-01-13 04:42:18 </div>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >收板机</TH>
+			<TH >6</TH>
+			<TH  > 板气缸上下定位异常        </TH>
+			<TH  >2015-01-12 04:42:20</TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >收板机</TH>
+			<TH >6</TH>
+			<TH  > 板气缸上下定位异常        </TH>
+			<TH  >2015-01-12 04:42:20</TH>
+			 
+     </TR>
+
+</TABLE>
+
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  >收板机</TH>
+			<TH >6</TH>
+			<TH  > 板气缸上下定位异常        </TH>
+			<TH  >2015-01-12 04:42:20</TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH  > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH  > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH  > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH  > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH  > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
+ <TABLE class="tableheaderlistcontent"   > 
+        
+	   <TR>
+            <TH  > 放板机</TH>
+			<TH >16</TH>
+			<TH  > 输送侧右门开关异常      </TH>
+			<TH      > 2015-01-12 04:43:20 </TH>
+			 
+     </TR>
+
+</TABLE>
 
 
 
 <div data-role="none" class="floatpicbuts">
 
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.PNG" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.PNG" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.PNG" /></a>
+<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
+<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
+<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
 
 </div>
 
