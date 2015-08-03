@@ -24,28 +24,32 @@
 
 <body>
 
-<div data-role="page" id="login"> 
-<div data-role="none">  
+<div data-role="page" id="login" > 
+ 
   
   
-<div id="mainpic">  	 
-	 <div class="logopic"> <img src="img/logo-01.png"  class="logo" /> </div>
-	 <div class="wordpic">
-	 <div class="p1"> FINDWAY </div>
-	 <div class="p2"> AUTOMATION SYSTEMS </div>
-	 </div>
-	 <div class="space1"></div>
-	 <div class="p3"> 上海飞为自动化系统有限公司 </div>
+<div   data-role="none" id="mainpic" >  
+ 
+<div   data-role="none"  > 
+	<table   >
+	<tr  >
+	  <td   align="center"><img src="img/logoall.png" style="width:70%"/> </td>
 	
+	
+	</tr>
+	
+	
+	</table>
+</div>	
 </div>	
 	
   
-</div>
+ 
 </div><!-- /page -->
 
 
 <div data-role="page" id="log_on"> 
- <div data-role="none" class="logiconpng"><img src="img/logicon.png" /> </div>
+ <div data-role="none" class="logiconpng" ><img src="img/logicon.png" /> </div>
  
   
  <div style=" text-align:center; margin-top:40px;margin-left:150px;margin-right:150px; ">
@@ -67,28 +71,20 @@
 
 <div data-role="page" id="workshoplist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white">
-    <h1 style="background-color:white">车间列表</h1>
+    <h1 style="background-color:white;">车间列表</h1>
 	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	  <a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	 
-   <!-- <div data-role="navbar" data-iconpos="left"   >
-      <ul > 
-        <li ><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#" data-icon="info">车间名称</a></li>
-        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">当日产量</a></li>
-        <li><a style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">完成度</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">状态</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">生产速度</a></li>
-      </ul>
-    </div>-->
+   
 	<TABLE class="tableheaderlist"   > 
        <TR>
-            <TH >车间名称</TH>
-			<TH >当日产量</TH>
-			<TH  >完成度</TH>
+            <TH style="font-size:1.2em;">车间名称</TH>
+			<TH style="font-size:1.2em;">当日产量</TH>
+			<TH  style="font-size:1.2em;">完成度</TH>
 			 
-			<TH  >状态</TH>
+			<TH  style="font-size:1.2em;">状态</TH>
 			 
-			<TH >生产速度</TH>
+			<TH style="font-size:1.2em;">生产速度</TH>
      </TR>
 
 </TABLE>
@@ -322,26 +318,16 @@
 	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	<a href="javascript:gotomainpage();"  class = "noshadowdiy" ><img src="img/menulog.png" />  </a>
 	 
-   <!-- <div data-role="none"   data-iconpos="left"  class="ullicss"  >
-      <ul >  
-        <li ><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#" data-icon="info">流水线代码</a></li>
-        <li><a  style="background-color:rgb(25,155,171)!important;color:white"  href="#"  data-icon="gear">产量</a></li>
-        <li><a style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">完成度</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">生产速度</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">状态</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="gear">时间</a></li>
-		<li><a  style="background-color:rgb(25,155,171)!important;color:white" href="#" data-icon="search">异常信息</a></li>
-      </ul>
-    </div> -->
+ 
 	<TABLE class="tableheaderlist"   > 
        <TR>
-            <TH >流水线</TH>
-			<TH >当日产量</TH>
-			<TH  >完成度</TH>
-			<TH  >产速</TH>
-			<TH  >状态</TH>
-			<TH >持续时长</TH>
-			<TH >异常信息</TH>
+            <TH style="font-size:1.2em;">流水线</TH>
+			<TH style="font-size:1.2em;">当日产量</TH>
+			<TH  style="font-size:1.2em;">完成度</TH>
+			<TH  style="font-size:1.2em;">产速</TH>
+			<TH  style="font-size:1.2em;">状态</TH>
+			<TH style="font-size:1.2em;">持续时长</TH>
+			<TH style="font-size:1.2em;">异常信息</TH>
      </TR>
 
 </TABLE>
@@ -356,7 +342,7 @@
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/yunxl.png" /></TH>
+			<TH  ><img src="img/yunxing.png" class="runingstate"  /><span style="color:rgb(72,144,55)"> 运行 </span></TH>
 			<TH >xx秒</TH>
 			<TH >0</TH> 
      </TR>
@@ -371,7 +357,7 @@
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/tingzhil.png" /></TH>
+			<TH  ><img src="img/tingzhi.png" class="runingstate" /><span style="color:rgb(221,85,26)" > 停止 </span></TH>
 			<TH >xx分</TH>
 			<TH >1</TH> 
      </TR>
@@ -385,7 +371,7 @@
 			<TH >3400</TH>
 			<TH  >30%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH  ><img src="img/shoudong.png" class="runingstate" /><span style="color:rgb(148,107,37)" > 手动 </span></TH>
 			<TH >xx小时</TH>
 			<TH >2</TH> 
      </TR>
@@ -400,7 +386,7 @@
 			<TH >3400</TH>
 			<TH  >20%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH  ><img src="img/daiji.png" class="runingstate" /><span style="color:rgb(113,111,111)" > 待机 </span></TH>
 			<TH >xx天</TH>
 			<TH >3</TH> 
      </TR>
@@ -414,7 +400,7 @@
 			<TH >3400</TH>
 			<TH  >16%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH  ><img src="img/zhongduan.png" class="runingstate" /><span style="color:rgb(231,24,26)" > 中断 </span></TH>
 			<TH >xx天</TH>
 			<TH >4</TH> 
      </TR>
@@ -428,7 +414,7 @@
 			<TH >3400</TH>
 			<TH  >18%</TH>
 			<TH  >200</TH>
-			<TH  ><img src="img/shoudongl.png" /></TH>
+			<TH  ><img src="img/shoudong.png" class="runingstate" /><span style="color:rgb(148,107,37); " > 手动 </span></TH>
 			<TH >xx秒</TH>
 			<TH >5</TH> 
      </TR>
@@ -452,6 +438,15 @@
 	</div>
 	
 	<div class="headerrightpic"><img src="img/duanxianstate.png" /> </div>
+	
+	
+		<div data-role="navbar">
+      <ul>
+        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
+        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
+        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
+      </ul>
+    </div>
 	
 </div>
 <div data-role="none" >
@@ -646,13 +641,7 @@
 
 </div>	
 
-<div data-role="none" class="floatpicbuts">
-
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
-
-</div>
+ 
 	
 	
 </div>
@@ -671,7 +660,13 @@
 	</div>
 	
 	<div class="headerrightpic backgreen"><img src="img/yunxingstate.png" /> </div>
-	
+	<div data-role="navbar">
+      <ul>
+        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
+        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
+        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
+      </ul>
+    </div>
 </div>
 <div>
  <div class="centerechartname">当日产量统计图-小时产量</div>
@@ -692,13 +687,7 @@
    
        
 </div>
-<div data-role="none" class="floatpicbuts">
-
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
-
-</div>
+ 
 
 </div>
 
@@ -721,6 +710,13 @@
 	</div>
 	
 	<div class="headerrightpic backorange"><img src="img/duanxianstate.png" /> </div>
+		<div data-role="navbar">
+      <ul>
+        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
+        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
+        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
+      </ul>
+    </div>
 		<TABLE class="tableheaderlist"   > 
        <TR>
             <TH > 设备类型</TH>
@@ -835,13 +831,7 @@
 
 
 
-<div data-role="none" class="floatpicbuts">
-
-<a href="#huodongbaojing"><img src="img/huodonggaojingbut.png" /></a>
-<a href="#shebeitongjitubiao"> <img src="img/tongjitubiaobut.png" /> </a>
-<a href="#shebeixiangqing"><img src="img/shebeixiangqingbut.png" /></a>
-
-</div>
+ 
 
 
 

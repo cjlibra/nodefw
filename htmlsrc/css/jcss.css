@@ -6,15 +6,20 @@
    background-size:100% 100%;
 }
 #mainpic {
-    margin-top:50px;
-	margin-left:50px;
+    margin-top:60px;
+    
 	 
    
 
 }
+ 
 .logiconpng{
    margin-left:10px;
    margin-top:10px;
+
+}
+.logiconpng img {
+    width:30%;
 
 }
 a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
@@ -207,5 +212,13 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
  
   height : 30px !important;
  // background-color:red !important;
+  
 
 }
+.runingstate {
+    width:18px;
+	height:26px;
+
+
+}
+ 
