@@ -440,21 +440,15 @@
 	<div class="headerrightpic"><img src="img/duanxianstate.png" /> </div>
 	
 	
-		<div data-role="navbar">
-      <ul>
-        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
-        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
-        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
-      </ul>
-    </div>
+	
+	
 	
 </div>
-<div data-role="none" >
-<div data-role="none" class="tabindex">  
-<a href="#"><div data-role="none" class="tabdev">设<br>备<br>详<br>情<br> </div></a>
-<a href="#"><div data-role="none" class="tabdev"> 统<br>计<br>图<br>表<br></div></a>
-<a href="#"><div data-role="none" class="tabdev tabtab">活<br>动<br>告<br>警<br> </div></a>
-</div>
+<div data-role="none" id="shebeixiangqingcontent">
+
+
+
+
 <ul data-role="listview"  id="listview">
  	 
 				<div data-role="none" style="height:20px;background-color:white "></div>
@@ -665,15 +659,9 @@
 	</div>
 	
 	<div class="headerrightpic backgreen"><img src="img/yunxingstate.png" /> </div>
-	<div data-role="navbar">
-      <ul>
-        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
-        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
-        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
-      </ul>
-    </div>
+	
 </div>
-<div>
+<div id="shebeitongjitubiaocontent">
  <div class="centerechartname">当日产量统计图-小时产量</div>
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main2" style="height:250px"></div>
@@ -715,14 +703,11 @@
 	</div>
 	
 	<div class="headerrightpic backorange"><img src="img/duanxianstate.png" /> </div>
-		<div data-role="navbar">
-      <ul>
-        <li><a href="#shebeixiangqing"  ><img src="img/shebeixiangqing.png"  style="width:70px;height:20px" /></a></li>
-        <li><a href="#shebeitongjitubiao"  ><img src="img/tongjitubiao.png" style="width:70px;height:20px"/></a></li>
-        <li><a href="#huodongbaojing"  ><img src="img/huodonggaojing.png"  style="width:70px;height:20px"/></a></li>
-      </ul>
-    </div>
-		<TABLE class="tableheaderlist"   > 
+
+	
+</div>
+
+	<TABLE class="tableheaderlist1"   > 
        <TR>
             <TH > 设备类型</TH>
 			<TH > 异常代码</TH>
@@ -732,14 +717,14 @@
      </TR>
 
 </TABLE>
-</div>
+<div  class="begintablecontent">
  <TABLE class="tableheaderlistcontent"   > 
         
 	   <TR>
             <TH  >收板机</TH>
 			<TH >6</TH>
 			<TH  > 板气缸上下定位异常        </TH>
-			<TH  >2015-01-12 04:42:20</TH>
+			<TH  >2015-01-12 04:42:20 </TH>
 			 
      </TR>
 
@@ -835,7 +820,7 @@
 </TABLE>
 
 
-
+</div>
  
 
 
@@ -845,7 +830,11 @@
 
 
 
-
+<div data-role="none" class="tabindex">  
+<a href="#shebeixiangqing" onclick="clicksbxq();"><div data-role="none" class="tabdev" id="tabdev1">设<br>备<br>详<br>情<br> </div></a>
+<a href="#shebeitongjitubiao" onclick="clicktjtb();"><div data-role="none" class="tabdev" id="tabdev2"> 统<br>计<br>图<br>表<br></div></a>
+<a href="#huodongbaojing" onclick="clickhdgj();"><div data-role="none" class="tabdev tabtab" id="tabdev3">活<br>动<br>告<br>警<br> </div></a>
+</div>
 
 
 

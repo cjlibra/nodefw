@@ -1,7 +1,71 @@
+function clicksbxq(){
+	$("#tabdev1").addClass("tabtab");
+	$("#tabdev2").removeClass("tabtab");
+	$("#tabdev3").removeClass("tabtab");
+	
+	
+}
+function clicktjtb(){
+	$("#tabdev2").addClass("tabtab");
+	$("#tabdev1").removeClass("tabtab");
+	$("#tabdev3").removeClass("tabtab");
+}
 
+
+function clickhdgj(){
+	$("#tabdev3").addClass("tabtab");
+	$("#tabdev2").removeClass("tabtab");
+	$("#tabdev1").removeClass("tabtab");
+	
+}
 $(document).on("pageshow", "#login", function(){
 	
 	  setTimeout("inputpassword()",5000);
+	
+	  
+	  
+});
+$(document).on("pageshow", "#shebeixiangqing", function(){
+	  
+	  showtabl("#shebeixiangqing");
+	  $("#tabdev1").addClass("tabtab");
+	$("#tabdev2").removeClass("tabtab");
+	$("#tabdev3").removeClass("tabtab");
+	
+	  
+	  
+});
+$(document).on("pagehide", "#shebeixiangqing", function(){
+	  
+	 $(".tabindex").hide();
+	
+	  
+	  
+});
+$(document).on("pageshow", "#huodongbaojing", function(){
+	  
+	  showtabl("#huodongbaojing");
+	
+	  
+	  
+});
+$(document).on("pagehide", "#huodongbaojing", function(){
+	  
+	 $(".tabindex").hide();
+	
+	  
+	  
+});
+$(document).on("pageshow", "#shebeitongjitubiao", function(){
+	  
+	  showtabl("#shebeitongjitubiao");
+	
+	  
+	  
+});
+$(document).on("pagehide", "#shebeitongjitubiao", function(){
+	  
+	 $(".tabindex").hide();
 	
 	  
 	  
@@ -152,8 +216,37 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
     $("#main2").hide(); 
 });
 
-
-
+function  showtabl(headerstr){
+	var fontsize = 9;
+	var viewheight = $(window).height();
+	var viewwidth = $(window).width();
+	var headerheight = $(headerstr +">[data-role='header']").height()+2;
+	var headerlistheight = 0;
+	var tableheaderheight = $("#huodongbaojing .tableheaderlist1").height();
+	console.log(tableheaderheight );
+	var tabwidth = $(".tabindex").width();
+	if (headerstr == "#huodongbaojing"){
+	   
+	   $(".tableheaderlist1").css({"width":viewwidth-tabwidth-2+"px" });
+	   $(".begintablecontent").css({"margin-top":tableheaderheight+"px"});
+	}
+	if (headerstr == "#shebeixiangqing"){
+	  $("#shebeixiangqingcontent").css({"width":viewwidth-tabwidth-3+"px"});
+	}
+	if (headerstr == "#shebeitongjitubiao"){
+	  $("#shebeitongjitubiaocontent").css({"width":viewwidth-tabwidth-3+"px"});
+		
+	}
+	var contentheight = viewheight - headerheight  ;
+	console.log(headerheight  );
+	console.log(contentheight);
+	console.log(viewwidth);
+	console.log(tabwidth);
+	$(".tabindex ").css({"display":"block","right":0+"px" ,"bottom":2+"px" ,"height":contentheight+"px"});
+	$(".tabdev").css({"height":4*fontsize -2+"px" ,"padding-top":(contentheight/3-4*fontsize)/2+"px","padding-bottom":(contentheight/3-4*fontsize)/2+"px"});
+   $(headerstr+" .tableheaderlistcontent").css({"width":viewwidth-tabwidth-2+"px" });
+   console.log($(".tableheaderlistcontent").css("width"));
+}
 
 function drawechart(id_div,optionset){
 	   

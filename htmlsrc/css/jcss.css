@@ -47,29 +47,33 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	width: 100%  ;
     table-layout:fixed ;
     color:white ;
+	
+}
+.tableheaderlist1{
+	background-color:rgb(25,155,171)  ;
+	width: 100%  ;
+    table-layout:fixed ;
+    color:white ;
+	position:fixed;
+	 
+}
+.begintablecontent{
+	//margin-top:30px;
+	
 }
 .tableheaderlistcontent{
-	
 	 
-	width: 100%  ;
+	 width: 100% ;
     table-layout:fixed ;
     border: 1px solid rgb(25,155,171);
 	
 }
 .tableheaderlistcontent  tr th{
 	border-right : 1px dashed rgb(25,155,171) !important;
-	
+	 
 	
 }
-.tableheaderlist > tr{ 
-  
-}
-.tableheaderlist > tr > td {
-     
-	
 
-
-}	
 .headerleftname{
 	
 	float:left;
@@ -225,8 +229,15 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
    float:right;
    width:3em;
      
-  position:relative;
+  position:fixed;
   background-color:white;
+  
+   display:none;
+   right:0px;
+   bottom:0px;
+   z-index:100;
+   font-size:9px;
+  
   
    
  
@@ -236,9 +247,8 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 .tabdev{
      border:1px solid rgb(25,155,171);
       text-align:center;
-	  height:auto;
-	  padding-top:30px;
-	  padding-bottom:30px;
+	  height:30%;
+	  
 	  color:rgb(25,155,171);
 	 
 	 
@@ -248,5 +258,17 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 
 
 }
+#shebeixiangqingcontent ,#shebeitongjitubiaocontent{
+	width:90%  ;
+	 
+	
+}
+
+.norightline{
+	border-right:0px;
+	
+	
+}
+ 
  
  
