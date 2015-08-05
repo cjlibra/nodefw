@@ -221,4 +221,32 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 
 
 }
+.tabindex {
+   float:right;
+   width:3em;
+     
+  position:relative;
+  background-color:white;
+  
+   
+ 
+ 
+   
+}
+.tabdev{
+     border:1px solid rgb(25,155,171);
+      text-align:center;
+	  height:auto;
+	  padding-top:30px;
+	  padding-bottom:30px;
+	  color:rgb(25,155,171);
+	 
+	 
+}
+.tabtab{
+   border-left:0px;
+
+
+}
+ 
  
