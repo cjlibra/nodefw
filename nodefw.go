@@ -18,7 +18,7 @@ import (
 	//"html"
 	//"log"
 	//"net/url"
-	// _ "github.com/ziutek/mymysql/thrsafe" // Thread safe engine
+	//_ "github.com/ziutek/mymysql/thrsafe" // Thread safe engine
 
 	"encoding/base64"
 	"encoding/json"
@@ -68,8 +68,8 @@ var dbinfo *DbInfo
 
 func opendb() mysql.Conn {
 
-	//db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
-	db := mysql.New(dbinfo.Proto, "", dbinfo.Ip+":"+dbinfo.Port, dbinfo.Dbuser, dbinfo.Dbpass, dbinfo.Dbname)
+	db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
+	//db := mysql.New(dbinfo.Proto, "", dbinfo.Ip+":"+dbinfo.Port, dbinfo.Dbuser, dbinfo.Dbpass, dbinfo.Dbname)
 
 	err := db.Connect()
 	if err != nil {
@@ -982,6 +982,79 @@ func datatochart(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type WSINFO struct {
+	WsName        string
+	SumDay        int
+	PlanSumDay    int
+	LineCountAuto int
+	LineCount     int
+	Velocity      int
+}
+
+var now = "2014-12-05 07:12:34"
+
+func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取车间")
+	db := opendb()
+	if db == nil {
+		return
+	}
+	defer db.Close()
+	res, err := db.Start("SELECT DISTINCT Workshop FROM stations")
+	checkError(err)
+	var wsinfo WSINFO
+	var wsinfos []WSINFO
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		wsinfo.WsName = row.Str(res.Map("Workshop"))
+
+		//res1, _ := db.Start("SELECT sum(PlanDay) FROM stations  where Workshop = '%s'", wsinfo.WsName)
+
+		wsinfos = append(wsinfos, wsinfo)
+	}
+
+	for indexnum, _ := range wsinfos {
+		rows1, res1, err1 := db.Query("SELECT sum(PlanDay) FROM stations  where Workshop = '%s'", wsinfos[indexnum].WsName)
+		checkError(err1)
+		//fmt.Print(wsinfos[indexnum].WsName)
+
+		//row1, _ := res1.GetRow()
+		//checkError(err1)
+		wsinfos[indexnum].PlanSumDay = rows1[0].Int(res1.Map("sum(PlanDay)"))
+
+		rows2, res2, err2 := db.Query("select  sum(uph_station.UPH) from uph_station inner join stations on stations.LineID = uph_station.StationID where to_days(uph_station.Hours) = to_days('%s') and stations.Workshop = '%s'", now, wsinfos[indexnum].WsName)
+		checkError(err2)
+		wsinfos[indexnum].SumDay = rows2[0].Int(res2.Map("sum(uph_station.UPH)"))
+
+		rows3, res3, err3 := db.Query("select count(LineID) from stations where Workshop = '%s'", wsinfos[indexnum].WsName)
+		checkError(err3)
+		wsinfos[indexnum].LineCount = rows3[0].Int(res3.Map("count(LineID)"))
+
+		rows4, res4, err4 := db.Query("select count(StationID) from stations_status where StationStatus = '自动运行中' and Workshop = '%s'", wsinfos[indexnum].WsName)
+		checkError(err4)
+		wsinfos[indexnum].LineCountAuto = rows4[0].Int(res4.Map("count(StationID)"))
+
+		//wsinfos[indexnum].Velocity = wsinfos[indexnum].SumDay / sumhours
+	}
+	//fmt.Print(wsinfos)
+	b, err := json.Marshal(wsinfos)
+	if err != nil {
+		checkError(err)
+	}
+	//os.Stdout.Write(b)
+	glog.V(2).Infoln(string(b))
+	w.Write(b)
+}
+
 var _ = fmt.Println
 var lasting int = 0
 var inputFile = "./htmlsrc/js/config.js"
@@ -991,6 +1064,11 @@ var Input_testdate = flag.String("testdate", "2017-11-11", "input test date")
 
 func main() {
 	flag.Parse()
+	//sh, _ := time.LoadLocation("Asia/Shanghai")
+	a, err1 := time.Parse("2014-11-05 07:12:34 cst", now)
+	checkError(err1)
+	sumhours := a.Hour() - 1
+	fmt.Print(a, sumhours)
 
 	http.HandleFunc("/datatochart", datatochart)               /*datatochart?atype=0&aunit=0&adate=2014-12-12&adays=0&lineid=1 */
 	http.HandleFunc("/infoloaderbylineid", infoloaderbylineid) /*infoloaderbylineid?lineid=2&&loader=1*/
@@ -1001,6 +1079,8 @@ func main() {
 	http.HandleFunc("/alarm", alarmfunc)
 	http.HandleFunc("/status/", statusfunc)
 	http.HandleFunc("/statusby", statusbyfunc)
+
+	http.HandleFunc("/jgetwsinfo", jgetwsinfo)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")
