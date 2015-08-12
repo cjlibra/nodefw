@@ -1043,7 +1043,13 @@ func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
 		checkError(err4)
 		wsinfos[indexnum].LineCountAuto = rows4[0].Int(res4.Map("count(StationID)"))
 
-		//wsinfos[indexnum].Velocity = wsinfos[indexnum].SumDay / sumhours
+		//sh, _ := time.LoadLocation("Asia/Shanghai")
+		a, err1 := time.Parse("2006-01-02 15:04:05", now)
+		//b := time.Now().Format("2006-01-02 15:04:05")
+		checkError(err1)
+		sumhours := a.Hour()
+		//fmt.Print(a, sumhours, b)
+		wsinfos[indexnum].Velocity = wsinfos[indexnum].SumDay / sumhours
 	}
 	//fmt.Print(wsinfos)
 	b, err := json.Marshal(wsinfos)
@@ -1055,6 +1061,87 @@ func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 }
 
+type LINEINFO struct {
+	LineID         int
+	SumDay         int
+	PlanSumDay     int
+	Velocity       int
+	Status         string
+	UpdateTime     string
+	ExceptionCount int
+}
+
+func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取流水线")
+	wshopname := r.FormValue("workshop")
+
+	glog.Infoln("工作车间：", wshopname)
+	if wshopname == "" {
+		//w.Write([]byte("error input! no lineid"))
+		glog.Errorln("error input! no wshopname")
+		return
+	}
+	db := opendb()
+	if db == nil {
+		return
+	}
+	defer db.Close()
+	var lineinfo LINEINFO
+	var lineinfos []LINEINFO
+	res, err := db.Start("select LineID from stations where Workshop = '%s'", wshopname)
+	checkError(err)
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		lineinfo.LineID = row.Int(res.Map("LineID"))
+
+		lineinfos = append(lineinfos, lineinfo)
+	}
+
+	for indexnum, _ := range lineinfos {
+		rows1, res1, err1 := db.Query("select UpdateTime , PlanDay from stations where LineID = %d", lineinfos[indexnum].LineID)
+		checkError(err1)
+		lineinfos[indexnum].PlanSumDay = rows1[0].Int(res1.Map("PlanDay"))
+		lineinfos[indexnum].UpdateTime = rows1[0].Str(res1.Map("UpdateTime"))
+
+		rows2, res2, err2 := db.Query("select  sum(UPH) from uph_station  where to_days(Hours) = to_days('%s') and StationID = %d ", now, lineinfos[indexnum].LineID)
+		checkError(err2)
+		lineinfos[indexnum].SumDay = rows2[0].Int(res2.Map("sum(UPH)"))
+
+		a, err1 := time.Parse("2006-01-02 15:04:05", now)
+		//b := time.Now().Format("2006-01-02 15:04:05")
+		checkError(err1)
+		sumhours := a.Hour()
+		//fmt.Print(a, sumhours, b)
+		lineinfos[indexnum].Velocity = lineinfos[indexnum].SumDay / sumhours
+
+		rows3, res3, err3 := db.Query("select StationStatus from stations_status where StationID = %d", lineinfos[indexnum].LineID)
+		checkError(err3)
+
+		lineinfos[indexnum].Status = rows3[0].Str(res3.Map("StationStatus"))
+
+		rows4, res4, err4 := db.Query("select count(AlarmID) from alarms_active where to_days(StartTime) = to_days('%s') and StationID = %d ", now, lineinfos[indexnum].LineID)
+		checkError(err4)
+		lineinfos[indexnum].ExceptionCount = rows4[0].Int(res4.Map("count(AlarmID)"))
+	}
+	b, err := json.Marshal(lineinfos)
+	if err != nil {
+		checkError(err)
+	}
+	//os.Stdout.Write(b)
+	glog.V(2).Infoln(string(b))
+	w.Write(b)
+
+}
+
 var _ = fmt.Println
 var lasting int = 0
 var inputFile = "./htmlsrc/js/config.js"
@@ -1064,11 +1151,6 @@ var Input_testdate = flag.String("testdate", "2017-11-11", "input test date")
 
 func main() {
 	flag.Parse()
-	//sh, _ := time.LoadLocation("Asia/Shanghai")
-	a, err1 := time.Parse("2014-11-05 07:12:34 cst", now)
-	checkError(err1)
-	sumhours := a.Hour() - 1
-	fmt.Print(a, sumhours)
 
 	http.HandleFunc("/datatochart", datatochart)               /*datatochart?atype=0&aunit=0&adate=2014-12-12&adays=0&lineid=1 */
 	http.HandleFunc("/infoloaderbylineid", infoloaderbylineid) /*infoloaderbylineid?lineid=2&&loader=1*/
@@ -1081,6 +1163,7 @@ func main() {
 	http.HandleFunc("/statusby", statusbyfunc)
 
 	http.HandleFunc("/jgetwsinfo", jgetwsinfo)
+	http.HandleFunc("/jgetlineinfo", jgetlineinfo)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")
