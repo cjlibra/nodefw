@@ -20,15 +20,26 @@ function clickhdgj(){
 }
 $(document).on("pageshow", "#login", function(){
 	
-	  setTimeout("inputpassword()",5000);
+	setTimeout("inputpassword()",5000);
 	
 	  
 	  
 });
+$(document).on("pageshow", "#workshoplist", function(){
+	
+	showWorkshoplist();
+	
+});
+
+$(document).on("pageshow", "#stationlist", function(){
+	
+	//showStationlist();
+	
+});
 $(document).on("pageshow", "#shebeixiangqing", function(){
 	  
-	  showtabl("#shebeixiangqing");
-	  $("#tabdev1").addClass("tabtab");
+	showtabl("#shebeixiangqing");
+	$("#tabdev1").addClass("tabtab");
 	$("#tabdev2").removeClass("tabtab");
 	$("#tabdev3").removeClass("tabtab");
 	
@@ -37,35 +48,35 @@ $(document).on("pageshow", "#shebeixiangqing", function(){
 });
 $(document).on("pagehide", "#shebeixiangqing", function(){
 	  
-	 $(".tabindex").hide();
+	$(".tabindex").hide();
 	
 	  
 	  
 });
 $(document).on("pageshow", "#huodongbaojing", function(){
 	  
-	  showtabl("#huodongbaojing");
+	showtabl("#huodongbaojing");
 	
 	  
 	  
 });
 $(document).on("pagehide", "#huodongbaojing", function(){
 	  
-	 $(".tabindex").hide();
+	$(".tabindex").hide();
 	
 	  
 	  
 });
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	  
-	  showtabl("#shebeitongjitubiao");
+	showtabl("#shebeitongjitubiao");
 	
 	  
 	  
 });
 $(document).on("pagehide", "#shebeitongjitubiao", function(){
 	  
-	 $(".tabindex").hide();
+	$(".tabindex").hide();
 	
 	  
 	  
@@ -215,6 +226,154 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
  
     $("#main2").hide(); 
 });
+
+var VV = new Array();
+function showStationlist(url){
+	$("#showStationlistcontent").html("");
+	showLoading();
+	
+	var linestrorig =  ' <a href="javascript:gotoshebeixiangqing();">   \
+							  <TABLE class="tableheaderlistcontent"   > \
+									\
+								   <TR>           \
+										<TH  >L!!LineID!!</TH>     \
+										<TH >!!SumDay!!</TH>       \
+										<TH  style="color:!!color!!">!!%%!!%</TH>       \
+										<TH  ><img src="img/!!downup!!.png" class="ui-li-icon"> !!Velocity!!</TH>         \
+										<TH  >              \
+										!!status!!  \
+										</TH>         \
+										<TH >!!TimeLast!!xx秒</TH>         \
+										<TH >!!ExceptionCount!!</TH>       \
+								 </TR>      \
+                                          \
+							</TABLE></a>     \
+							 ' ;
+	var liststrs="";
+	//{"LineID":1,"SumDay":7062,"PlanSumDay":7000,"Velocity":1008,"Status":"自动运行中","UpdateTime":"2015-01-13 05:01:32","ExceptionCount":0}
+	$.getJSON(url,null,function(data){ 
+		 
+		$.each(data,function(idx,item){ 
+			/*if(idx==0){ 
+				 return true;//同countinue，返回false同break 
+			}  */
+			hideLoading();
+			linestr = linestrorig ;
+			 
+			linestr = linestr.replace(/!!LineID!!/g,item.LineID);
+			 
+			linestr = linestr.replace(/!!SumDay!!/g,item.SumDay);
+			var rate = parseInt(item.SumDay )/parseInt(item.PlanSumDay) *100;
+			if (rate < 1) linestr = linestr.replace(/!!color!!/g,"green");
+			if (rate == 1) linestr = linestr.replace(/!!color!!/g,"white");
+			if (rate > 1) linestr = linestr.replace(/!!color!!/g,"red");
+			linestr = linestr.replace(/!!%%!!/g,rate.toFixed(2));
+			linestr = linestr.replace(/!!Velocity!!/g,item.Velocity);
+			
+			if (typeof VV[idx] == 'undefined'){
+			    VV[idx] = item.Velocity;
+				linestr = linestr.replace(/!!downup!!/g,"equalicon");
+			}else{
+				rate = parseInt(item.Velocity) - parseInt(VV[idx]);
+				 
+				if (rate < 0) linestr = linestr.replace(/!!downup!!/g,"downicon");
+				if (rate == 0) linestr = linestr.replace(/!!downup!!/g,"equalicon");
+				if (rate > 0) linestr = linestr.replace(/!!downup!!/g,"upicon");
+			
+			}
+			
+			var statusStr = "" ;
+			if (item.Status == "自动运行中"){
+				statusStr = '<img src="img/yunxing.png" class="runingstate"  /> <span style="color:rgb(72,144,55)"> 运行 </span>  ';
+			}
+			if (item.Status == "停止"){
+				statusStr = '<img src="img/tingzhi.png" class="runingstate" /><span style="color:rgb(221,85,26)" > 停止 </span>  ';
+			}
+			if (item.Status == "手动"){
+				statusStr = '<img src="img/shoudong.png" class="runingstate" /><span style="color:rgb(148,107,37)" > 手动 </span> ';
+			}
+			if (item.Status == "待机"){
+				statusStr = '<img src="img/daiji.png" class="runingstate" /><span style="color:rgb(113,111,111)" > 待机 </span> ' ;
+			}
+			if (item.Status == "通讯中断"){
+				statusStr = '<img src="img/zhongduan.png" class="runingstate" /><span style="color:rgb(231,24,26)" > 中断 </span>' ;
+			}
+			linestr = linestr.replace(/!!status!!/g, statusStr );
+			 
+			 
+			linestr = linestr.replace(/!!ExceptionCount!!/g, item.ExceptionCount);
+			
+			 
+			liststrs = liststrs + linestr;
+		});
+		$("#showStationlistcontent").html(liststrs ) ;
+		
+		setTimeout("showStationlist("+url+")", 30000);
+	});
+	
+}
+var V = new Array();
+function showWorkshoplist(){
+	$("#workshoplistcontent").html("") ;
+	showLoading();
+    var linestrorig =  ' <a href="#stationlist" onclick="javascript:showStationlist(\'/jgetlineinfo?workshop=!!WsName!! \')">   \
+						<TABLE class="tableheaderlistcontent"   > \
+								\
+							   <TR> \
+									<TH  >!!WsName!!</TH> \
+									<TH >!!SumDay!!</TH> \
+									<TH style="color:!!color!!" >!!%%!!%</TH> \
+									<TH  >!!X-Y!!</TH> \
+									<TH  ><img src="img/!!downup!!.png" class="ui-li-icon"> !!V!!</TH> \
+								  \
+							 </TR>  \
+                                      \
+						</TABLE></a>  ' ;
+	var liststrs="";
+	$.getJSON("/jgetwsinfo",null,function(data){ 
+		 
+		$.each(data,function(idx,item){ 
+			/*if(idx==0){ 
+				 return true;//同countinue，返回false同break 
+			}  */
+			hideLoading();
+			linestr = linestrorig ;
+			 
+			linestr = linestr.replace(/!!WsName!!/g,item.WsName);
+			 
+			linestr = linestr.replace(/!!SumDay!!/g,item.SumDay);
+			var rate = parseInt(item.SumDay )/parseInt(item.PlanSumDay) *100;
+			if (rate < 1) linestr = linestr.replace(/!!color!!/g,"green");
+			if (rate == 1) linestr = linestr.replace(/!!color!!/g,"white");
+			if (rate > 1) linestr = linestr.replace(/!!color!!/g,"red");
+			linestr = linestr.replace(/!!%%!!/g,rate.toFixed(2));
+			linestr = linestr.replace(/!!V!!/g,item.Velocity);
+			
+			if (typeof V[idx] == 'undefined'){
+			    V[idx] = item.Velocity;
+				linestr = linestr.replace(/!!downup!!/g,"equalicon");
+			}else{
+				rate = parseInt(item.Velocity) - parseInt(V[idx]);
+				 
+				if (rate < 0) linestr = linestr.replace(/!!downup!!/g,"downicon");
+				if (rate == 0) linestr = linestr.replace(/!!downup!!/g,"equalicon");
+				if (rate > 0) linestr = linestr.replace(/!!downup!!/g,"upicon");
+			
+			}
+			 
+			linestr = linestr.replace(/!!X-Y!!/g, item.LineCountAuto +"/"+item.LineCount);
+			
+			 
+			liststrs = liststrs + linestr;
+		});
+		$("#workshoplistcontent").html(liststrs ) ;
+		
+		setTimeout("showWorkshoplist()", 30000);
+	});
+			
+	
+	
+}
 
 function  showtabl(headerstr){
 	var fontsize = 9;
