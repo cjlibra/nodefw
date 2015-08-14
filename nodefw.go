@@ -6,6 +6,7 @@ import (
 	"crypto/cipher"
 	"flag"
 	"io/ioutil"
+	"math"
 	"os"
 	"os/signal"
 	"strconv"
@@ -1068,6 +1069,7 @@ type LINEINFO struct {
 	Velocity       int
 	Status         string
 	UpdateTime     string
+	TimeLast       string
 	ExceptionCount int
 }
 
@@ -1111,6 +1113,25 @@ func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
 		checkError(err1)
 		lineinfos[indexnum].PlanSumDay = rows1[0].Int(res1.Map("PlanDay"))
 		lineinfos[indexnum].UpdateTime = rows1[0].Str(res1.Map("UpdateTime"))
+		tm1, et1 := time.Parse("2006-01-02 15:04:05", lineinfos[indexnum].UpdateTime)
+		checkError(et1)
+		tm2, et2 := time.Parse("2006-01-02 15:04:05", now)
+		checkError(et2)
+		var tm2_1 time.Duration = tm2.Sub(tm1)
+		if math.Abs(tm2_1.Minutes()) < 1 {
+			lineinfos[indexnum].TimeLast = fmt.Sprintf("%s秒", strconv.FormatFloat(tm2_1.Seconds(), 'f', 1, 64))
+		} else {
+			if math.Abs(tm2_1.Hours()) < 1 {
+				lineinfos[indexnum].TimeLast = fmt.Sprintf("%s分", strconv.FormatFloat(tm2_1.Minutes(), 'f', 1, 64))
+			} else {
+				if math.Abs(tm2_1.Hours()) < 24 {
+					lineinfos[indexnum].TimeLast = fmt.Sprintf("%s小时", strconv.FormatFloat(tm2_1.Hours(), 'f', 1, 64))
+				} else {
+
+					lineinfos[indexnum].TimeLast = fmt.Sprintf("%s天", strconv.FormatFloat(tm2_1.Hours()/24, 'f', 1, 64))
+				}
+			}
+		}
 
 		rows2, res2, err2 := db.Query("select  sum(UPH) from uph_station  where to_days(Hours) = to_days('%s') and StationID = %d ", now, lineinfos[indexnum].LineID)
 		checkError(err2)
@@ -1128,9 +1149,9 @@ func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
 
 		lineinfos[indexnum].Status = rows3[0].Str(res3.Map("StationStatus"))
 
-		rows4, res4, err4 := db.Query("select count(AlarmID) from alarms_active where to_days(StartTime) = to_days('%s') and StationID = %d ", now, lineinfos[indexnum].LineID)
+		rows4, res4, err4 := db.Query("select count(*) from alarms as al, stations as s where AlarmStatus = 'active' and (al.MachineID = s.LoaderID or al.MachineID = s.UnloaderID) and s.LineID = %d and to_days(StartTime) = to_days('%s')   ", lineinfos[indexnum].LineID, now)
 		checkError(err4)
-		lineinfos[indexnum].ExceptionCount = rows4[0].Int(res4.Map("count(AlarmID)"))
+		lineinfos[indexnum].ExceptionCount = rows4[0].Int(res4.Map("count(*)"))
 	}
 	b, err := json.Marshal(lineinfos)
 	if err != nil {
