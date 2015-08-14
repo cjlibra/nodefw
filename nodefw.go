@@ -1113,26 +1113,29 @@ func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
 		checkError(err1)
 		lineinfos[indexnum].PlanSumDay = rows1[0].Int(res1.Map("PlanDay"))
 		lineinfos[indexnum].UpdateTime = rows1[0].Str(res1.Map("UpdateTime"))
-		tm1, et1 := time.Parse("2006-01-02 15:04:05", lineinfos[indexnum].UpdateTime)
-		checkError(et1)
-		tm2, et2 := time.Parse("2006-01-02 15:04:05", now)
-		checkError(et2)
-		var tm2_1 time.Duration = tm2.Sub(tm1)
-		if math.Abs(tm2_1.Minutes()) < 1 {
-			lineinfos[indexnum].TimeLast = fmt.Sprintf("%s秒", strconv.FormatFloat(tm2_1.Seconds(), 'f', 1, 64))
-		} else {
-			if math.Abs(tm2_1.Hours()) < 1 {
-				lineinfos[indexnum].TimeLast = fmt.Sprintf("%s分", strconv.FormatFloat(tm2_1.Minutes(), 'f', 1, 64))
+		if lineinfos[indexnum].UpdateTime != "" {
+			tm1, et1 := time.Parse("2006-01-02 15:04:05", lineinfos[indexnum].UpdateTime)
+			checkError(et1)
+			tm2, et2 := time.Parse("2006-01-02 15:04:05", now)
+			checkError(et2)
+			var tm2_1 time.Duration = tm2.Sub(tm1)
+			if math.Abs(tm2_1.Minutes()) < 1 {
+				lineinfos[indexnum].TimeLast = fmt.Sprintf("%s秒", strconv.FormatFloat(tm2_1.Seconds(), 'f', 1, 64))
 			} else {
-				if math.Abs(tm2_1.Hours()) < 24 {
-					lineinfos[indexnum].TimeLast = fmt.Sprintf("%s小时", strconv.FormatFloat(tm2_1.Hours(), 'f', 1, 64))
+				if math.Abs(tm2_1.Hours()) < 1 {
+					lineinfos[indexnum].TimeLast = fmt.Sprintf("%s分", strconv.FormatFloat(tm2_1.Minutes(), 'f', 1, 64))
 				} else {
+					if math.Abs(tm2_1.Hours()) < 24 {
+						lineinfos[indexnum].TimeLast = fmt.Sprintf("%s小时", strconv.FormatFloat(tm2_1.Hours(), 'f', 1, 64))
+					} else {
 
-					lineinfos[indexnum].TimeLast = fmt.Sprintf("%s天", strconv.FormatFloat(tm2_1.Hours()/24, 'f', 1, 64))
+						lineinfos[indexnum].TimeLast = fmt.Sprintf("%s天", strconv.FormatFloat(tm2_1.Hours()/24, 'f', 1, 64))
+					}
 				}
 			}
+		} else {
+			lineinfos[indexnum].TimeLast = "没有参数"
 		}
-
 		rows2, res2, err2 := db.Query("select  sum(UPH) from uph_station  where to_days(Hours) = to_days('%s') and StationID = %d ", now, lineinfos[indexnum].LineID)
 		checkError(err2)
 		lineinfos[indexnum].SumDay = rows2[0].Int(res2.Map("sum(UPH)"))

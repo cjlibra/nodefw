@@ -30,10 +30,23 @@ $(document).on("pageshow", "#workshoplist", function(){
 	showWorkshoplist();
 	
 });
+$(document).on("pagehide", "#workshoplist", function(){
+	
+	 V = [];
+	 clearTimeout(iTime);
+	
+});
 
 $(document).on("pageshow", "#stationlist", function(){
 	
 	//showStationlist();
+	
+});
+$(document).on("pagehide", "#stationlist", function(){
+	
+	 
+	VV = [];
+	clearTimeout(iTime);
 	
 });
 $(document).on("pageshow", "#shebeixiangqing", function(){
@@ -226,13 +239,14 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
  
     $("#main2").hide(); 
 });
-
+var iTime;
 var VV = new Array();
 function showStationlist(url){
 	$("#showStationlistcontent").html("");
+	$("#workshopname").text( url.split("=")[1]);
 	showLoading();
 	
-	var linestrorig =  ' <a href="javascript:gotoshebeixiangqing();">   \
+	var linestrorig =  ' <a href="#shebeixiangqing" onclick="javascript:getLineInfo(\"!!LineID!!\");">   \
 							  <TABLE class="tableheaderlistcontent"   > \
 									\
 								   <TR>           \
@@ -243,7 +257,7 @@ function showStationlist(url){
 										<TH  >              \
 										!!status!!  \
 										</TH>         \
-										<TH >!!TimeLast!!xx秒</TH>         \
+										<TH >!!TimeLast!!</TH>         \
 										<TH >!!ExceptionCount!!</TH>       \
 								 </TR>      \
                                           \
@@ -300,7 +314,7 @@ function showStationlist(url){
 			}
 			linestr = linestr.replace(/!!status!!/g, statusStr );
 			 
-			 
+			linestr = linestr.replace(/!!TimeLast!!/g, item.TimeLast);
 			linestr = linestr.replace(/!!ExceptionCount!!/g, item.ExceptionCount);
 			
 			 
@@ -308,7 +322,7 @@ function showStationlist(url){
 		});
 		$("#showStationlistcontent").html(liststrs ) ;
 		
-		setTimeout("showStationlist("+url+")", 30000);
+		iTime = setTimeout("showStationlist("+url+")", 30000);
 	});
 	
 }
@@ -368,9 +382,81 @@ function showWorkshoplist(){
 		});
 		$("#workshoplistcontent").html(liststrs ) ;
 		
-		setTimeout("showWorkshoplist()", 30000);
+		iTime = setTimeout("showWorkshoplist()", 30000);
 	});
 			
+	
+	
+}
+function clearLineInfo(){
+	$("#workshop").text("");
+	$("#linetype").text("");
+	$("#MachineID").text("");
+	$("#MachineName").text("");
+	$("#MachineType").text("");
+	$("#TotalOutput").text("");
+	$("#CurOutput").text("");
+	$("#CurTotalOutput").text("");
+	$("#CurPartNum").text("");
+	$("#CurBatchNum").text("");
+	$("#UpdateTime").text("");
+	$("#LoaderStatus").text("");
+	
+	$("#MachineID1").text("");
+	$("#MachineName1").text("");
+	$("#MachineType1").text("");
+	$("#TotalOutput1").text("");
+	$("#CurOutput1").text("");
+	$("#CurTotalOutput1").text("");
+	$("#CurPartNum1").text("");
+	$("#CurBatchNum1").text("");
+	$("#UpdateTime1").text("");
+	$("#UnloaderStatus1").text("");
+			
+}
+function getLineInfo(lineid){
+	 
+	
+	clearLineInfo(); 
+	$.getJSON("/infoloaderbylineid?lineid="+lineid+"&&loader=1" ,null,function(data){ 
+				
+			 
+			$("#workshop").text(data.Workshop);
+			$("#linetype").text(data.LineType);
+			$("#MachineID").text(data.MachineID);
+			$("#MachineName").text(data.MachineName);
+			$("#MachineType").text(data.MachineType);
+			$("#TotalOutput").text(data.TotalOutput);
+			$("#CurOutput").text(data.CurOutput);
+			$("#CurTotalOutput").text(data.CurTotalOutput);
+			$("#CurPartNum").text(data.CurPartNum);
+			$("#CurBatchNum").text(data.CurBatchNum);
+			$("#UpdateTime").text(data.UpdateTime);
+			$("#LoaderStatus").text(data.LoaderStatus);
+			
+		 $("#shebeixiangqing .headernameword").text(data.Workshop+" L"+ lineid+" "+data.LineType);
+	}); 
+	
+	 $.getJSON("/infoloaderbylineid?lineid="+lineid+"&&loader=0" ,null,function(data){ 
+				
+			 
+			//$("#workshop").text(data.Workshop);
+			//$("#linetype").text(data.LineType);
+			$("#MachineID1").text(data.MachineID);
+			$("#MachineName1").text(data.MachineName);
+			$("#MachineType1").text(data.MachineType);
+			$("#TotalOutput1").text(data.TotalOutput);
+			$("#CurOutput1").text(data.CurOutput);
+			$("#CurTotalOutput1").text(data.CurTotalOutput);
+			$("#CurPartNum1").text(data.CurPartNum);
+			$("#CurBatchNum1").text(data.CurBatchNum);
+			$("#UpdateTime1").text(data.UpdateTime);
+			$("#UnloaderStatus1").text(data.UnloaderStatus);
+			
+		 
+	}); 
+	
+	
 	
 	
 }
