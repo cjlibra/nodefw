@@ -69,6 +69,9 @@ $(document).on("pagehide", "#shebeixiangqing", function(){
 $(document).on("pageshow", "#huodongbaojing", function(){
 	  
 	showtabl("#huodongbaojing");
+	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
+	var lineid = g_lineid ;
+	showgaojingcontent(lineid);
 	
 	  
 	  
@@ -239,6 +242,50 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
  
     $("#main2").hide(); 
 });
+function showgaojingcontent(lineid){
+	$("#huodongbaojing > .begintablecontent").html("");
+	showLoading();
+	var linestrorig =   '  <TABLE class="tableheaderlistcontent"   >      \
+							   <TR>    \
+									<TH  >!!MachineType!!</TH>  \
+									<TH >!!ExceptionCode!!</TH>   \
+									<TH  > !!ErrorDesc!!       </TH>   \
+									<TH  >!!ErrorTime!! </TH>			  \
+							   </TR>    \
+				        </TABLE> ' ;
+	var liststrs="";
+	$.getJSON("/jgetalarms?lineid="+lineid,null,function(data){ 
+		 
+		$.each(data,function(idx,item){ 
+			/*if(idx==0){ 
+				 return true;//同countinue，返回false同break 
+			}  */
+			hideLoading();
+			linestr = linestrorig ;
+			 
+			var tmpType = item.MachineType;
+			if (item.MachineType =="Loader") {
+				tmpType = "放板机";
+			}else{
+			    if (item.MachineType =="Unloader") {
+					tmpType = "收板机";
+				} 
+			}
+			linestr = linestr.replace(/!!MachineType!!/g,tmpType);
+			 
+			linestr = linestr.replace(/!!ExceptionCode!!/g,item.ExceptionCode);
+			linestr = linestr.replace(/!!ErrorDesc!!/g,item.ErrorDesc);
+			linestr = linestr.replace(/!!ErrorTime!!/g,item.ErrorTime);
+			
+			liststrs = liststrs + linestr;
+	    });
+		$("#huodongbaojing > .begintablecontent").html(liststrs ) ;
+	});
+	
+	
+		
+	iTime = setTimeout("showgaojingcontent("+lineid+")", 30000);
+}
 var iTime;
 var VV = new Array();
 function showStationlist(url){
@@ -246,7 +293,7 @@ function showStationlist(url){
 	$("#workshopname").text( url.split("=")[1]);
 	showLoading();
 	
-	var linestrorig =  ' <a href="#shebeixiangqing" onclick="javascript:getLineInfo(\"!!LineID!!\");">   \
+	var linestrorig =  ' <a href="#shebeixiangqing" onclick="javascript:getLineInfo(\'!!LineID!!\',\'!!nowstate!!\')">   \
 							  <TABLE class="tableheaderlistcontent"   > \
 									\
 								   <TR>           \
@@ -313,7 +360,7 @@ function showStationlist(url){
 				statusStr = '<img src="img/zhongduan.png" class="runingstate" /><span style="color:rgb(231,24,26)" > 中断 </span>' ;
 			}
 			linestr = linestr.replace(/!!status!!/g, statusStr );
-			 
+			linestr = linestr.replace(/!!nowstate!!/g, item.Status ); 
 			linestr = linestr.replace(/!!TimeLast!!/g, item.TimeLast);
 			linestr = linestr.replace(/!!ExceptionCount!!/g, item.ExceptionCount);
 			
@@ -414,9 +461,9 @@ function clearLineInfo(){
 	$("#UnloaderStatus1").text("");
 			
 }
-function getLineInfo(lineid){
+function getLineInfo(lineid,nowstate){
 	 
-	
+	g_lineid  = lineid;
 	clearLineInfo(); 
 	$.getJSON("/infoloaderbylineid?lineid="+lineid+"&&loader=1" ,null,function(data){ 
 				
@@ -434,7 +481,7 @@ function getLineInfo(lineid){
 			$("#UpdateTime").text(data.UpdateTime);
 			$("#LoaderStatus").text(data.LoaderStatus);
 			
-		 $("#shebeixiangqing .headernameword").text(data.Workshop+" L"+ lineid+" "+data.LineType);
+		 $(".headernameword").text(data.Workshop+" L"+ lineid+" "+data.LineType);
 	}); 
 	
 	 $.getJSON("/infoloaderbylineid?lineid="+lineid+"&&loader=0" ,null,function(data){ 
@@ -455,12 +502,45 @@ function getLineInfo(lineid){
 			
 		 
 	}); 
-	
+	removeClassFunc($(".headerleftname"));//.removeClass(["backrunning","backstop","backhandle","backwait","backbroken"]);
+	removeClassFunc($(".headerrightpic"));//.removeClass(["backrunning","backstop","backhandle","backwait","backbroken"]);
+	if (nowstate == "自动运行中"){
+		
+		$(".headerleftname").addClass("backrunning");
+		$(".headerrightpic").addClass("backrunning");
+		$(".headerrightpic > img").prop("src","img/yunxingstate.png");
+	}
+	if (nowstate == "停止"){
+		$(".headerleftname").addClass("backstop");
+		$(".headerrightpic").addClass("backstop");
+		$(".headerrightpic > img").prop("src","img/tingzhistate.png");
+	}
+	if (nowstate == "手动"){
+		$(".headerleftname").addClass("backhandle");
+		$(".headerrightpic").addClass("backhandle");
+		$(".headerrightpic > img").prop("src","img/shoudongstate.png");
+	}
+	if (nowstate == "待机"){
+		$(".headerleftname").addClass("backwait");
+		$(".headerrightpic").addClass("backwait");
+		$(".headerrightpic > img").prop("src","img/daijistate.png");
+	}
+	if (nowstate == "通讯中断"){
+		$(".headerleftname").addClass("backbroken");
+		$(".headerrightpic").addClass("backbroken");
+		$(".headerrightpic > img").prop("src","img/zhongduanstate.png");
+	}
 	
 	
 	
 }
-
+function removeClassFunc(obj){
+	obj.removeClass("backrunning");
+	obj.removeClass("backstop");
+	obj.removeClass("backhandle");
+	obj.removeClass("backwait");
+	obj.removeClass("backbroken");
+}
 function  showtabl(headerstr){
 	var fontsize = 9;
 	var viewheight = $(window).height();

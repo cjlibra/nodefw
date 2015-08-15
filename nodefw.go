@@ -992,7 +992,8 @@ type WSINFO struct {
 	Velocity      int
 }
 
-var now = "2014-12-05 07:12:34"
+//var now = "2014-12-05 07:12:34"
+var now = "2014-10-11 07:12:34"
 
 func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -1166,6 +1167,61 @@ func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
 
 }
 
+type ALARMINFO struct {
+	MachineType   string
+	ExceptionCode string
+	ErrorDesc     string
+	ErrorTime     string
+}
+
+func jgetalarms(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("获取告警")
+	lineid := r.FormValue("lineid")
+
+	glog.Infoln("流水线号：", lineid)
+	if lineid == "" {
+
+		glog.Errorln("error input! no lineid")
+		return
+	}
+	db := opendb()
+	if db == nil {
+		return
+	}
+	defer db.Close()
+
+	res, err := db.Start("select machines.MachineClass , alarms.AlarmCode , alarms.AlarmDescription , alarms.StartTime from alarms inner join machines inner join stations on machines.MachineID = alarms.MachineID and (stations.LoaderID = alarms.MachineID or stations.UnloaderID = alarms.MachineID)   where stations.LineID = %s and  to_days('%s') - to_days(alarms.StartTime)  <= 7 and to_days('%s') - to_days(alarms.StartTime) > 0 order by alarms.StartTime desc", lineid, now, now)
+	checkError(err)
+	var alarminfo ALARMINFO
+	var alarminfos []ALARMINFO
+	for {
+		row, err := res.GetRow()
+		checkError(err)
+
+		if row == nil {
+			// No more rows
+			break
+		}
+
+		alarminfo.MachineType = row.Str(res.Map("MachineClass"))
+		alarminfo.ExceptionCode = row.Str(res.Map("AlarmCode"))
+		alarminfo.ErrorDesc = row.Str(res.Map("AlarmDescription"))
+		alarminfo.ErrorTime = row.Str(res.Map("StartTime"))
+
+		alarminfos = append(alarminfos, alarminfo)
+	}
+	b, err := json.Marshal(alarminfos)
+	if err != nil {
+		checkError(err)
+	}
+	//os.Stdout.Write(b)
+	glog.V(2).Infoln(string(b))
+	w.Write(b)
+
+}
+
 var _ = fmt.Println
 var lasting int = 0
 var inputFile = "./htmlsrc/js/config.js"
@@ -1188,6 +1244,7 @@ func main() {
 
 	http.HandleFunc("/jgetwsinfo", jgetwsinfo)
 	http.HandleFunc("/jgetlineinfo", jgetlineinfo)
+	http.HandleFunc("/jgetalarms", jgetalarms)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")
