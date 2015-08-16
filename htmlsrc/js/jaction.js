@@ -36,9 +36,9 @@ $(document).on("pagehide", "#workshoplist", function(){
 	 clearTimeout(iTime);
 	
 });
-
+var g_url;
 $(document).on("pageshow", "#stationlist", function(){
-	
+	if (typeof g_url == "undefined") {window.location.href="#workshoplist"; return;} 
 	//showStationlist();
 	
 });
@@ -50,7 +50,7 @@ $(document).on("pagehide", "#stationlist", function(){
 	
 });
 $(document).on("pageshow", "#shebeixiangqing", function(){
-	  
+	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;} 
 	showtabl("#shebeixiangqing");
 	$("#tabdev1").addClass("tabtab");
 	$("#tabdev2").removeClass("tabtab");
@@ -86,6 +86,9 @@ $(document).on("pagehide", "#huodongbaojing", function(){
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	  
 	showtabl("#shebeitongjitubiao");
+	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
+	var lineid = g_lineid;
+	showTongjitubiao(lineid)
 	
 	  
 	  
@@ -121,99 +124,71 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	 var divbutheight = $(".floatpicbuts").height();
 	 var winheight = $(window).height() ;
 	 var bottommargin = (winheight - divbutheight)/2;
-	// $(".floatpicbuts").css("margin-bottom",bottommargin+"px");
+	
 	 $("#main1").css("height" , winheight - 120 + "px");
 	 $("#main2").css("height" , winheight - 120 + "px");
-	 console.log(winheight);
-	  console.log(divbutheight);
-	 option2 = {
-		tooltip: {
-			show: true
-		},
-		legend: {
-			data:['日产量','目标产量','产量累计线']
-		},
-		grid : {
-			x : 25 ,
-			x2 : 25
-		},
-		xAxis : [
-			{
-				type : 'category',
-				data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
-			}
-		],
-		yAxis : [
-			{
-				type : 'value'
-			}
-		],
-		series : [
-			{
-				"name":"日产量",
-				"type":"bar",
-				"data":[1, 30, 50, 20, 20, 30]
-			},
-			 {
-						"name":"目标产量",
-						"type":"line",
-						"data":[50, 50,50, 50, 50, 50]
-			 },
-			  {
-						"name":"产量累计线",
-						"type":"line",
-						"data":[150, 200, 220, 240, 300, 320]
-			  }
-		]
-	};
-
-	drawechart("main2",option2);
 	
-	 
-                    
-	 option1 = {
-		tooltip: {
-			show: true
-		},
-		legend: {
-			data:['小时产量','目标产量','产量累计线']
-		},
-		grid : {
-			x : 25 ,
-			x2 : 25
-		},
-		xAxis : [
-			{
-				type : 'category',
-				data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
-			}
-		],
-		yAxis : [
-			{
-				type : 'value'
-			}
-		],
-		series : [
-			{
-				"name":"小时产量",
-				"type":"bar",
-				"data":[15, 5, 2, 2, 6, 2]
-			}
-			,
-			 {
-						"name":"目标产量",
-						"type":"line",
-						"data":[15, 15,15, 15, 15, 15]
-			 },
-			  {
-						"name":"产量累计线",
-						"type":"line",
-						"data":[15, 20, 22, 24, 30, 32]
-			  }
-		]
-	};
-
-	 drawechart("main1",option1);
+    var loption1= {
+			tooltip: {
+				show: true
+			},
+			legend: {
+				data:['自动运行时间','小时目标产量','每小时产量']
+			},
+			grid : {
+				x : 35 ,
+				x2 : 35
+			},
+			xAxis : [
+				{
+					type : 'category',
+					data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24" ]
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					"name":"",
+					"type":"bar",
+					"data":[],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"",
+					"type":"line",
+					"data":[],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"",
+					"type":"line",
+					"data":[],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				}
+			]
+		};
+	drawechart("main2",loption1);
+	drawechart("main1",loption1);
+	showLoading();
 		
 		 
 	  
@@ -223,6 +198,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	    
 		  $("#main2").hide();
 		  $("#main1").show();
+		   drawechart("main1",0);
 		  drawechart("main1",option1);
 		  $(".centerechartname").text("当日产量统计图-小时产量");
 		 	 
@@ -232,7 +208,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	 
 		$("#main1").hide();
 		$("#main2").show();
-		drawechart("main2",option2);
+		 drawechart("main2",0);
+	    drawechart("main2",option2);
 		$(".centerechartname").text("本月产量统计图-日产量");
   
 	});
@@ -242,6 +219,281 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
  
     $("#main2").hide(); 
 });
+//var time1 = new Date().Format("yyyy-mm-dd");
+var data = new Date();
+var year = data.getFullYear();  //获取年
+var month = data.getMonth() + 1;    //获取月
+var day = data.getDate(); //获取日
+nowstr = year+"-"+month+"-"+day ;
+nowatr = "2014-12-08";
+function showTongjitubiao(lineid){
+	var atype=0 ;
+	var aunit=0 ;
+	var adays = 0;
+	var adate = nowatr;
+	var url = "/datatochart?atype="+atype+"&aunit="+aunit+"&adate="+adate+"&adays="+adays+"&lineid="+lineid ;
+	$.getJSON(url,null,function(data){ 
+		   hideLoading();
+		   setechart0(data);
+		 
+	});
+	atype= 1 ;
+	aunit= 1 ;
+	adays = 0 ;
+	url = "/datatochart?atype="+atype+"&aunit="+aunit+"&adate="+adate+"&adays="+adays+"&lineid="+lineid ;
+	$.getJSON(url,null,function(data){ 
+		   hideLoading();
+		   setechart1(data);
+		 
+	});
+	
+}
+
+var option1;
+var option2;
+function setechart0(data){
+	option1= {
+			tooltip: {
+				show: true
+			},
+			legend: {
+				data:['每小时产量','日目标产量','累计产量']
+			},
+			grid : {
+				x : 55 ,
+				x2 : 55
+			},
+			xAxis : [
+				{
+					type : 'category',
+					data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24" ]
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					"name":"每小时产量",
+					"type":"bar",
+					"data":[5, 20, 40, 10, 10, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"日目标产量",
+					"type":"line",
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"累计产量",
+					"type":"line",
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				}
+			]
+		};
+	 
+		
+		
+		option1.legend.data[0]="每小时产量";
+		option1.legend.data[1]="日目标产量";
+		option1.legend.data[2]="累计产量";
+		option1.series[0].name=option1.legend.data[0];
+		option1.series[1].name=option1.legend.data[1];
+		option1.series[2].name=option1.legend.data[2];
+		var sumval = data.Plan.PlanDay  ;
+		option1.series[0].data=[];
+		option1.series[1].data=[];
+		option1.series[2].data=[];
+		for (var i=0;i<24;i++){
+		   option1.series[1].data.push(sumval);
+		   option1.series[2].data.push(0);
+		   option1.series[0].data.push(0);
+		}
+	 
+	
+	if (data.Uphstations==null  ) {
+		 
+		drawechart("main1",0);
+	 
+	}else{
+			 
+			$.each(data.Uphstations,function(idx,item){ 
+				
+					var  thehours = item.Hours.split(" ");
+					var thehour = parseInt(thehours[1]);
+			
+					option1.series[0].data[thehour] = item.UPH;
+				
+					 
+			}); 
+			
+		
+			var sumwhole = 0;
+			for (var i=0;i<24;i++){
+				sumwhole = sumwhole+option1.series[0].data[i];
+				option1.series[2].data[i] = sumwhole;
+
+			}
+		
+			drawechart("main1",option1);			
+
+		
+    }
+	
+
+}
+function setechart1(data){
+
+     option2= {
+			tooltip: {
+				show: true
+			},
+			legend: {
+				data:['每日产量','月目标产量','累计产量']
+			},
+			grid : {
+				x : 55 ,
+				x2 : 55
+			},
+			xAxis : [
+				{
+					type : 'category',
+					data : ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					"name":"每日产量",
+					"type":"bar",
+					"data":[5, 20, 40, 10, 10, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"月目标产量",
+					"type":"line",
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				},
+				 {
+					"name":"累计产量",
+					"type":"line",
+					"data":[15, 30, 30, 10, 20, 20],
+					markPoint : {
+							data : [
+								{type : 'max', name: '最大值'},
+								{type : 'min', name: '最小值'}
+							]
+						}
+				}
+			]
+		};
+		
+		var objnow = new Date(nowstr);  
+		var daysofthemonth = DaysOfMonth( objnow); 
+		 
+		var dayval = data.Plan.PlanDay  ;
+		
+		option2.legend.data[0]="每日产量";
+		option2.legend.data[1]="月目标产量";
+		option2.legend.data[2]="累计产量";
+		option2.series[0].name=option2.legend.data[0];
+		option2.series[1].name=option2.legend.data[1];
+		option2.series[2].name=option2.legend.data[2];
+		var sumval = data.Plan.PlanMonth  ;
+		option2.series[0].data=[];
+		option2.series[1].data=[];
+		option2.series[2].data=[];
+		for (var i=0;i<daysofthemonth;i++){
+		   option2.series[1].data.push(sumval);
+		   option2.series[2].data.push(0);
+		   option2.series[0].data.push(0);
+		}
+		
+	
+	
+	if (data.Updstations==null  ) {
+		 
+		
+		drawechart("main2",0);
+		
+		 
+		 
+		
+	}else{
+		
+		$.each(data.Updstations,function(idx,item){ 
+			
+				var  thedays = item.Days.split("-");
+				var theday = parseInt(thedays[2]);
+			
+				option2.series[0].data[theday-1] = item.UPD;
+		
+				 
+				 
+		}); 
+		var sumwhole = 0;
+		for (var i=0;i<daysofthemonth;i++){
+			sumwhole = sumwhole+option2.series[0].data[i];
+			option2.series[2].data[i] = sumwhole;
+		
+		}
+	
+	
+	    drawechart("main2",option2);
+    }
+	 
+	 
+	
+
+
+}
+function DaysOfMonth(dateval)
+{
+	var month = dateval.getMonth();
+	 
+	var year = dateval.getFullYear();
+	var day = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+	{
+		day[1] = 29;
+	}
+	 
+	return day[month ];
+}
 function showgaojingcontent(lineid){
 	$("#huodongbaojing > .begintablecontent").html("");
 	showLoading();
@@ -289,6 +541,7 @@ function showgaojingcontent(lineid){
 var iTime;
 var VV = new Array();
 function showStationlist(url){
+	g_url = url;
 	$("#showStationlistcontent").html("");
 	$("#workshopname").text( url.split("=")[1]);
 	showLoading();
