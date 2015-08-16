@@ -993,7 +993,8 @@ type WSINFO struct {
 }
 
 //var now = "2014-12-05 07:12:34"
-var now = "2014-10-11 07:12:34"
+//var now = "2014-10-11 07:12:34"
+var now = time.Now().Format("2006-01-02 15:04:05")
 
 func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -1222,6 +1223,21 @@ func jgetalarms(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func jconfig(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	glog.Info(r.RemoteAddr)
+	glog.Infoln("配置程序")
+	nowdate := r.FormValue("now")
+	if nowdate == "" {
+		now = time.Now().Format("2006-01-02 15:04:05")
+		w.Write([]byte(now))
+		return
+	}
+	now = nowdate
+	w.Write([]byte(now))
+
+}
+
 var _ = fmt.Println
 var lasting int = 0
 var inputFile = "./htmlsrc/js/config.js"
@@ -1245,6 +1261,7 @@ func main() {
 	http.HandleFunc("/jgetwsinfo", jgetwsinfo)
 	http.HandleFunc("/jgetlineinfo", jgetlineinfo)
 	http.HandleFunc("/jgetalarms", jgetalarms)
+	http.HandleFunc("/jconfig", jconfig)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")

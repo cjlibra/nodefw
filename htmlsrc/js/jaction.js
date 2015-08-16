@@ -33,7 +33,7 @@ $(document).on("pageshow", "#workshoplist", function(){
 $(document).on("pagehide", "#workshoplist", function(){
 	
 	 V = [];
-	 clearTimeout(iTime);
+	 clearTimeout(iTime1);
 	
 });
 var g_url;
@@ -46,7 +46,7 @@ $(document).on("pagehide", "#stationlist", function(){
 	
 	 
 	VV = [];
-	clearTimeout(iTime);
+	clearTimeout(iTime2);
 	
 });
 $(document).on("pageshow", "#shebeixiangqing", function(){
@@ -79,6 +79,7 @@ $(document).on("pageshow", "#huodongbaojing", function(){
 $(document).on("pagehide", "#huodongbaojing", function(){
 	  
 	$(".tabindex").hide();
+	clearTimeout(iTime3);
 	
 	  
 	  
@@ -494,6 +495,7 @@ function DaysOfMonth(dateval)
 	 
 	return day[month ];
 }
+var iTime3;
 function showgaojingcontent(lineid){
 	$("#huodongbaojing > .begintablecontent").html("");
 	showLoading();
@@ -536,9 +538,9 @@ function showgaojingcontent(lineid){
 	
 	
 		
-	iTime = setTimeout("showgaojingcontent("+lineid+")", 30000);
+	iTime3 = setTimeout("showgaojingcontent("+lineid+")", 30000);
 }
-var iTime;
+var iTime2;
 var VV = new Array();
 function showStationlist(url){
 	g_url = url;
@@ -585,7 +587,7 @@ function showStationlist(url){
 			linestr = linestr.replace(/!!Velocity!!/g,item.Velocity);
 			
 			if (typeof VV[idx] == 'undefined'){
-			    VV[idx] = item.Velocity;
+			    
 				linestr = linestr.replace(/!!downup!!/g,"equalicon");
 			}else{
 				rate = parseInt(item.Velocity) - parseInt(VV[idx]);
@@ -595,6 +597,7 @@ function showStationlist(url){
 				if (rate > 0) linestr = linestr.replace(/!!downup!!/g,"upicon");
 			
 			}
+			VV[idx] = item.Velocity;
 			
 			var statusStr = "" ;
 			if (item.Status == "自动运行中"){
@@ -622,10 +625,14 @@ function showStationlist(url){
 		});
 		$("#showStationlistcontent").html(liststrs ) ;
 		
-		iTime = setTimeout("showStationlist("+url+")", 30000);
+		
 	});
-	
+	 
+	iTime2 = setTimeout("showStationlist('"+url+"')", 30000);
+	//iTime2 = setTimeout("alert('l')", 5000);
+	 
 }
+var iTime1;
 var V = new Array();
 function showWorkshoplist(){
 	$("#workshoplistcontent").html("") ;
@@ -664,7 +671,7 @@ function showWorkshoplist(){
 			linestr = linestr.replace(/!!V!!/g,item.Velocity);
 			
 			if (typeof V[idx] == 'undefined'){
-			    V[idx] = item.Velocity;
+			   
 				linestr = linestr.replace(/!!downup!!/g,"equalicon");
 			}else{
 				rate = parseInt(item.Velocity) - parseInt(V[idx]);
@@ -674,6 +681,7 @@ function showWorkshoplist(){
 				if (rate > 0) linestr = linestr.replace(/!!downup!!/g,"upicon");
 			
 			}
+			V[idx] = item.Velocity;
 			 
 			linestr = linestr.replace(/!!X-Y!!/g, item.LineCountAuto +"/"+item.LineCount);
 			
@@ -682,7 +690,8 @@ function showWorkshoplist(){
 		});
 		$("#workshoplistcontent").html(liststrs ) ;
 		
-		iTime = setTimeout("showWorkshoplist()", 30000);
+		iTime1 = setTimeout("showWorkshoplist()", 30000);
+		
 	});
 			
 	
