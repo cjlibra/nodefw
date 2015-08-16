@@ -995,8 +995,17 @@ type WSINFO struct {
 //var now = "2014-12-05 07:12:34"
 //var now = "2014-10-11 07:12:34"
 var now = time.Now().Format("2006-01-02 15:04:05")
+var nowflag = 0
 
+func setNowTime() {
+	if nowflag == 1 {
+		return
+	}
+	now = time.Now().Format("2006-01-02 15:04:05")
+
+}
 func jgetwsinfo(w http.ResponseWriter, r *http.Request) {
+	setNowTime()
 	r.ParseForm()
 	glog.Info(r.RemoteAddr)
 	glog.Infoln("获取车间")
@@ -1076,6 +1085,7 @@ type LINEINFO struct {
 }
 
 func jgetlineinfo(w http.ResponseWriter, r *http.Request) {
+	setNowTime()
 	r.ParseForm()
 	glog.Info(r.RemoteAddr)
 	glog.Infoln("获取流水线")
@@ -1176,6 +1186,7 @@ type ALARMINFO struct {
 }
 
 func jgetalarms(w http.ResponseWriter, r *http.Request) {
+	setNowTime()
 	r.ParseForm()
 	glog.Info(r.RemoteAddr)
 	glog.Infoln("获取告警")
@@ -1229,10 +1240,11 @@ func jconfig(w http.ResponseWriter, r *http.Request) {
 	glog.Infoln("配置程序")
 	nowdate := r.FormValue("now")
 	if nowdate == "" {
-		now = time.Now().Format("2006-01-02 15:04:05")
-		w.Write([]byte(now))
+		nowflag = 0
+		w.Write([]byte("自动now"))
 		return
 	}
+	nowflag = 1
 	now = nowdate
 	w.Write([]byte(now))
 
