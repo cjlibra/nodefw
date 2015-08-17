@@ -666,10 +666,13 @@ type ZDYB struct { //自定义2  班
 }
 
 func datatochart(w http.ResponseWriter, r *http.Request) {
+    setNowTime()
 	r.ParseForm()
 	lineid := r.FormValue("lineid")
 	adays := r.FormValue("adays")
 	adate := r.FormValue("adate")
+	adate = strings.Split(now, " ")[0]
+	 
 	aunit := r.FormValue("aunit")
 	atype := r.FormValue("atype")
 	glog.Info(r.RemoteAddr)

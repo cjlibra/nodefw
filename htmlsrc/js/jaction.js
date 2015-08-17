@@ -815,6 +815,8 @@ function  showtabl(headerstr){
 	if (headerstr == "#huodongbaojing"){
 	   
 	   $(".tableheaderlist1").css({"width":viewwidth-tabwidth-2+"px" });
+	   
+	   $(".begintablecontent").css({"width":viewwidth-tabwidth-2+"px" });
 	   $(".begintablecontent").css({"margin-top":tableheaderheight+"px"});
 	}
 	if (headerstr == "#shebeixiangqing"){
@@ -831,7 +833,7 @@ function  showtabl(headerstr){
 	console.log(tabwidth);
 	$(".tabindex ").css({"display":"block","right":0+"px" ,"bottom":2+"px" ,"height":contentheight+"px"});
 	$(".tabdev").css({"height":4*fontsize -2+"px" ,"padding-top":(contentheight/3-4*fontsize)/2+"px","padding-bottom":(contentheight/3-4*fontsize)/2+"px"});
-   $(headerstr+" .tableheaderlistcontent").css({"width":viewwidth-tabwidth-2+"px" });
+   $(headerstr+"  .tableheaderlistcontent").css({"width":viewwidth-tabwidth-2+"px" });
    console.log($(".tableheaderlistcontent").css("width"));
 }
 
