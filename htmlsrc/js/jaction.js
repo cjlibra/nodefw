@@ -26,8 +26,22 @@ $(document).on("pageshow", "#login", function(){
 	  
 });
 $(document).on("pageshow", "#workshoplist", function(){
-	
+	 
 	showWorkshoplist();
+	$("body").click(function(e){
+		if (typeof e.target.src == "undefined") {
+	 
+			$(".dropdownmenu").removeClass("showclassdiskplay");
+		}else{
+
+            if (e.target.src.indexOf("menulog.png") < 0){
+				$(".dropdownmenu").removeClass("showclassdiskplay");
+			}
+
+		}		
+			 
+			 
+	});
 	
 });
 $(document).on("pagehide", "#workshoplist", function(){
@@ -915,6 +929,17 @@ function gotomainpage(){
 	document.location.href="#workshoplist";
 	
 }
+
+ 
+function clickMenuRight(){
+	 
+	 
+	$(".dropdownmenu").toggleClass("showclassdiskplay");
+	 
+	  
+	 
+	
+}
 function inputpassword(){
 	
 	document.location.href="#log_on";
@@ -933,5 +958,13 @@ function inputpassword(){
 	
 	
 	
+	
+}
+function closeDoor(){
+	
+	 
+	window.close();
+	document.close();
+	navigator.app.exitApp();  
 	
 }

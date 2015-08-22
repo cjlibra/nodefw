@@ -289,6 +289,39 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	
 	
 }
+
+.dropdownmenu{
+   position:absolute;
+   top:30px;
+   right:2px; 
+   display:none;
+   width:100px;
+   border:1px solid green;
+   text-align:center;
+   background-color:rgb(227,242,245);
+ // background-color:white;
+   z-index:999;
+   padding-left:0px;
+
+}
+.dropdownmenu > li {
+   list-style:none;
+  
+ }
+.dropdownmenu > li > a {
+  
+  text-decoration:none !important;
+ 
+  
+  
+}
+.dropdownmenu > li > a:link    {color:blue;}
+.dropdownmenu > li > a :visited {color:blue;}
+.dropdownmenu > li > a:hover   {color:blue;}
+.dropdownmenu > li > a:active  {color:blue;}
+.showclassdiskplay{
+    display:block;
+}
  
  
  
