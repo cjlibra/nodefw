@@ -69,8 +69,8 @@ var dbinfo *DbInfo
 
 func opendb() mysql.Conn {
 
-	db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
-	//db := mysql.New(dbinfo.Proto, "", dbinfo.Ip+":"+dbinfo.Port, dbinfo.Dbuser, dbinfo.Dbpass, dbinfo.Dbname)
+	//db := mysql.New("tcp", "", "127.0.0.1:3306", "android_server", "123456", "nodefw")
+	db := mysql.New(dbinfo.Proto, "", dbinfo.Ip+":"+dbinfo.Port, dbinfo.Dbuser, dbinfo.Dbpass, dbinfo.Dbname)
 
 	err := db.Connect()
 	if err != nil {
