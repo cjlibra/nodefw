@@ -26,7 +26,7 @@ $(document).on("pageshow", "#login", function(){
 	  
 });
 $(document).on("pageshow", "#workshoplist", function(){
-	 
+	 FixTable("workshopid", 2, 800, 200);
 	showWorkshoplist();
 	$("body").click(function(e){
 		if (typeof e.target.src == "undefined") {
@@ -649,6 +649,7 @@ function showStationlist(url){
 var iTime1;
 var V = new Array();
 function showWorkshoplist(){
+	return;
 	$("#workshoplistcontent").html("") ;
 	showLoading();
     var linestrorig =  ' <a href="#stationlist" onclick="javascript:showStationlist(\'/jgetlineinfo?workshop=!!WsName!! \')">   \

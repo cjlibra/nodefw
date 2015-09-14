@@ -45,8 +45,7 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 }
 .tableheaderlist{
 	background-color:rgb(25,155,171)  ;
-	width: 100%  ;
-    table-layout:fixed ;
+ 
     color:white ;
 	
 }

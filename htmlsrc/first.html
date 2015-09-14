@@ -4,7 +4,7 @@
 
   <title>流水线管理系统</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Pragma" content="no-cache">
     <!--meta http-equiv="Cache-control" content="no-cache"-->
     <meta http-equiv="Expires" content="Mon,1 Jan 2001 0:0:0 UTC">   
@@ -85,34 +85,36 @@
                         
                     </ul>  
  
-	<TABLE class="tableheaderlist"   > 
+	
+  </div>
+ <table    id="workshopid"> 
+  <thead class="tableheaderlist"   > 
        <TR>
-            <TH style="font-size:1.2em; font-weight:100;">车间名称</TH>
-			<TH style="font-size:1.2em;font-weight:100;">当日产量</TH>
-			<TH  style="font-size:1.2em;font-weight:100;">完成度</TH>
+            <TH style="font-size:1.2em; font-weight:100; width:300px">车间名称</TH>
+			<TH style="font-size:1.2em;font-weight:100; width:300px">当日产量</TH>
+			<TH  style="font-size:1.2em;font-weight:100; width:300px">完成度</TH>
 			 
-			<TH  style="font-size:1.2em;font-weight:100;">状态</TH>
+			<TH  style="font-size:1.2em;font-weight:100; width:300px">状态</TH>
 			 
-			<TH style="font-size:1.2em;font-weight:100;">生产速度</TH>
+			<TH style="font-size:1.2em;font-weight:100; width:300px">生产速度</TH>
      </TR>
 
-</TABLE>
-  </div>
-  <div data-role="none" style="background-color:rgb(228,243,248)" id="workshoplistcontent">
-<a href="javascript:gotostationlist();">  
-<TABLE class="tableheaderlistcontent"   > 
+</thead>
+  
+
+ <tbody>
         
-	   <TR>
-            <TH  >第01车间</TH>
+	   <TR onclick="gotostationlist();" style="cursor:pointer"> 
+            <TH  >  第01车间</TH>
 			<TH >3400</TH>
 			<TH style="color:red" >16%</TH>
 			<TH  >X/Y</TH>
 			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
 		 
-     </TR>
+     </TR>  
 
-</TABLE></a>
-<TABLE class="tableheaderlistcontent"   > 
+
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -123,8 +125,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -135,8 +137,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -147,8 +149,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -159,8 +161,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -171,8 +173,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -183,8 +185,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -195,8 +197,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -207,8 +209,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -219,8 +221,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -231,8 +233,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -243,8 +245,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -255,8 +257,19 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
+	   <TR>
+            <TH  >第01车间</TH>
+			<TH >3400</TH>
+			<TH  >16%</TH>
+			<TH  >X/Y</TH>
+			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
+		 
+     </TR>
+
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -267,8 +280,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -278,21 +291,8 @@
 			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
 		 
      </TR>
-
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
-        
-	   <TR>
-            <TH  >第01车间</TH>
-			<TH >3400</TH>
-			<TH  >16%</TH>
-			<TH  >X/Y</TH>
-			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
-		 
-     </TR>
-
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -303,8 +303,8 @@
 		 
      </TR>
 
-</TABLE>
-<TABLE class="tableheaderlistcontent"   > 
+ 
+ 
         
 	   <TR>
             <TH  >第01车间</TH>
@@ -314,11 +314,11 @@
 			<TH  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TH>
 		 
      </TR>
+ </tbody>
+</table>
 
-</TABLE>
 
-
-</div></div>
+ </div>
 
 
 <div data-role="page" id="stationlist"   >
