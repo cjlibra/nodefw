@@ -26,7 +26,7 @@ $(document).on("pageshow", "#login", function(){
 	  
 });
 $(document).on("pageshow", "#workshoplist", function(){
-	 FixTable("workshopid", 2, 800, 200);
+	 FixTable("workshopid", 1, document.body.clientWidth, 400);
 	showWorkshoplist();
 	$("body").click(function(e){
 		if (typeof e.target.src == "undefined") {
@@ -1024,7 +1024,7 @@ function FixTable(TableID, FixColumnNumber, width, height) {
 	ColumnsNumber++; 
 	}); 
 	ColumnsWidth += 2; 
-	if ($.support.msie) { 
+	/*if ($.support.msie) { 
 	switch ($.support.version) { 
 	case "7.0": 
 	if (ColumnsNumber >= 3) ColumnsWidth--; 
@@ -1033,16 +1033,16 @@ function FixTable(TableID, FixColumnNumber, width, height) {
 	if (ColumnsNumber >= 2) ColumnsWidth--; 
 	break; 
 	} 
-	} 
+	} */
 	$("#" + TableID + "_tableColumn").css("width", ColumnsWidth); 
 	$("#" + TableID + "_tableFix").css("width", ColumnsWidth); 
 	$("#" + TableID + "_tableData").scroll(function () { 
 	$("#" + TableID + "_tableHead").scrollLeft($("#" + TableID + "_tableData").scrollLeft()); 
 	$("#" + TableID + "_tableColumn").scrollTop($("#" + TableID + "_tableData").scrollTop()); 
 	}); 
-	$("#" + TableID + "_tableFix").css({ "overflow": "hidden", "position": "relative", "z-index": "50", "background-color": "Silver" }); 
-	$("#" + TableID + "_tableHead").css({ "overflow": "hidden", "width": width - 17, "position": "relative", "z-index": "45", "background-color": "Silver" }); 
-	$("#" + TableID + "_tableColumn").css({ "overflow": "hidden", "height": height - 17, "position": "relative", "z-index": "40", "background-color": "Silver" }); 
+	$("#" + TableID + "_tableFix").css({ "overflow": "hidden", "position": "relative", "z-index": "50", "background-color": "white" }); 
+	$("#" + TableID + "_tableHead").css({ "overflow": "hidden", "width": width - 17, "position": "relative", "z-index": "45", "background-color": "white" }); 
+	$("#" + TableID + "_tableColumn").css({ "overflow": "hidden", "height": height - 17, "position": "relative", "z-index": "40", "background-color": "white" }); 
 	$("#" + TableID + "_tableData").css({ "overflow": "scroll", "width": width, "height": height, "position": "relative", "z-index": "35" }); 
 	if ($("#" + TableID + "_tableHead").width() > $("#" + TableID + "_tableFix table").width()) { 
 	$("#" + TableID + "_tableHead").css("width", $("#" + TableID + "_tableFix table").width()); 
