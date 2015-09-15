@@ -74,7 +74,7 @@
 
 
 <div data-role="page" id="workshoplist"   >
-  <div data-role="header" data-position="fixed"   style="background-color:white">
+  <div data-role="header" data-position="fixed"   style="background-color:white;">
     <h1 style="background-color:white;">车间列表</h1>
 	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
   <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
@@ -88,28 +88,35 @@
 	
   </div>
  <table  style=" width:600px;"  id="workshopid"> 
+  <colgroup   width=20%></colgroup>  
+      <colgroup  width=20%></colgroup>  
+       <colgroup   width=20%></colgroup>  
+	    <colgroup   width=20%></colgroup>  
+      <colgroup  width=20%></colgroup>  
   <thead class="tableheaderlist"    > 
+     
+      
        <TR>
-            <TH style="font-size:1.2em; font-weight:100;  ">车间名称</TH>
-			<TH style="font-size:1.2em;font-weight:100;  ">当日产量</TH>
-			<TH  style="font-size:1.2em;font-weight:100;  ">完成度</TH>
+            <TH >车间名称</TH>
+			<TH >当日产量</TH>
+			<TH >完成度</TH>
 			 
-			<TH  style="font-size:1.2em;font-weight:100; ">状态</TH>
+			<TH >状态</TH>
 			 
-			<TH style="font-size:1.2em;font-weight:100;  ">生产速度</TH>
+			<TH >生产速度</TH>
      </TR>
 
 </thead>
   
 
- <tbody>
+ <tbody class="tableheaderlistcontent">
         
-	   <TR onclick="gotostationlist();" style="cursor:pointer"> 
+	   <TR onclick="gotostationlist();" > 
             <TD  >  第01车间</TD>
 			<TD >3400</TD>
 			<TD style="color:red" >16%</TD>
 			<TD  >X/Y</TD>
-			<TD  ><img src="img/gb.png" alt="up" class="ui-li-icon"> 500</TD>
+			<TD  ><span> 500 </span> <span><img src="img/gb.png" alt="up" class="ui-li-icon"></span></TD>
 		 
      </TR>  
 
@@ -341,25 +348,33 @@
                     </ul>  
 	 
  
-	<TABLE class="tableheaderlist"   > 
-       <TR>
-            <TD style="font-size:1.2em;font-weight:100;">流水线</TD>
-			<TD style="font-size:1.2em;font-weight:100;">当日产量</TD>
-			<TD  style="font-size:1.2em;font-weight:100;">完成度</TD>
-			<TD  style="font-size:1.2em;font-weight:100;">产速</TD>
-			<TD  style="font-size:1.2em;font-weight:100;">状态</TD>
-			<TD style="font-size:1.2em;font-weight:100;">持续时长</TD>
-			<TD style="font-size:1.2em;font-weight:100;">异常信息</TD>
-     </TR>
-
-</TABLE>
 	 
   </div>
-  <div data-role="none" style="background-color:rgb(228,243,248)"  id="showStationlistcontent">
- <a href="javascript:gotoshebeixiangqing();">  
-  <TABLE class="tableheaderlistcontent"   > 
-        
-	   <TR>
+ 
+	<TABLE    style=" width:800px;"  id="stationlistid" > 
+	
+	 <colgroup   width=14%></colgroup>  
+      <colgroup  width=14%></colgroup>  
+       <colgroup  width=14%></colgroup>  
+	    <colgroup  width=14%></colgroup>  
+      <colgroup  width=14%></colgroup>  
+	   <colgroup   width=14%></colgroup>  
+      <colgroup  width=14%></colgroup>  
+	  <thead class="tableheaderlist">
+       <TR>
+            <TH >流水线</TH>
+			<TH >当日产量</TH>
+			<TH >完成度</TH>
+			<TH >产速</TH>
+			<TH >状态</TH>
+			<TH >持续时长</TH>
+			<TH >异常信息</TH>
+     </TR>
+</thead>
+ 
+ 
+       <tbody class="tableheaderlistcontent"  id="showStationlistcontent">  
+	   <TR onclick="gotoshebeixiangqing();">
             <TD  >L01</TD>
 			<TD >3400</TD>
 			<TD  >30%</TD>
@@ -369,10 +384,9 @@
 			<TD >0</TD> 
      </TR>
 
-</TABLE></a>
+ 
 
- <a href="javascript:alert('lll');">  
-  <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >L11</TD>
@@ -384,9 +398,7 @@
 			<TD >1</TD> 
      </TR>
 
-</TABLE></a>
- <a href="javascript:alert('lll');">  
-  <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >L15</TD>
@@ -398,10 +410,7 @@
 			<TD >2</TD> 
      </TR>
 
-</TABLE></a>
-
- <a href="javascript:alert('lll');">  
-  <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >L07</TD>
@@ -413,9 +422,7 @@
 			<TD >3</TD> 
      </TR>
 
-</TABLE></a>
- <a href="javascript:alert('lll');">  
-  <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >L09</TD>
@@ -426,10 +433,7 @@
 			<TD >xx天</TD>
 			<TD >4</TD> 
      </TR>
-
-</TABLE></a>
- <a href="javascript:alert('lll');">  
-  <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >L21</TD>
@@ -440,8 +444,8 @@
 			<TD >xx秒</TD>
 			<TD >5</TD> 
      </TR>
-
-</TABLE></a>
+</tbody>
+</TABLE> 
 
 
 </div>

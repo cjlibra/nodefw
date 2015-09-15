@@ -45,16 +45,26 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 }
 .tableheaderlist{
 	background-color:rgb(25,155,171)  ;
- 
+   
     color:white ;
 	
 }
+.tableheaderlist > tr {
+ height:2em !important;
+ }
+ 
+ .tableheaderlist > tr > th {
+     font-size:1.2em;
+	 font-weight:100;
+ }
+ 
 .tableheaderlist1{
 	background-color:rgb(25,155,171)  ;
 	width: 100%  ;
     table-layout:fixed ;
     color:white ;
 	position:fixed;
+	
 	 
 }
 .begintablecontent{
@@ -67,7 +77,19 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	 width: 100% ;
     table-layout:fixed ;
     border: 1px solid rgb(25,155,171);
+	background-color:rgb(227,242,245);
+}
+.tableheaderlistcontent > tr {
+    cursor:pointer;
+	height:3em;
 	
+}
+.tableheaderlistcontent > tr >td {
+  // border-right : 1px dashed rgb(25,155,171);
+	border-bottom:1px solid rgb(25,155,171);
+	text-align:center;
+
+
 }
 .tableheaderlistcontent  tr th{
 	border-right : 1px dashed rgb(25,155,171) !important;

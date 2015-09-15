@@ -26,7 +26,7 @@ $(document).on("pageshow", "#login", function(){
 	  
 });
 $(document).on("pageshow", "#workshoplist", function(){
-	 FixTable("workshopid", 1, document.body.clientWidth, 400);
+	FixTable("workshopid", 1, screen.width,screen.height);
 	showWorkshoplist();
 	$("body").click(function(e){
 		if (typeof e.target.src == "undefined") {
@@ -52,6 +52,7 @@ $(document).on("pagehide", "#workshoplist", function(){
 });
 var g_url;
 $(document).on("pageshow", "#stationlist", function(){
+	FixTable("stationlistid", 1, screen.width,screen.height);
 	if (typeof g_url == "undefined") {window.location.href="#workshoplist"; return;} 
 	//showStationlist();
 	
@@ -562,23 +563,18 @@ function showStationlist(url){
 	$("#workshopname").text( url.split("=")[1]);
 	showLoading();
 	
-	var linestrorig =  ' <a href="#shebeixiangqing" onclick="javascript:getLineInfo(\'!!LineID!!\',\'!!nowstate!!\')">   \
-							  <TABLE class="tableheaderlistcontent"   > \
-									\
-								   <TR>           \
-										<TH  >L!!LineID!!</TH>     \
-										<TH >!!SumDay!!</TH>       \
-										<TH  style="color:!!color!!">!!%%!!%</TH>       \
-										<TH  ><img src="img/!!downup!!.png" class="ui-li-icon"> !!Velocity!!</TH>         \
-										<TH  >              \
+	var linestrorig =  ' 	   <TR  onclick="gotoshebeixiangqing();getLineInfo(\'!!LineID!!\',\'!!nowstate!!\')">           \
+										<TD  >L!!LineID!!</TD>     \
+										<TD >!!SumDay!!</TD>       \
+										<TD  style="color:!!color!!">!!%%!!%</TD>       \
+										<TD  >!!Velocity!!<img src="img/!!downup!!.png" class="ui-li-icon"> </TD>         \
+										<TD  >              \
 										!!status!!  \
-										</TH>         \
-										<TH >!!TimeLast!!</TH>         \
-										<TH >!!ExceptionCount!!</TH>       \
+										</TD>         \
+										<TD >!!TimeLast!!</TD>         \
+										<TD >!!ExceptionCount!!</TD>       \
 								 </TR>      \
-                                          \
-							</TABLE></a>     \
-							 ' ;
+                     ' ;
 	var liststrs="";
 	//{"LineID":1,"SumDay":7062,"PlanSumDay":7000,"Velocity":1008,"Status":"自动运行中","UpdateTime":"2015-01-13 05:01:32","ExceptionCount":0}
 	$.getJSON(url,null,function(data){ 
@@ -649,22 +645,20 @@ function showStationlist(url){
 var iTime1;
 var V = new Array();
 function showWorkshoplist(){
-	return;
-	$("#workshoplistcontent").html("") ;
+	 
+	//$("#workshoplistcontent").html("") ;
+	$(".tableheaderlistcontent").html("");
 	showLoading();
-    var linestrorig =  ' <a href="#stationlist" onclick="javascript:showStationlist(\'/jgetlineinfo?workshop=!!WsName!! \')">   \
-						<TABLE class="tableheaderlistcontent"   > \
-								\
-							   <TR> \
-									<TH  >!!WsName!!</TH> \
-									<TH >!!SumDay!!</TH> \
-									<TH style="color:!!color!!" >!!%%!!%</TH> \
-									<TH  >!!X-Y!!</TH> \
-									<TH  ><img src="img/!!downup!!.png" class="ui-li-icon"> !!V!!</TH> \
+    var linestrorig =  '    <TR  onclick="gotostationlist();showStationlist(\'/jgetlineinfo?workshop=!!WsName!! \')"> \
+									<TD  >!!WsName!!</TD> \
+									<TD >!!SumDay!!</TD> \
+									<TD style="color:!!color!!" >!!%%!!%</TD> \
+									<TD  >!!X-Y!!</TD> \
+									<TD  >!!V!!<img src="img/!!downup!!.png" class="ui-li-icon"> </TD> \
 								  \
 							 </TR>  \
                                       \
-						</TABLE></a>  ' ;
+						  ' ;
 	var liststrs="";
 	$.getJSON("/jgetwsinfo",null,function(data){ 
 		 
@@ -703,8 +697,8 @@ function showWorkshoplist(){
 			 
 			liststrs = liststrs + linestr;
 		});
-		$("#workshoplistcontent").html(liststrs ) ;
-		
+		//$("#workshoplistcontent").html(liststrs ) ;
+		$(".tableheaderlistcontent").html(liststrs);
 		iTime1 = setTimeout("showWorkshoplist()", 30000);
 		
 	});
@@ -969,7 +963,147 @@ function closeDoor(){
 	navigator.app.exitApp();  
 	
 }
+function FixTable1(TableID, FixColumnNumber, width, height, overflowx, overflowy) {
+ /// 参数说明
+ /// <param name="TableID" type="String">
+ ///     要锁定的Table的ID
+ /// </param>
+ /// <param name="FixColumnNumber" type="Number">
+ ///     要锁定列的个数
+ /// </param>
+ /// <param name="width" type="Number">
+ ///     显示的宽度
+ /// </param>
+ /// <param name="height" type="Number">
+ ///     显示的高度
+ /// </param>
+ if ($("#" + TableID + "_tableLayout").length != 0) {
+  $("#" + TableID + "_tableLayout").before($("#" + TableID));
+  $("#" + TableID + "_tableLayout").empty();
+ } else {
+  $("#" + TableID).after(
+    "<div id='" + TableID
+      + "_tableLayout' style='overflow:hidden;height:"
+      + height + "px; width:100%;'></div>");
+ }
+ $(
+   '<div id="' + TableID + '_tableFix"></div>' + '<div id="' + TableID
+     + '_tableHead"></div>' + '<div id="' + TableID
+     + '_tableColumn"></div>' + '<div id="' + TableID
+     + '_tableData"></div>').appendTo(
+   "#" + TableID + "_tableLayout");
+ var oldtable = $("#" + TableID);
+ var tableFixClone = oldtable.clone(true);
+ tableFixClone.attr("id", TableID + "_tableFixClone");
+ $("#" + TableID + "_tableFix").append(tableFixClone);
+ var tableHeadClone = oldtable.clone(true);
+ tableHeadClone.attr("id", TableID + "_tableHeadClone");
+ $("#" + TableID + "_tableHead").append(tableHeadClone);
+ var tableColumnClone = oldtable.clone(true);
+ tableColumnClone.attr("id", TableID + "_tableColumnClone");
+ $("#" + TableID + "_tableColumn").append(tableColumnClone);
+ $("#" + TableID + "_tableData").append(oldtable);
+ $("#" + TableID + "_tableLayout table").each(function() {
+  $(this).css("margin", "0");
+ });
+ var HeadHeight = $("#" + TableID + "_tableHead thead").height();
+ HeadHeight += 2;
+ $("#" + TableID + "_tableHead").css("height", HeadHeight);
+ $("#" + TableID + "_tableFix").css("height", HeadHeight);
+ var ColumnsWidth = 0;
+ var ColumnsNumber = 0;
+ $("#" + TableID + "_tableColumn tr:last td:lt(" + FixColumnNumber + ")")
+   .each(function() {
+    ColumnsWidth += $(this).outerWidth(true);
+    ColumnsNumber++;
+   });
+ ColumnsWidth += 2;
+ if ($.browser.msie) {
+  switch ($.browser.version) {
+  case "7.0":
+   if (ColumnsNumber >= 3)
+    ColumnsWidth--;
+   break;
+  case "8.0":
+   if (ColumnsNumber >= 2)
+    ColumnsWidth--;
+   break;
+  }
+ }
+ $("#" + TableID + "_tableColumn").css("width", ColumnsWidth);
+ $("#" + TableID + "_tableFix").css("width", ColumnsWidth);
+ $("#" + TableID + "_tableData").scroll(
+   function() {
+    $("#" + TableID + "_tableHead").scrollLeft(
+      $("#" + TableID + "_tableData").scrollLeft());
+    $("#" + TableID + "_tableColumn").scrollTop(
+      $("#" + TableID + "_tableData").scrollTop());
+   });
+ $("#" + TableID + "_tableFix").css({
+  "overflow" : "hidden",
+  "position" : "relative",
+  "z-index" : "50",
+  "background-color" : "Silver"
+ });
+ $("#" + TableID + "_tableHead").css({
+  "overflow" : "hidden",
+  "width" : "98.4%" ,
+  "position" : "relative",
+  "z-index" : "45",
+  "background-color" : "#FFFFFF"
+ });
+ $("#" + TableID + "_tableColumn").css({
+  "overflow" : "hidden",
+  "height" : height - 17,
+  "position" : "relative",
+  "z-index" : "40",
+  "background-color" : "Silver"
+ });
+ $("#" + TableID + "_tableData").css({
+  "overflow-x" : overflowx,
+  "overflow-y" : overflowy,
+  "width" : "100%",
+  "height" : height,
+  "position" : "relative",
+  "z-index" : "35"
+ });
+ if ($("#" + TableID + "_tableHead").width() > $(
+   "#" + TableID + "_tableFix table").width()) {
+  $("#" + TableID + "_tableHead").css("width",
+    $("#" + TableID + "_tableFix table").width());
+  $("#" + TableID + "_tableData").css("width",
+    $("#" + TableID + "_tableFix table").width() + 17);
+ }
+ if ($("#" + TableID + "_tableColumn").height() > $(
+   "#" + TableID + "_tableColumn table").height()) {
+  $("#" + TableID + "_tableColumn").css("height",
+    $("#" + TableID + "_tableColumn table").height());
+  $("#" + TableID + "_tableData").css("height",
+    $("#" + TableID + "_tableColumn table").height() + 17);
+ }
+ $("#" + TableID + "_tableFix").offset(
+   $("#" + TableID + "_tableLayout").offset());
+ $("#" + TableID + "_tableHead").offset(
+   $("#" + TableID + "_tableLayout").offset());
+ $("#" + TableID + "_tableColumn").offset(
+   $("#" + TableID + "_tableLayout").offset());
+ $("#" + TableID + "_tableData").offset(
+   $("#" + TableID + "_tableLayout").offset());
 
+ /*鼠标滑过换色*/
+ $("#"+TableID+" tbody tr").hover( 
+     function () { 
+        $(this).addClass("over");
+      },
+      function () {
+       if (this.rowIndex % 2 == 0) { 
+         $(this).removeClass("over");
+      } else { 
+       $(this).removeClass("over");
+      }
+       
+      });
+}
 
 function FixTable(TableID, FixColumnNumber, width, height) { 
 	/// <summary> 
@@ -1024,7 +1158,7 @@ function FixTable(TableID, FixColumnNumber, width, height) {
 	ColumnsNumber++; 
 	}); 
 	ColumnsWidth += 2; 
-	/*if ($.support.msie) { 
+	if ($.support.msie) { 
 	switch ($.support.version) { 
 	case "7.0": 
 	if (ColumnsNumber >= 3) ColumnsWidth--; 
@@ -1033,7 +1167,7 @@ function FixTable(TableID, FixColumnNumber, width, height) {
 	if (ColumnsNumber >= 2) ColumnsWidth--; 
 	break; 
 	} 
-	} */
+	} 
 	$("#" + TableID + "_tableColumn").css("width", ColumnsWidth); 
 	$("#" + TableID + "_tableFix").css("width", ColumnsWidth); 
 	$("#" + TableID + "_tableData").scroll(function () { 
@@ -1041,16 +1175,16 @@ function FixTable(TableID, FixColumnNumber, width, height) {
 	$("#" + TableID + "_tableColumn").scrollTop($("#" + TableID + "_tableData").scrollTop()); 
 	}); 
 	$("#" + TableID + "_tableFix").css({ "overflow": "hidden", "position": "relative", "z-index": "50", "background-color": "white" }); 
-	$("#" + TableID + "_tableHead").css({ "overflow": "hidden", "width": width - 17, "position": "relative", "z-index": "45", "background-color": "white" }); 
-	$("#" + TableID + "_tableColumn").css({ "overflow": "hidden", "height": height - 17, "position": "relative", "z-index": "40", "background-color": "white" }); 
+	$("#" + TableID + "_tableHead").css({ "overflow": "hidden", "width": width , "position": "relative", "z-index": "45", "background-color": "white" }); 
+	$("#" + TableID + "_tableColumn").css({ "overflow": "hidden", "height": height , "position": "relative", "z-index": "40", "background-color": "white" }); 
 	$("#" + TableID + "_tableData").css({ "overflow": "scroll", "width": width, "height": height, "position": "relative", "z-index": "35" }); 
 	if ($("#" + TableID + "_tableHead").width() > $("#" + TableID + "_tableFix table").width()) { 
 	$("#" + TableID + "_tableHead").css("width", $("#" + TableID + "_tableFix table").width()); 
-	$("#" + TableID + "_tableData").css("width", $("#" + TableID + "_tableFix table").width() + 17); 
+	$("#" + TableID + "_tableData").css("width", $("#" + TableID + "_tableFix table").width() ); 
 	} 
 	if ($("#" + TableID + "_tableColumn").height() > $("#" + TableID + "_tableColumn table").height()) { 
 	$("#" + TableID + "_tableColumn").css("height", $("#" + TableID + "_tableColumn table").height()); 
-	$("#" + TableID + "_tableData").css("height", $("#" + TableID + "_tableColumn table").height() + 17); 
+	$("#" + TableID + "_tableData").css("height", $("#" + TableID + "_tableColumn table").height() ); 
 	} 
 	$("#" + TableID + "_tableFix").offset($("#" + TableID + "_tableLayout").offset()); 
 	$("#" + TableID + "_tableHead").offset($("#" + TableID + "_tableLayout").offset()); 
