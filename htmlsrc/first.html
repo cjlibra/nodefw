@@ -76,15 +76,8 @@
 <div data-role="page" id="workshoplist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white;">
     <h1 style="background-color:white;">车间列表</h1>
-	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
-  <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
-	                  <ul   class="dropdownmenu" > 
-                        <li><a href="#workshoplist">车间列表</a></li> 
-                        <li><a href="#"><hr></a></li> 
-                        <li><a href="javascript:closeDoor()">退出</a></li> 
-                        
-                    </ul>  
- 
+	 <a href="#log_on"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+  <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	
   </div>
  <table  style=" width:600px;"  id="workshopid"> 
@@ -109,7 +102,7 @@
 </thead>
   
 
- <tbody class="tableheaderlistcontent">
+ <tbody  id="showworkshoplistid" class="tableheaderlistcontent">
         
 	   <TR onclick="gotostationlist();" > 
             <TD  >  第01车间</TD>
@@ -338,17 +331,9 @@
 <div data-role="page" id="stationlist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white">
     <h1 style="background-color:white">流水线列表<span style="float:right" id="workshopname"> 第01车间</span></h1> 
-	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
-	 <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
-	                  <ul   class="dropdownmenu" > 
-                        <li><a href="#workshoplist">车间列表</a></li> 
-                        <li><a href="#"><hr></a></li> 
-                        <li><a href="javascript:closeDoor()">退出</a></li> 
-                        
-                    </ul>  
-	 
- 
-	 
+	 <a href="#workshoplist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
+	      
   </div>
  
 	<TABLE    style=" width:800px;"  id="stationlistid" > 
@@ -455,15 +440,9 @@
 <div data-role="page" id="shebeixiangqing"   >
 <div data-role="header" data-position="fixed"   style="background-color:white">
     <h1 style="background-color:white">设备详情</h1> 
-	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
-	 <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
-	                  <ul   class="dropdownmenu" > 
-                        <li><a href="#workshoplist">车间列表</a></li> 
-                        <li><a href="#"><hr></a></li> 
-                        <li><a href="javascript:closeDoor()">退出</a></li> 
-                        
-                    </ul>  
-	
+	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
+	                  	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
 		<span class="headercurrstate">当前状态：</span>
@@ -673,6 +652,15 @@
 </div>	
 
  
+<div data-role="header">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#shebeixiangqing" onclick="clicksbxq();" style="font-size:1em;background-color:rgb(227,242,245);color:rgb(25,155,171)">设备详情</a></li>
+      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+    </ul>
+  </div>
+</div>
 	
 	
 </div>
@@ -682,15 +670,9 @@
 	 
 <div data-role="header" data-position="fixed"   style="background-color:white">
     <h1 style="background-color:white">统计图表</h1> 
-	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
-	 <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
-	                  <ul   class="dropdownmenu" > 
-                        <li><a href="#workshoplist">车间列表</a></li> 
-                        <li><a href="#"><hr></a></li> 
-                        <li><a href="javascript:closeDoor()">退出</a></li> 
-                        
-                    </ul>  
-	
+	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
+	                 	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
 		<span class="headercurrstate">当前状态：</span>
@@ -720,26 +702,30 @@
 </div>
  
 
+<div data-role="header">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#shebeixiangqing" onclick="clicksbxq();">设备详情</a></li>
+      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+    </ul>
+  </div>
+</div>
 </div>
 
 
 
 
-</div>
+ 
 
 
 
 <div data-role="page" id="huodongbaojing"   >
 <div data-role="header" data-position="fixed"   style="background-color:white">
     <h1 style="background-color:white">活动告警</h1> 
-	 <a href="javascript:history.back();"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
-	 <a href="javascript:clickMenuRight()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
-	                  <ul   class="dropdownmenu" > 
-                        <li><a href="#workshoplist">车间列表</a></li> 
-                        <li><a href="#"><hr></a></li> 
-                        <li><a href="javascript:closeDoor()">退出</a></li> 
-                        
-                    </ul>  
+	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
+	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
+	                 
 	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
@@ -868,18 +854,22 @@
  
 
 
+<div data-role="header">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#shebeixiangqing" onclick="clicksbxq();">设备详情</a></li>
+      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+    </ul>
+  </div>
+</div>
 
 </div>
 
 
 
 
-<div data-role="none" class="tabindex">  
-<a href="#shebeixiangqing" onclick="clicksbxq();"><div data-role="none" class="tabdev" id="tabdev1">设<br>备<br>详<br>情<br> </div></a>
-<a href="#shebeitongjitubiao" onclick="clicktjtb();"><div data-role="none" class="tabdev" id="tabdev2"> 统<br>计<br>图<br>表<br></div></a>
-<a href="#huodongbaojing" onclick="clickhdgj();"><div data-role="none" class="tabdev tabtab" id="tabdev3">活<br>动<br>告<br>警<br> </div></a>
-</div>
-
+ 
 
 
 
