@@ -20,15 +20,14 @@ function clickhdgj(){
 }
 $(document).on("pageshow", "#login", function(){
 	
-	setTimeout("inputpassword()",5000);
+	setTimeout("inputpassword()",3000);
 	
 	  
 	  
 });
 $(document).on("pageshow", "#workshoplist", function(){
 	
-	console.log(screen.width );
-	console.log(screen.height );
+	//$("#workshopid > .tableheaderlistcontent").html("");
 	showWorkshoplist();
 	
 	$("body").click(function(e){
@@ -55,9 +54,9 @@ $(document).on("pagehide", "#workshoplist", function(){
 });
 var g_url;
 $(document).on("pageshow", "#stationlist", function(){
-	
+	 $("#stationlistid > .tableheaderlistcontent").empty();
 	if (typeof g_url == "undefined") {window.location.href="#workshoplist"; return;} 
-	//showStationlist();
+	showStationlist( g_url);
 	
 });
 $(document).on("pagehide", "#stationlist", function(){
@@ -85,7 +84,7 @@ $(document).on("pagehide", "#shebeixiangqing", function(){
 	  
 });
 $(document).on("pageshow", "#huodongbaojing", function(){
-	  
+	$("#huodongbaojing > .begintablecontent").html("");  
 	showtabl("#huodongbaojing");
 	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
 	var lineid = g_lineid ;
@@ -515,7 +514,7 @@ function DaysOfMonth(dateval)
 }
 var iTime3;
 function showgaojingcontent(lineid){
-	$("#huodongbaojing > .begintablecontent").html("");
+	
 	showLoading();
 	var linestrorig =   '  <TABLE class="tableheaderlistcontent"   >      \
 							   <TR>    \
@@ -551,6 +550,7 @@ function showgaojingcontent(lineid){
 			
 			liststrs = liststrs + linestr;
 	    });
+		$("#huodongbaojing > .begintablecontent").html("");
 		$("#huodongbaojing > .begintablecontent").html(liststrs ) ;
 	});
 	
@@ -562,7 +562,7 @@ var iTime2;
 var VV = new Array();
 function showStationlist(url){
 	g_url = url;
-	$("#stationlistid > .tableheaderlistcontent").html("");
+	
 	
 	$("#workshopname").text( url.split("=")[1]);
 	showLoading();
@@ -638,9 +638,11 @@ function showStationlist(url){
 			liststrs = liststrs + linestr;
 		});
 		 
+		$("#stationlistid > .tableheaderlistcontent").empty();
 		$("#stationlistid > .tableheaderlistcontent").html(liststrs ) ;
 		
-		//FixTable("stationlistid", 1, screen.width,500);
+		FixTable("stationlistid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		
 		
 		
 	});
@@ -651,13 +653,16 @@ function showStationlist(url){
 }
 var iTime1;
 var V = new Array();
+function showStationlistbyclick(url){
+	g_url = url;
+}
 function showWorkshoplist(){
 	 
 	//$("#workshoplistcontent").html("") ;
-	$("#workshopid > .tableheaderlistcontent").html("");
+	//$("#workshopid > .tableheaderlistcontent").html("");
 	
 	showLoading();
-    var linestrorig =  '    <TR  onclick="gotostationlist();showStationlist(\'/jgetlineinfo?workshop=!!WsName!! \')"> \
+    var linestrorig =  '    <TR  onclick="showStationlistbyclick(\'/jgetlineinfo?workshop=!!WsName!! \');gotostationlist();"> \
 									<TD  >!!WsName!!</TD> \
 									<TD >!!SumDay!!</TD> \
 									<TD style="color:!!color!!" >!!%%!!%</TD> \
@@ -706,10 +711,12 @@ function showWorkshoplist(){
 			liststrs = liststrs + linestr;
 		});
 		//$("#workshoplistcontent").html(liststrs ) ;
+		$("#workshopid > .tableheaderlistcontent").html("");
 		$("#workshopid > .tableheaderlistcontent").html(liststrs);
 		//console.log($("#showworkshoplistid").html());
 		
-		FixTable("workshopid", 1, screen.width,500);
+		FixTable("workshopid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		//alert($("div[data-role='header']").height());
 		iTime1 = setTimeout("showWorkshoplist()", 30000);
 		
 	});
@@ -889,6 +896,7 @@ function drawechart(id_div,optionset){
 	   };
 
 function showLoading(){
+return;
 $.mobile.loadingMessageTextVisible = true;
 //$.mobile.showPageLoadingMsg("a", "加载中..." );
   $.mobile.loading('show', {  
