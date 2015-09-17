@@ -14,12 +14,12 @@
 }
  
 .logiconpng{
-   margin-left:10px;
-   margin-top:10px;
+   margin-left:20px;
+   margin-top:50px;
 
 }
 .logiconpng img {
-    width:30%;
+    width:50%;
 
 }
 
@@ -29,9 +29,13 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
  background-color:white !important; 
  border:0px solid white;
  box-shadow: 0px 0px 0px white;
- width : 20px;
- height : 20px;
+// width : 20px;
+ //height : 20px;
 
+}
+.noshadowdiy img {
+  width : 22px;
+  height : 22px;
 }
 .tablesolidbottomline{
 
@@ -50,11 +54,11 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	
 }
 .tableheaderlist > tr {
- height:2em !important;
+ height:3em !important;
  }
  
  .tableheaderlist > tr > th {
-     font-size:1.2em;
+     font-size:1em;
 	 font-weight:100;
  }
  
@@ -102,7 +106,7 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	float:left;
 	background-color:red;
 	color:white;
-	height:38px;
+	height:3em;
 	width:80%;
 	
 }
@@ -148,8 +152,10 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 }
 .headernameword{
 	margin-left:40px;
-	margin-top:8px;
+	margin-top:1em;
 	float:left;
+	font-size:1em;
+	font-weight:normal;
 	
 }
 .headercurrstate{
@@ -159,12 +165,17 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 .headerrightpic{
 	float:right;
 	width:20%;
+	height:3em;
 	 
 	
 	
 }
 .headerrightpic img {
+    
 	float:left;
+	background-color:white;
+	height:3em;
+	
 	
 }
 .floatpicbuts{
@@ -344,6 +355,43 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 .showclassdiskplay{
     display:block;
 }
+
+.hititleh1{
+   background-color:white;
+   font-size:1.2em !important;
+   font-weight:normal;
+
+}
+
+.hititleh2 {
+   font-weight:normal;
+   background-color:white!important;
+   font-size:1.2em!important;
+   width:100%!important;
+   margin-left:0px!important;
+
+}
+.fanbanjishoubanji{
+ 
+   
+  color:rgb(16,162,159) !important; 
+ // background-color:gray !important;
+  background-color:white!important;
+  border-top:none !important;
+  font-size:1.0em!important;
+   
+  text-align:center!important;
+
+
+}
+.fanbanjishoubanji_nextli{
+    //width:90%!important;
+	font-size:0.9em !important;
+    padding-bottom:0.5em!important;
+    padding-top:0.5em!important;
+}
+
+ 
  
  
  

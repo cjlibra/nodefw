@@ -75,7 +75,7 @@
 
 <div data-role="page" id="workshoplist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white;">
-    <h1 style="background-color:white;">车间列表</h1>
+    <h1 class="hititleh1">车间列表</h1>
 	 <a href="#log_on"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
   <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	
@@ -330,7 +330,7 @@
 
 <div data-role="page" id="stationlist"   >
   <div data-role="header" data-position="fixed"   style="background-color:white">
-    <h1 style="background-color:white;width:100%;margin-left:0px"><span>流水线列表</span>&nbsp&nbsp&nbsp&nbsp<span  id="workshopname"> 第01车间</span></h1> 
+    <h1 class="hititleh2"><span>流水线列表</span>&nbsp&nbsp&nbsp&nbsp<span  id="workshopname"> 第01车间</span></h1> 
 	 <a href="#workshoplist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	      
@@ -437,15 +437,15 @@
 
 </div>
 
-<div data-role="page" id="shebeixiangqing"   >
+<div data-role="page" id="shebeixiangqing"  style="background-color:white ;"  >
 <div data-role="header" data-position="fixed"   style="background-color:white">
-    <h1 style="background-color:white">设备详情</h1> 
+    <h1 class="hititleh1">设备详情</h1> 
 	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	                  	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
-		<span class="headercurrstate">当前状态：</span>
+		<!--<span class="headercurrstate">当前状态：</span>-->
 	</div>
 	
 	<div class="headerrightpic"><img src="img/duanxianstate.png" /> </div>
@@ -455,16 +455,16 @@
 	
 	
 </div>
-<div data-role="none" id="shebeixiangqingcontent">
+<div data-role="none" id="shebeixiangqingcontent" style="background-color:white;margin-bottom:30px;"  >
 
 
 
 
-<ul data-role="listview"  id="listview">
+<ul data-role="listview"  id="listview"  style="margin-left:1em; margin-right: 1em;"  >
  	 
 				<div data-role="none" style="height:20px;background-color:white "></div>
-		 <li data-role="list-divider" style="text-align:center; color:rgb(16,162,159); background-color:white;border-top:none">放板机
-		 <li style="font-size:1.4em;height:1.5em;padding-bottom:0px;"> <div class="ui-grid-a">
+		 <li data-role="list-divider" class="fanbanjishoubanji">放板机
+		 <li  class="fanbanjishoubanji_nextli" style="border-top:3px solid gray" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备名称：</p>
 					</div> 
@@ -473,7 +473,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备型号：</p>
 					</div> 
@@ -482,7 +482,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备号：</p>
 					</div> 
@@ -491,7 +491,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>状态：</p>
 					</div> 
@@ -500,7 +500,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+	<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>总产量：</p>
 					</div> 
@@ -509,7 +509,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当批已生产数量：</p>
 					</div> 
@@ -518,7 +518,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当批总产量：</p>
 					</div> 
@@ -527,7 +527,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当前料号：</p>
 					</div> 
@@ -536,7 +536,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当前批号：</p>
 					</div> 
@@ -545,7 +545,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>更新时间：</p>
 					</div> 
@@ -554,8 +554,8 @@
 					</div> 
 					 
 				</div></li>
-		 <li data-role="list-divider" style="text-align:center; color:rgb(16,162,159); background-color:white;border-top:none">收板机
-				<li> <div class="ui-grid-a">
+		 <li data-role="list-divider"  class="fanbanjishoubanji"  style="margin-top:3em;">收板机
+				<li  class="fanbanjishoubanji_nextli" style="border-top:3px solid gray"> <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备名称：</p>
 					</div> 
@@ -564,7 +564,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备型号：</p>
 					</div> 
@@ -573,7 +573,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>设备号：</p>
 					</div> 
@@ -582,7 +582,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>状态：</p>
 					</div> 
@@ -591,7 +591,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>总产量：</p>
 					</div> 
@@ -600,7 +600,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当批已生产数量：</p>
 					</div> 
@@ -609,7 +609,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当批总产量：</p>
 					</div> 
@@ -618,7 +618,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当前料号：</p>
 					</div> 
@@ -627,7 +627,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>当前批号：</p>
 					</div> 
@@ -636,7 +636,7 @@
 					</div> 
 					 
 				</div></li>
-		<li> <div class="ui-grid-a">
+		<li  class="fanbanjishoubanji_nextli" > <div class="ui-grid-a">
 					<div class="ui-block-a">
 						<p>更新时间：</p>
 					</div> 
@@ -652,12 +652,13 @@
 </div>	
 
  
-<div data-role="header">
+<div data-role="footer"  data-position="fixed" style="border-top:none;">
   <div data-role="navbar">
     <ul>
-      <li><a href="#shebeixiangqing" onclick="clicksbxq();" style="font-size:1em;background-color:rgb(227,242,245);color:rgb(25,155,171)">设备详情</a></li>
-      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
-      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+       <li ><a href="#shebeixiangqing" onclick="clicksbxq();" style="background-color:white ;"><img src="img/sbxqlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);height:3em;margin-bottom:1em;font-size:1.2em;font-weight:normal;">设备详情</span></a></li>
+      <li  ><a href="#shebeitongjitubiao" onclick="clicktjtb();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)" ><img src="img/tjtblog.png" style="width:30px;height:30px; "><span style="color:rgb(25,155,171);margin-bottom:6px;font-size:1.2em;font-weight:normal;">统计图表</span></a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)"><img src="img/hdgjlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);padding-bottom:6px;font-size:1.2em;font-weight:normal;">活动告警</span></a></li>
+   
     </ul>
   </div>
 </div>
@@ -665,26 +666,26 @@
 	
 </div>
 
-<div data-role="page" id="shebeitongjitubiao"   >
+<div data-role="page" id="shebeitongjitubiao"  style="background-color:white" >
  
 	 
 <div data-role="header" data-position="fixed"   style="background-color:white">
-    <h1 style="background-color:white">统计图表</h1> 
+    <h1 class="hititleh1">统计图表</h1> 
 	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	                 	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
-		<span class="headercurrstate">当前状态：</span>
+		<!--<span class="headercurrstate">当前状态：</span>-->
 	</div>
 	
 	<div class="headerrightpic"><img src="img/yunxingstate.png" /> </div>
 	
 </div>
-<div id="shebeitongjitubiaocontent">
+<div id="shebeitongjitubiaocontent"  style="background-color:white !important;">
  <div class="centerechartname">当日产量统计图-小时产量</div>
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main1" style="height:250px"></div>
+    <div id="main1" style="height:200px"></div>
     <!-- ECharts单文件引入 -->
 	 
    
@@ -694,7 +695,7 @@
 
 
 
- <div id="main2" style="height:250px"></div>
+ <div id="main2" style="height:200px"></div>
     <!-- ECharts单文件引入 -->
 	 
    
@@ -702,12 +703,12 @@
 </div>
  
 
-<div data-role="header">
-  <div data-role="navbar">
-    <ul>
-      <li><a href="#shebeixiangqing" onclick="clicksbxq();">设备详情</a></li>
-      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
-      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+<div data-role="footer" data-position="fixed" style="border-top:none ; ">
+  <div data-role="navbar"  >
+    <ul  >
+      <li ><a href="#shebeixiangqing" onclick="clicksbxq();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)"><img src="img/sbxqlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);height:3em;margin-bottom:1em;font-size:1.2em;font-weight:normal;">设备详情</span></a></li>
+      <li  ><a href="#shebeitongjitubiao" onclick="clicktjtb();" style="background-color:white ;"><img src="img/tjtblog.png" style="width:30px;height:30px; "><span style="color:rgb(25,155,171);margin-bottom:6px;font-size:1.2em;font-weight:normal;">统计图表</span></a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)"><img src="img/hdgjlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);padding-bottom:6px;font-size:1.2em;font-weight:normal;">活动告警</span></a></li>
     </ul>
   </div>
 </div>
@@ -720,16 +721,16 @@
 
 
 
-<div data-role="page" id="huodongbaojing"   >
+<div data-role="page" id="huodongbaojing"   style="background-color:white ;"  >
 <div data-role="header" data-position="fixed"   style="background-color:white">
-    <h1 style="background-color:white">活动告警</h1> 
+    <h1 class="hititleh1">活动告警</h1> 
 	 <a href="#stationlist"  class = "noshadowdiy" ><img    src="img/preview.png" />  </a>
 	 <a href="javascript:closeDoor()"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a>
 	                 
 	
 	<div data-role="none" class="headerleftname">
 		<span class="headernameword">第01车间  L01 内层前处理线</span>  
-		<span class="headercurrstate">当前状态：</span>
+		<!--<span class="headercurrstate">当前状态：</span>-->
 	</div>
 	
 	<div class="headerrightpic"><img src="img/duanxianstate.png" /> </div>
@@ -854,12 +855,13 @@
  
 
 
-<div data-role="header">
+<div data-role="footer" data-position="fixed"  style="border-top:none">
   <div data-role="navbar">
     <ul>
-      <li><a href="#shebeixiangqing" onclick="clicksbxq();">设备详情</a></li>
-      <li><a href="#shebeitongjitubiao" onclick="clicktjtb();">统计图表</a></li>
-      <li><a href="#huodongbaojing" onclick="clickhdgj();">活动告警</a></li>
+       <li ><a href="#shebeixiangqing" onclick="clicksbxq();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)" ><img src="img/sbxqlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);height:3em;margin-bottom:1em;font-size:1.2em;font-weight:normal;">设备详情</span></a></li>
+      <li  ><a href="#shebeitongjitubiao" onclick="clicktjtb();" style="background-color:rgb(228,243,248) ;border-top:1px solid rgb(221,221,221)" ><img src="img/tjtblog.png" style="width:30px;height:30px; "><span style="color:rgb(25,155,171);margin-bottom:6px;font-size:1.2em;font-weight:normal;">统计图表</span></a></li>
+      <li><a href="#huodongbaojing" onclick="clickhdgj();" style="background-color:white ;" ><img src="img/hdgjlog.png" style="width:30px;height:30px;"><span style="color:rgb(25,155,171);padding-bottom:6px;font-size:1.2em;font-weight:normal;">活动告警</span></a></li>
+   
     </ul>
   </div>
 </div>

@@ -641,7 +641,8 @@ function showStationlist(url){
 		$("#stationlistid > .tableheaderlistcontent").empty();
 		$("#stationlistid > .tableheaderlistcontent").html(liststrs ) ;
 		
-		FixTable("stationlistid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		//FixTable("stationlistid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		FixTable("stationlistid", 1, screen.width,screen.height-$("div[data-role='header']").height());
 		
 		
 		
@@ -715,7 +716,8 @@ function showWorkshoplist(){
 		$("#workshopid > .tableheaderlistcontent").html(liststrs);
 		//console.log($("#showworkshoplistid").html());
 		
-		FixTable("workshopid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		//FixTable("workshopid", 1, screen.width,document.body.clientHeight-$("div[data-role='header']").height());
+		FixTable("workshopid", 1, screen.width,screen.height-$("div[data-role='header']").height());
 		//alert($("div[data-role='header']").height());
 		iTime1 = setTimeout("showWorkshoplist()", 30000);
 		
