@@ -84,10 +84,18 @@ $(document).on("pagehide", "#shebeixiangqing", function(){
 	  
 });
 $(document).on("pageshow", "#huodongbaojing", function(){
-	$("#huodongbaojing > .begintablecontent").html("");  
+	
+	//FixTable("tableheaderlist1idgj", 0, screen.width,screen.height-$("#huodongbaojing > div[data-role='header']").height());
+	//FixTable("tableheaderlist1idgj", 0, 200,300);
+	
+	  
+	$("#gaojingcontentid").empty();  
+	
 	showtabl("#huodongbaojing");
+	
 	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
 	var lineid = g_lineid ;
+	
 	showgaojingcontent(lineid);
 	
 	  
@@ -526,11 +534,12 @@ function showgaojingcontent(lineid){
 				        </TABLE> ' ;
 	var liststrs="";
 	$.getJSON("/jgetalarms?lineid="+lineid,null,function(data){ 
-		 
+		if (data == null) return;
 		$.each(data,function(idx,item){ 
 			/*if(idx==0){ 
 				 return true;//同countinue，返回false同break 
 			}  */
+			 
 			hideLoading();
 			linestr = linestrorig ;
 			 
@@ -550,8 +559,8 @@ function showgaojingcontent(lineid){
 			
 			liststrs = liststrs + linestr;
 	    });
-		$("#huodongbaojing > .begintablecontent").html("");
-		$("#huodongbaojing > .begintablecontent").html(liststrs ) ;
+		$("#gaojingcontentid").html("");
+		$("#gaojingcontentid").html(liststrs ) ;
 	});
 	
 	
@@ -833,6 +842,7 @@ function removeClassFunc(obj){
 	obj.removeClass("backbroken");
 }
 function  showtabl(headerstr){
+	return;
 	var fontsize = 9;
 	var viewheight = $(window).height();
 	var viewwidth = $(window).width();

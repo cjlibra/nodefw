@@ -461,14 +461,14 @@
 	
 	
 </div>
-<div data-role="none" id="shebeixiangqingcontent" style="background-color:white;margin-bottom:30px;"  >
+<div data-role="content" id="shebeixiangqingcontent" style="background-color:red;margin-bottom:30px;"  >
 
 
 
 
-<ul data-role="listview"  id="listview"  style="margin-left:1em; margin-right: 1em;"  >
+<ul data-role="listview"  id="listview"  style="margin-left:1em; margin-right: 2em;"  >
  	 
-				<div data-role="none" style="height:20px;background-color:white "></div>
+				<div data-role="none" style="height:20px;background-color:white ;margin-right: 2em;"></div>
 		 <li data-role="list-divider" class="fanbanjishoubanji">放板机
 		 <li  class="fanbanjishoubanji_nextli" style="border-top:3px solid gray" > <div class="ui-grid-a">
 					<div class="ui-block-a">
@@ -743,20 +743,26 @@
 
 	
 </div>
-
-	<TABLE class="tableheaderlist1"   > 
-       <TR>
-            <TD > 设备类型</TD>
-			<TD > 异常代码</TD>
-			<TD  >异常描述 </TD>
-			<TD  >发生时间</TD>
-			 
+ <div data-role="content">
+	<TABLE class="tableheaderlist1" id="tableheaderlist1idgj"  > 
+	  <colgroup   width=25% class="gaojingcolgroup"></colgroup>  
+	   <colgroup   width=25% class="gaojingcolgroup" ></colgroup>  
+	    <colgroup   width=25% class="gaojingcolgroup"></colgroup>  
+		 <colgroup   width=25%></colgroup>  
+		 
+       <TR  >
+	  
+            <TH > 设备类型</TH>
+			<TH > 异常代码</TH>
+			<TH  >异常描述 </TH>
+			<TH  >发生时间</TH>
+		  
      </TR>
 
-</TABLE>
-<div  class="begintablecontent">
- <TABLE class="tableheaderlistcontent"   > 
-        
+ 
+ 
+ 
+      <div id="gaojingcontentid">  
 	   <TR>
             <TD  >收板机</TD>
 			<TD >6</TD>
@@ -765,8 +771,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >收板机</TD>
@@ -776,9 +781,7 @@
 			 
      </TR>
 
-</TABLE>
-
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  >收板机</TD>
@@ -788,8 +791,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -799,8 +801,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -810,8 +811,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -821,8 +821,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -832,8 +831,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+ 
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -843,8 +841,7 @@
 			 
      </TR>
 
-</TABLE>
- <TABLE class="tableheaderlistcontent"   > 
+
         
 	   <TR>
             <TD  > 放板机</TD>
@@ -853,12 +850,13 @@
 			<TD      > 2015-01-12 04:43:20 </TD>
 			 
      </TR>
+	 </div>
 
 </TABLE>
 
 
-</div>
  
+ </div>
 
 
 <div data-role="footer" data-position="fixed"  style="border-top:none">
