@@ -978,8 +978,10 @@ function inputpassword(){
 }
 function closeDoor(){
 	
-	 
-	window.close();
+	 alert(navigator.appName);
+	window.opener=null; 
+    window.open('','_self'); 
+    window.close(); 
 	document.close();
 	navigator.app.exitApp();  
 	
