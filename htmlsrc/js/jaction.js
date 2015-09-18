@@ -27,10 +27,10 @@ $(document).on("pageshow", "#login", function(){
 });
 $(document).on("pageshow", "#workshoplist", function(){
 	
-	//$("#workshopid > .tableheaderlistcontent").html("");
+	 
 	showWorkshoplist();
 	
-	$("body").click(function(e){
+/*	$("body").click(function(e){
 		if (typeof e.target.src == "undefined") {
 	 
 			$(".dropdownmenu").removeClass("showclassdiskplay");
@@ -43,7 +43,7 @@ $(document).on("pageshow", "#workshoplist", function(){
 		}		
 			 
 			 
-	});
+	});*/
 	
 });
 $(document).on("pagehide", "#workshoplist", function(){
@@ -68,10 +68,10 @@ $(document).on("pagehide", "#stationlist", function(){
 });
 $(document).on("pageshow", "#shebeixiangqing", function(){
 	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;} 
-	showtabl("#shebeixiangqing");
-	$("#tabdev1").addClass("tabtab");
-	$("#tabdev2").removeClass("tabtab");
-	$("#tabdev3").removeClass("tabtab");
+	//showtabl("#shebeixiangqing");
+//	$("#tabdev1").addClass("tabtab");
+	//$("#tabdev2").removeClass("tabtab");
+	//$("#tabdev3").removeClass("tabtab");
 	
 	  
 	  
@@ -88,10 +88,10 @@ $(document).on("pageshow", "#huodongbaojing", function(){
 	//FixTable("tableheaderlist1idgj", 0, screen.width,screen.height-$("#huodongbaojing > div[data-role='header']").height());
 	//FixTable("tableheaderlist1idgj", 0, 200,300);
 	
-	  
-	$("#gaojingcontentid").empty();  
+	 
+	$("#tableheaderlist1idgj  tr  td").empty();  
 	
-	showtabl("#huodongbaojing");
+	//showtabl("#huodongbaojing");
 	
 	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
 	var lineid = g_lineid ;
@@ -111,7 +111,7 @@ $(document).on("pagehide", "#huodongbaojing", function(){
 });
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	  
-	showtabl("#shebeitongjitubiao");
+	//showtabl("#shebeitongjitubiao");
 	if (typeof g_lineid == "undefined") {window.location.href="#workshoplist"; return;}
 	var lineid = g_lineid;
 	showTongjitubiao(lineid)
@@ -147,12 +147,19 @@ $(document).on("pageshow", "#log_on", function(){
 });
 
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
-	 var divbutheight = $(".floatpicbuts").height();
-	 var winheight = $(window).height() ;
-	 var bottommargin = (winheight - divbutheight)/2;
+	// var divbutheight = $(".floatpicbuts").height();
+	// var winheight = $(window).height() ;
+	// var bottommargin = (winheight - divbutheight)/2;
+	 
+	 var head_foot_height = $("#shebeitongjitubiao div[data-role='header']").height()+ $("#shebeitongjitubiao div[data-role='footer']").height();
+	 var headtitleheight = $("#shebeitongjitubiaocontent > .centerechartname").height();
+	 var bodyheight =  document.body.clientHeight;
 	
-	 $("#main1").css("height" , winheight - 120 + "px");
-	 $("#main2").css("height" , winheight - 120 + "px");
+	// $("#main1").css("height" , winheight - 120 + "px");
+	// $("#main2").css("height" , winheight - 120 + "px");
+	 
+	 $("#main1").css("height" , bodyheight - head_foot_height - headtitleheight-10 + "px");
+	 $("#main2").css("height" ,  bodyheight - head_foot_height - headtitleheight-10 + "px");
 	
     var loption1= {
 			tooltip: {
@@ -183,8 +190,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -194,8 +201,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -205,8 +212,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				}
@@ -307,8 +314,8 @@ function setechart0(data){
 					"data":[5, 20, 40, 10, 10, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -318,8 +325,8 @@ function setechart0(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -329,8 +336,8 @@ function setechart0(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				}
@@ -418,8 +425,8 @@ function setechart1(data){
 					"data":[5, 20, 40, 10, 10, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -429,8 +436,8 @@ function setechart1(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				},
@@ -440,8 +447,8 @@ function setechart1(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值'},
-								{type : 'min', name: '最小值'}
+								{type : 'max', name: '最大值',symbol: 'diamond'},
+								{type : 'min', name: '最小值',symbol: 'diamond'}
 							]
 						}
 				}
@@ -524,14 +531,12 @@ var iTime3;
 function showgaojingcontent(lineid){
 	
 	showLoading();
-	var linestrorig =   '  <TABLE class="tableheaderlistcontent"   >      \
-							   <TR>    \
-									<TH  >!!MachineType!!</TH>  \
-									<TH >!!ExceptionCode!!</TH>   \
-									<TH  > !!ErrorDesc!!       </TH>   \
-									<TH  >!!ErrorTime!! </TH>			  \
-							   </TR>    \
-				        </TABLE> ' ;
+	var linestrorig =   ' 	   <TR>    \
+									<TD  >!!MachineType!!</TD>  \
+									<TD >!!ExceptionCode!!</TD>   \
+									<TD > !!ErrorDesc!!       </TD>   \
+									<TD  >!!ErrorTime!! </TD>			  \
+							   </TR>   ' ;
 	var liststrs="";
 	$.getJSON("/jgetalarms?lineid="+lineid,null,function(data){ 
 		if (data == null) return;
@@ -559,8 +564,11 @@ function showgaojingcontent(lineid){
 			
 			liststrs = liststrs + linestr;
 	    });
-		$("#gaojingcontentid").html("");
-		$("#gaojingcontentid").html(liststrs ) ;
+		 var tablestr = $("#tableheaderlist1idgj").html();
+		 console.log(tablestr);
+		 var tableheadstr = tablestr.split("<!-- abcdef -->")[0];
+		 $("#tableheaderlist1idgj").empty();
+		 $("#tableheaderlist1idgj").html(tableheadstr+"<!-- abcdef -->"+liststrs ) ;
 	});
 	
 	

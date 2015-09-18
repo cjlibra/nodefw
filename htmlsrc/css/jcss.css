@@ -338,11 +338,7 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 
 
 }
-#shebeixiangqingcontent ,#shebeitongjitubiaocontent{
-	width:100%  ;
-	 
-	
-}
+ 
 
 .norightline{
 	border-right:0px;
@@ -402,21 +398,21 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
  
    
   color:rgb(16,162,159) !important; 
- // background-color:gray !important;
+ 
   background-color:white!important;
   border-top:none !important;
   font-size:1.0em!important;
    
   text-align:center!important;
-  margin-right: 2em!important;
+  
 
 }
 .fanbanjishoubanji_nextli{
-    width:100%!important;
+     height:1.5em;
 	font-size:0.9em !important;
     padding-bottom:0.5em!important;
     padding-top:0.5em!important;
-	 margin-right: 2em!important;
+	 
 }
 
  
