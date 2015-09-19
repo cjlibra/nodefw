@@ -39,12 +39,12 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 }
 .tablesolidbottomline{
 
- border-bottom:1px solid rgb(25,155,171);
+   border-bottom:1px solid rgb(25,155,171);
 
 }
 .tabledotrightline{
   
-  border-right:1px dashed rgb(25,155,171);
+   border-right:1px dashed rgb(25,155,171);
 
 }
 .tableheaderlist{
@@ -54,13 +54,13 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 	
 }
 .tableheaderlist > tr {
- height:3em !important;
- }
+    height:3em !important;
+}
  
- .tableheaderlist > tr > th {
+.tableheaderlist > tr > th {
      font-size:1em;
 	 font-weight:100;
- }
+}
  
 .tableheaderlist1{
    // margin-top:0.5em;
@@ -85,6 +85,7 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
      border-bottom: 2px solid rgb(221,221,221);
      color:rgb(25,155,171);
 	 height:2em;
+	 font-weight:normal;
 }
 .tableheaderlist1   td  {
   // border-top:1px solid rgb(221,221,221)!important;
@@ -402,7 +403,7 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
   background-color:white!important;
   border-top:none !important;
   font-size:1.0em!important;
-   
+  font-weight:normal;
   text-align:center!important;
   
 
@@ -413,6 +414,12 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
     padding-bottom:0.5em!important;
     padding-top:0.5em!important;
 	 
+}
+.ui-li-icon{
+   width:1em;
+   height:1em;
+
+
 }
 
  
