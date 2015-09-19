@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+  <title>流水线管理系统</title>
+  <meta charset="utf-8" />
+  </head>
+  <body>
+ <script src="js/jquery-1.11.2.min.js"></script> 
+<script type="text/javascript">// <![CDATA[ 
+function FixTable(TableID, FixColumnNumber, width, height) { 
+/// <summary> 
+/// 锁定表头和列 
+/// <para> sorex.cnblogs.com </para> 
+/// </summary> 
+/// <param name="TableID" type="String"> 
+/// 要锁定的Table的ID 
+/// </param> 
+/// <param name="FixColumnNumber" type="Number"> 
+/// 要锁定列的个数 
+/// </param> 
+/// <param name="width" type="Number"> 
+/// 显示的宽度 
+/// </param> 
+/// <param name="height" type="Number"> 
+/// 显示的高度 
+/// </param> 
+if ($("#" + TableID + "_tableLayout").length != 0) { 
+$("#" + TableID + "_tableLayout").before($("#" + TableID)); 
+$("#" + TableID + "_tableLayout").empty(); 
+} 
+else { 
+$("#" + TableID).after("<div id='" + TableID + "_tableLayout' style='overflow:hidden;height:" + height + "px; width:" + width + "px;'></div>"); 
+} 
+$('<div id="' + TableID + '_tableFix"></div>' 
++ '<div id="' + TableID + '_tableHead"></div>' 
++ '<div id="' + TableID + '_tableColumn"></div>' 
++ '<div id="' + TableID + '_tableData"></div>').appendTo("#" + TableID + "_tableLayout"); 
+var oldtable = $("#" + TableID); 
+var tableFixClone = oldtable.clone(true); 
+tableFixClone.attr("id", TableID + "_tableFixClone"); 
+$("#" + TableID + "_tableFix").append(tableFixClone); 
+var tableHeadClone = oldtable.clone(true); 
+tableHeadClone.attr("id", TableID + "_tableHeadClone"); 
+$("#" + TableID + "_tableHead").append(tableHeadClone); 
+var tableColumnClone = oldtable.clone(true); 
+tableColumnClone.attr("id", TableID + "_tableColumnClone"); 
+$("#" + TableID + "_tableColumn").append(tableColumnClone); 
+$("#" + TableID + "_tableData").append(oldtable); 
+$("#" + TableID + "_tableLayout table").each(function () { 
+$(this).css("margin", "0"); 
+}); 
+var HeadHeight = $("#" + TableID + "_tableHead thead").height(); 
+HeadHeight += 2; 
+$("#" + TableID + "_tableHead").css("height", HeadHeight); 
+$("#" + TableID + "_tableFix").css("height", HeadHeight); 
+var ColumnsWidth = 0; 
+var ColumnsNumber = 0; 
+$("#" + TableID + "_tableColumn tr:last td:lt(" + FixColumnNumber + ")").each(function () { 
+ColumnsWidth += $(this).outerWidth(true); 
+ColumnsNumber++; 
+}); 
+ColumnsWidth += 2; 
+if ($.support.msie) { 
+switch ($.support.version) { 
+case "7.0": 
+if (ColumnsNumber >= 3) ColumnsWidth--; 
+break; 
+case "8.0": 
+if (ColumnsNumber >= 2) ColumnsWidth--; 
+break; 
+} 
+} 
+$("#" + TableID + "_tableColumn").css("width", ColumnsWidth); 
+$("#" + TableID + "_tableFix").css("width", ColumnsWidth); 
+$("#" + TableID + "_tableData").scroll(function () { 
+$("#" + TableID + "_tableHead").scrollLeft($("#" + TableID + "_tableData").scrollLeft()); 
+$("#" + TableID + "_tableColumn").scrollTop($("#" + TableID + "_tableData").scrollTop()); 
+}); 
+$("#" + TableID + "_tableFix").css({ "overflow": "hidden", "position": "relative", "z-index": "50", "background-color": "Silver" }); 
+$("#" + TableID + "_tableHead").css({ "overflow": "hidden", "width": width - 17, "position": "relative", "z-index": "45", "background-color": "Silver" }); 
+$("#" + TableID + "_tableColumn").css({ "overflow": "hidden", "height": height - 17, "position": "relative", "z-index": "40", "background-color": "Silver" }); 
+$("#" + TableID + "_tableData").css({ "overflow": "scroll", "width": width, "height": height, "position": "relative", "z-index": "35" }); 
+if ($("#" + TableID + "_tableHead").width() > $("#" + TableID + "_tableFix table").width()) { 
+$("#" + TableID + "_tableHead").css("width", $("#" + TableID + "_tableFix table").width()); 
+$("#" + TableID + "_tableData").css("width", $("#" + TableID + "_tableFix table").width() + 17); 
+} 
+if ($("#" + TableID + "_tableColumn").height() > $("#" + TableID + "_tableColumn table").height()) { 
+$("#" + TableID + "_tableColumn").css("height", $("#" + TableID + "_tableColumn table").height()); 
+$("#" + TableID + "_tableData").css("height", $("#" + TableID + "_tableColumn table").height() + 17); 
+} 
+$("#" + TableID + "_tableFix").offset($("#" + TableID + "_tableLayout").offset()); 
+$("#" + TableID + "_tableHead").offset($("#" + TableID + "_tableLayout").offset()); 
+$("#" + TableID + "_tableColumn").offset($("#" + TableID + "_tableLayout").offset()); 
+$("#" + TableID + "_tableData").offset($("#" + TableID + "_tableLayout").offset()); 
+} 
+$(document).ready(function () { 
+FixTable("MyTable", 2, 600, 200); 
+}); 
+// ]]></script> 
+<style><!-- 
+.style1 
+{ 
+width: 137px; 
+} 
+#MyTable 
+{ 
+border-top: 1px solid #cc0000; 
+border-left: 1px solid #cc0000; 
+} 
+#MyTable td,th 
+{ border-bottom:1px solid #cc0000; 
+border-right: 1px solid #cc0000; 
+} 
+
+
+
+--></style> 
+<p><br /> </p> 
+<table id="MyTable" style="border-bottom-color: black; border-top-color: black; width: 1000px; height: 200px; color: #000000; border-right-color: black; font-size: medium; border-left-color: #15b0e1;" border="0" cellspacing="0" cellpadding="0"> 
+<thead> 
+<tr><th style="text-align: center; width: 80px;" rowspan="2"> </th><th class="style1" style="text-align: center;" rowspan="2">项目</th><th style="text-align: center; width: 80px;" rowspan="2">公示栏</th><th style="text-align: center;" colspan="9">dddddddd</th><th style="text-align: center;" rowspan="2" colspan="2"> 总分 </th></tr> 
+<tr id="game"><th style="text-align: center;" colspan="2">语文 数学 </th><th style="text-align: center;" colspan="2">英语 政治 </th><th style="text-align: center;" colspan="2">历史 地理 </th><th style="text-align: center;" colspan="2">物理 化学 </th><th style="text-align: center; width: 80px;">生物 </th></tr> 
+</thead> 
+<tbody><!-- 数据行 --> 
+<tr> 
+<td> </td> 
+<td class="style1"> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td>ss </td> 
+<td class="style1">上线时间 </td> 
+<td>1 </td> 
+<td>29 1</td> 
+<td>25 2</td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 33</td> 
+<td>526 qq</td> 
+<td>dd</td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">在线人数 </td> 
+<td>2 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td>s</td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+<tr> 
+<td> </td> 
+<td class="style1">学生32 </td> 
+<td>班级1 </td> 
+<td>29 </td> 
+<td>25 </td> 
+<td>146 </td> 
+<td>28 </td> 
+<td>79 </td> 
+<td>73 </td> 
+<td>47 </td> 
+<td>8 </td> 
+<td>91 </td> 
+<td>526 </td> 
+<td> </td> 
+</tr> 
+</tbody> 
+</table> 
+<p> </p> 
