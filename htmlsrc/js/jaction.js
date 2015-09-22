@@ -54,7 +54,7 @@ $(document).on("pagehide", "#workshoplist", function(){
 });
 var g_url;
 $(document).on("pageshow", "#stationlist", function(){
-	 $("#stationlistid > .tableheaderlistcontent").empty();
+	// $("#stationlistid > .tableheaderlistcontent").empty();
 	if (typeof g_url == "undefined") {window.location.href="#workshoplist"; return;} 
 	showStationlist( g_url);
 	
@@ -995,12 +995,17 @@ function inputpassword(){
 }
 function closeDoor(){
 	
-	 alert(navigator.appName);
-	window.opener=null; 
-    window.open('','_self'); 
-    window.close(); 
-	document.close();
-	navigator.app.exitApp();  
+	// alert(navigator.appName);
+	//window.opener=null; 
+   // window.open('','_self'); 
+   // window.close(); 
+	//document.close();
+	var r=confirm("确认关闭吗？");
+    if (r==true)
+    {
+       navigator.app.exitApp();  
+    }
+	
 	
 }
 function FixTable1(TableID, FixColumnNumber, width, height, overflowx, overflowy) {
