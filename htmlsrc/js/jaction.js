@@ -16,6 +16,7 @@ function clickhdgj(){
 	$("#tabdev3").addClass("tabtab");
 	$("#tabdev2").removeClass("tabtab");
 	$("#tabdev1").removeClass("tabtab");
+	$("#tableheaderlist1idgj  tr  td").empty();  
 	
 }
 $(document).on("pageshow", "#login", function(){
@@ -189,8 +190,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -200,8 +201,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -211,8 +212,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 					"data":[],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				}
@@ -313,8 +314,8 @@ function setechart0(data){
 					"data":[5, 20, 40, 10, 10, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -324,8 +325,8 @@ function setechart0(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -335,8 +336,8 @@ function setechart0(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				}
@@ -424,8 +425,8 @@ function setechart1(data){
 					"data":[5, 20, 40, 10, 10, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -435,8 +436,8 @@ function setechart1(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				},
@@ -446,8 +447,8 @@ function setechart1(data){
 					"data":[15, 30, 30, 10, 20, 20],
 					markPoint : {
 							data : [
-								{type : 'max', name: '最大值',symbol: 'diamond'},
-								{type : 'min', name: '最小值',symbol: 'diamond'}
+								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
+								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
 							]
 						}
 				}

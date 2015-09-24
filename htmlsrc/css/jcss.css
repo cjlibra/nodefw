@@ -58,8 +58,8 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 }
  
 .tableheaderlist > tr > th {
-     font-size:1em;
-	 font-weight:100;
+     font-size:1em!important;
+	 font-weight:100!important;
 }
  
 .tableheaderlist1{
