@@ -672,6 +672,7 @@ var iTime1;
 var V = new Array();
 function showStationlistbyclick(url){
 	g_url = url;
+	$("#stationlistid > .tableheaderlistcontent").empty();
 }
 function showWorkshoplist(){
 	 
@@ -933,7 +934,7 @@ function hideLoading(){
  $.mobile.loading('hide');
 } 	
 function dengluto(){
-	 
+	 $("#workshopid > .tableheaderlistcontent").html("");
 	if ( $("#mima").val() == "passpass"  && $("#fullname").val() == "admin") {
 		   
 		   
