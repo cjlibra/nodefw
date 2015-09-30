@@ -154,12 +154,17 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	 var head_foot_height = $("#shebeitongjitubiao div[data-role='header']").height()+ $("#shebeitongjitubiao div[data-role='footer']").height();
 	 var headtitleheight = $("#shebeitongjitubiaocontent > .centerechartname").height();
 	 var bodyheight =  document.body.clientHeight;
+	// var bodyheight =  document.body.clientWidth;
 	
 	// $("#main1").css("height" , winheight - 120 + "px");
 	// $("#main2").css("height" , winheight - 120 + "px");
 	 
 	 $("#main1").css("height" , bodyheight - head_foot_height - headtitleheight-10 + "px");
 	 $("#main2").css("height" ,  bodyheight - head_foot_height - headtitleheight-10 + "px");
+	//  $("#main1").css("height" ,"500px");
+////	   $("#main1").css("width" ,"1000px");
+	//    $("#main2").css("height" ,"500px");
+////	   $("#main2").css("width" ,"1000px");
 	
     var loption1= {
 			tooltip: {

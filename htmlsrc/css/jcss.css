@@ -422,6 +422,14 @@ a:link,a:visited,a:hover,a:active {text-decoration:none;color:black}
 
 }
 
+.bodyrotation {
+     transform:rotate(90deg);
+	 -ms-transform:rotate(90deg);
+	 -moz-transform:rotate(90deg);
+	 -webkit-transform:rotate(90deg);
+
+
+}
  
  
  
