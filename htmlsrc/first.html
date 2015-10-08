@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="jmobile/jquery.mobile.structure-1.4.5.min.css" /> 
   <link rel="stylesheet" type="text/css" href="./css/jcss.css">
   
-  <!-- <script src="js/cordova.js"></script>  -->
+   <script src="js/cordova.js"></script>   
  
   <script src="js/jquery-1.11.2.min.js"></script> 
   <script src="jmobile/jquery.mobile-1.4.5.min.js"></script> 
@@ -689,7 +689,7 @@
 	<div class="headerrightpic"><img src="img/yunxingstate.png" /> </div>
 	
 </div>
-<div id="shebeitongjitubiaocontent"  style="background-color:white !important; " onclick="alert('lll')">
+<div id="shebeitongjitubiaocontent"  style="background-color:white !important; " onclick="showtubiaohenping();">
  <div class="centerechartname">当日产量统计图-小时产量</div>
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main1"   ></div>
@@ -708,6 +708,7 @@
    
        
 </div>
+
  
 
 <div data-role="footer" data-position="fixed" style="border-top:none ; ">
@@ -720,6 +721,42 @@
   </div>
 </div>
 </div>
+
+
+<div   data-role="page" id="tubiaohenpingid"  style="background-color:white"  >
+ 
+  <div data-role="header" data-position="fixed"   style="background-color:white">
+    <h1 class="hititleh1">统计图表横屏显示</h1>  
+     <a href="#shebeitongjitubiao"  class = "noshadowdiy"   ><img src="img/menulog.png" />  </a> 
+   </div>
+  
+ <div id="shebeitongjitubiaohenpingcontent"    >
+  <div class="centerechartname">当日产量统计图-小时产量</div>
+		  
+    <div id="main3" style="height:300px"  ></div>
+    
+	 
+   
+      
+
+
+
+
+
+ <div id="main4"  style="height:300px" ></div>  
+     
+	 
+   
+       
+</div>  
+
+</div>
+
+
+
+
+
+ 
 
 
 

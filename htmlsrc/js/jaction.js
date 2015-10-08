@@ -19,6 +19,38 @@ function clickhdgj(){
 	$("#tableheaderlist1idgj  tr  td").empty();  
 	
 }
+function showtubiaohenping(){
+   
+   document.location.href = "#tubiaohenpingid";
+   var bodyheight =  document.body.clientHeight;
+   var bodywidth =  document.body.clientWidth;
+   bodyheight = $(window).height();
+   bodywidth =  $(window).width() ;
+   
+   // $("body").css("height",bodywidth +"px");
+  $("#tubiaohenpingid").addClass("bodyrotation");
+     
+   alert(bodyheight+" "+bodywidth)	;
+  $("#tubiaohenpingid").css({
+	                         "width" : bodyheight+"px" ,
+                             "height" : bodywidth+"px" ,
+                             "margin-left" : bodywidth-bodyheight+"px"
+							 });
+ // $("#tubiaohenpingid").css("height",bodywidth+"px");
+  
+ //  $("#tubiaohenpingid").height(bodywidth);
+  
+  //$("#shebeitongjitubiaohenpingcontent").css("height",bodyWidth+"px");
+  //$("#tubiaohenpingid").height(1366);
+	 alert($("#tubiaohenpingid").height()+" ");;
+	
+ 
+}
+function tuichutubiaohenping(){
+	alert("hiede")	;
+	 $(".tubiaohenping").hide();
+	
+}
 $(document).on("pageshow", "#login", function(){
 	
 	setTimeout("inputpassword()",3000);
@@ -145,6 +177,37 @@ $(document).on("pageshow", "#log_on", function(){
 	   
 	  
 });
+$(document).on("pageshow", "#tubiaohenpingid", function(){
+	    drawechart("main3",option1);
+		drawechart("main4",option2);
+		
+		$("#main4").on("swipe",function(){
+	    
+		  $("#main4").hide();
+		  $("#main3").show();
+		   drawechart("main3",0);
+		  drawechart("main3",option1);
+		  $(".centerechartname").text("当日产量统计图-小时产量");
+		 	 
+	});
+
+	$("#main3").on("swipe",function(){
+	 
+		$("#main3").hide();
+		$("#main4").show();
+		 drawechart("main4",0);
+	    drawechart("main4",option2);
+		$(".centerechartname").text("本月产量统计图-日产量");
+  
+	});
+	  
+	
+	$("#main3").show();  
+ 
+    $("#main4").hide(); 
+	
+	
+});
 
 $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	// var divbutheight = $(".floatpicbuts").height();
@@ -192,40 +255,24 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 				{
 					"name":"",
 					"type":"bar",
-					"data":[],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[] 
 				},
 				 {
 					"name":"",
 					"type":"line",
-					"data":[],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[] 
 				},
 				 {
 					"name":"",
 					"type":"line",
-					"data":[],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[]
+					 
 				}
 			]
 		};
 	drawechart("main2",loption1);
 	drawechart("main1",loption1);
+	 
 	showLoading();
 		
 		 
@@ -316,35 +363,18 @@ function setechart0(data){
 				{
 					"name":"每小时产量",
 					"type":"bar",
-					"data":[5, 20, 40, 10, 10, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[5, 20, 40, 10, 10, 20]
+					 
 				},
 				 {
 					"name":"日目标产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[15, 30, 30, 10, 20, 20] 
 				},
 				 {
 					"name":"累计产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[15, 30, 30, 10, 20, 20] 
 				}
 			]
 		};
@@ -392,7 +422,8 @@ function setechart0(data){
 
 			}
 		
-			drawechart("main1",option1);			
+			drawechart("main1",option1);
+			
 
 		
     }
@@ -427,35 +458,17 @@ function setechart1(data){
 				{
 					"name":"每日产量",
 					"type":"bar",
-					"data":[5, 20, 40, 10, 10, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[5, 20, 40, 10, 10, 20] 
 				},
 				 {
 					"name":"月目标产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[15, 30, 30, 10, 20, 20] 
 				},
 				 {
 					"name":"累计产量",
 					"type":"line",
-					"data":[15, 30, 30, 10, 20, 20],
-					markPoint : {
-							data : [
-								{type : 'max', name: '最大值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}},
-								{type : 'min', name: '最小值',symbol:  'emptyCircle', itemStyle:{normal:{color:'#dc143c',label:{position:'top'}}}}
-							]
-						}
+					"data":[15, 30, 30, 10, 20, 20] 
 				}
 			]
 		};
@@ -512,6 +525,7 @@ function setechart1(data){
 	
 	
 	    drawechart("main2",option2);
+		
     }
 	 
 	 
