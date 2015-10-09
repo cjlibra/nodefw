@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="jmobile/jquery.mobile.structure-1.4.5.min.css" /> 
   <link rel="stylesheet" type="text/css" href="./css/jcss.css">
   
-   <script src="js/cordova.js"></script>   
+  <!--- <script src="js/cordova.js"></script>    --->
  
   <script src="js/jquery-1.11.2.min.js"></script> 
   <script src="jmobile/jquery.mobile-1.4.5.min.js"></script> 
@@ -689,8 +689,13 @@
 	<div class="headerrightpic"><img src="img/yunxingstate.png" /> </div>
 	
 </div>
-<div id="shebeitongjitubiaocontent"  style="background-color:white !important; " onclick="showtubiaohenping();">
- <div class="centerechartname">当日产量统计图-小时产量</div>
+<div id="shebeitongjitubiaocontent"  style="background-color:white !important; "  >
+ <div class="centerechartname">
+ <span>当日产量统计图-小时产量 </span>
+ <a href="javascript:showtubiaohenping();"><img src="img/rotationwide.jpg" class="imgtubiaozhishi"/></a> 
+  <a href="javascript:switchtubiaobyclick();"><img src="img/switchnext.jpg" class="imgtubiaozhishi" /></a> 
+  </div> 
+
 		  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main1"   ></div>
     <!-- ECharts单文件引入 -->
@@ -731,7 +736,11 @@
    </div>
   
  <div id="shebeitongjitubiaohenpingcontent"    >
-  <div class="centerechartname">当日产量统计图-小时产量</div>
+ <div class="centerechartname">
+ <span>当日产量统计图-小时产量 </span>
+ 
+  <a href="javascript:switchtubiaobyclick3_4();"><img src="img/switchnext.jpg" class="imgtubiaozhishi" /></a> 
+ </div>
 		  
     <div id="main3" style="height:300px"  ></div>
     
