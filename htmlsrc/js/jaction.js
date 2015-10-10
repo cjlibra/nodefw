@@ -82,7 +82,8 @@ function showtubiaohenping(){
    bodywidth =  $(window).width() ;
    
    // $("body").css("height",bodywidth +"px");
-  $("#tubiaohenpingid").addClass("bodyrotation");
+   //$("#shebeitongjitubiaohenpingcontent").addClass("bodyrotation");
+  
      
  //  alert(bodyheight+" "+bodywidth)	;
   $("#tubiaohenpingid").css({
@@ -90,6 +91,7 @@ function showtubiaohenping(){
                              "height" : bodywidth+"px" ,
                              "margin-left" : bodywidth-bodyheight+"px"
 							 });
+  $("#tubiaohenpingid").addClass("bodyrotation");
  // $("#tubiaohenpingid").css("height",bodywidth+"px");
   
  //  $("#tubiaohenpingid").height(bodywidth);
@@ -231,6 +233,11 @@ $(document).on("pageshow", "#log_on", function(){
 	   
 	  
 });
+
+
+$(document).on("pagehide", "#tubiaohenpingid", function(){
+	switchflagyubiao3_4 = 1;
+});
 $(document).on("pageshow", "#tubiaohenpingid", function(){
 	    drawechart("main3",option1);
 		drawechart("main4",option2);
@@ -257,7 +264,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 	  
 	
 	$("#main3").show();  
- 
+     drawechart("main3",option1);
     $("#main4").hide(); 
 	
 	
