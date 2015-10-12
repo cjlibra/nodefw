@@ -75,7 +75,8 @@ function switchtubiaobyclick(){
 }
 function showtubiaohenping(){
    
-   document.location.href = "#tubiaohenpingid";
+  // document.location.href = "#tubiaohenpingid";
+   $.mobile.changePage("#tubiaohenpingid",{ transition: "pop"});
    var bodyheight =  document.body.clientHeight;
    var bodywidth =  document.body.clientWidth;
    bodyheight = $(window).height();
@@ -336,12 +337,9 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 	 
 	showLoading();
 		
-		 
-	  
-	 
-	 
-	$("#main2").on("swipe",function(){
-	    
+	/*	 
+	$("#shebeitongjitubiao > #shebeitongjitubiaocontent > #main2").bind("swipe",function(){
+	      alert("2");
 		  $("#main2").hide();
 		  $("#main1").show();
 		   drawechart("main1",0);
@@ -350,21 +348,54 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 		 	 
 	});
 
-	$("#main1").on("swipe",function(){
-	 
+	$("#shebeitongjitubiao > #shebeitongjitubiaocontent > #main1").bind("swipe",function(){
+	    alert("1");
 		$("#main1").hide();
 		$("#main2").show();
 		 drawechart("main2",0);
 	    drawechart("main2",option2);
 		$(".centerechartname > span").text("本月产量统计图-日产量");
   
-	});
+	});  */
+	
+	$("#main1").swipe( {
+    
+		swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			
+			$("#main1").hide();
+			$("#main2").show();
+			drawechart("main2",0);
+			drawechart("main2",option2);
+			$(".centerechartname > span").text("本月产量统计图-日产量");
+		}
+    });
+ 
+  
+ 
+    $("#main2").swipe( {
+   
+		swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+		   
+			  $("#main2").hide();
+			  $("#main1").show();
+			  drawechart("main1",0);
+			  drawechart("main1",option1);
+			  $(".centerechartname > span").text("当日产量统计图-小时产量");
+		}
+    });
+	 
+	 
+	
 	  
 	
 	$("#main1").show();  
  
     $("#main2").hide(); 
 });
+ 
+  
+ 
+
 //var time1 = new Date().Format("yyyy-mm-dd");
 var data = new Date();
 var year = data.getFullYear();  //获取年
