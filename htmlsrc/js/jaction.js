@@ -92,7 +92,14 @@ function showtubiaohenping(){
                              "height" : bodywidth+"px" ,
                              "margin-left" : bodywidth-bodyheight+"px"
 							 });
+							 
+						 
+		
+		
   $("#tubiaohenpingid").addClass("bodyrotation");
+  
+  
+   
  // $("#tubiaohenpingid").css("height",bodywidth+"px");
   
  //  $("#tubiaohenpingid").height(bodywidth);
@@ -240,8 +247,9 @@ $(document).on("pagehide", "#tubiaohenpingid", function(){
 	switchflagyubiao3_4 = 1;
 });
 $(document).on("pageshow", "#tubiaohenpingid", function(){
-	    drawechart("main3",option1);
-		drawechart("main4",option2);
+	     
+	 //   drawechart("main3",option1);
+	//	drawechart("main4",option2);
 		
 		$("#main4").on("swipe",function(){
 	    
@@ -265,7 +273,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 	  
 	
 	$("#main3").show();  
-     drawechart("main3",option1);
+    drawechart("main3",option1);
     $("#main4").hide(); 
 	
 	
