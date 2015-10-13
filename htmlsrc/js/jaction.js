@@ -97,7 +97,49 @@ function showtubiaohenping(){
 		
 		
   $("#tubiaohenpingid").addClass("bodyrotation");
-  
+   $("#main3").bind("mousedown",function(e){
+	   alert(e.target+" " +e.screeX);
+	   
+   });
+   $("#tubiaohenpingid").bind("mousedown",function(e){
+	     var ss = e.target +" " ;
+		 ss  += e.screenX + " "  ;
+         ss  += e.screenY + " "  ;
+         ss  +=e.clientX + " "  ;
+         ss  += e.clientY+ " "  ;
+		 ss  += e.type+ " "  ;
+	     alert(ss);
+		 e.screenX = 1097;
+		 e.screenY = 233;
+		 e.clientX = 1097;
+		 e.clientY = 110;
+		 
+		  var type = 'mousedown'; //要触发的事件类型
+                var bubbles = false; //事件是否可以冒泡
+               var cancelable = true; //事件是否可以阻止浏览器默认事件
+                var view = document.defaultView; //与事件关联的视图，该属性默认即可，不管
+                var detail = 0;
+                var screenX = 1097;
+                var screenY = 233;
+               var clientX = 1097;
+                var clientY = 110;
+               var ctrlKey = false; //是否按下ctrl
+                var altKey = false; //是否按下alt
+               var shiftKey = false;
+                var metaKey = false;
+                var button = 0; //表示按下哪一个鼠标键
+                 var relatedTarget = 0; //模拟mousemove或者out时候用到，与事件相关的对象
+                 var event = document.createEvent('Events');
+                 event.myFlag = '叶小钗';
+                event.initEvent(type, bubbles, cancelable, view, detail, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey, button, relatedTarget);
+                 
+                 console.log(event);
+                // c.dispatchEvent(event);
+		//$('main3')[0].dispatchEvent(e);
+	 document.getElementById('main3').dispatchEvent(event);
+		  
+   });
+ // $("body").addClass("bodyrotation");
   
    
  // $("#tubiaohenpingid").css("height",bodywidth+"px");
@@ -1028,6 +1070,7 @@ function drawechart(id_div,optionset){
         
                 // 为echarts对象加载数据 
                 myChart.setOption(option); 
+			 
             }
         );
 	   
