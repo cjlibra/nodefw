@@ -106,7 +106,7 @@ function switchtubiaobyclick3_4(){
 		$("#main3").show();
 		drawechart("main3",0);
 		drawechart("main3",option1);
-		$(".centerechartname > span").text("当日产量统计图-小时产量");
+		$("#tubiaohenpingid .centerechartname > span").text("当日产量统计图-小时产量");
 		 
 	}else{ 
 
@@ -117,7 +117,7 @@ function switchtubiaobyclick3_4(){
 		$("#main4").show();
 		drawechart("main4",0);
 	    drawechart("main4",option2);
-		$(".centerechartname > span").text("本月产量统计图-日产量");
+		$("#tubiaohenpingid .centerechartname > span").text("本月产量统计图-日产量");
     }
 	
 	
@@ -133,7 +133,7 @@ function switchtubiaobyclick(){
 		$("#main1").show();
 		drawechart("main1",0);
 		drawechart("main1",option1);
-		$(".centerechartname > span").text("当日产量统计图-小时产量");
+		$("#shebeitongjitubiao .centerechartname > span").text("当日产量统计图-小时产量");
 		 
 	}else{ 
 
@@ -144,7 +144,7 @@ function switchtubiaobyclick(){
 		$("#main2").show();
 		drawechart("main2",0);
 	    drawechart("main2",option2);
-		$(".centerechartname > span").text("本月产量统计图-日产量");
+		$("#shebeitongjitubiao .centerechartname > span").text("本月产量统计图-日产量");
     }
 	
 	
@@ -379,7 +379,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 			$("#main4").show();
 			drawechart("main4",0);
 			drawechart("main4",option2);
-			$(".centerechartname > span").text("本月产量统计图-日产量");
+			$("#tubiaohenpingid .centerechartname > span").text("本月产量统计图-日产量");
 			 
 		}
     });
@@ -393,7 +393,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 			$("#main3").show();
 			drawechart("main3",0);
 			drawechart("main3",option1);
-			$(".centerechartname > span").text("当日产量统计图-小时产量");
+			$("#tubiaohenpingid .centerechartname > span").text("当日产量统计图-小时产量");
 			  
 		}
     });
@@ -522,7 +522,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			$("#main2").show();
 			drawechart("main2",0);
 			drawechart("main2",option2);
-			$(".centerechartname > span").text("本月产量统计图-日产量");
+			$("#shebeitongjitubiao .centerechartname > span").text("本月产量统计图-日产量");
 		//	event.stopPropagation();
 		//	console.log(event);
 		}
@@ -538,7 +538,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			  $("#main1").show();
 			  drawechart("main1",0);
 			  drawechart("main1",option1);
-			  $(".centerechartname > span").text("当日产量统计图-小时产量");
+			  $("#shebeitongjitubiao .centerechartname > span").text("当日产量统计图-小时产量");
 			 // event.stopPropagation();
 		}
     });
