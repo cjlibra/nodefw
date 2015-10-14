@@ -1,3 +1,80 @@
+
+
+/*
+function orientationChange() {
+
+    switch(window.orientation) {
+
+    　　case 0: 
+
+            alert("肖像模式 0,screen-width: " + screen.width + "; screen-height:" + screen.height);
+
+            break;
+
+    　　case -90: 
+
+            alert("左旋 -90,screen-width: " + screen.width + "; screen-height:" + screen.height);
+
+            break;
+
+    　　case 90:   
+
+            alert("右旋 90,screen-width: " + screen.width + "; screen-height:" + screen.height);
+
+            break;
+
+    　　case 180:   
+
+        　　alert("风景模式 180,screen-width: " + screen.width + "; screen-height:" + screen.height);
+
+        　　break;
+
+    }; 
+	
+}
+
+
+
+addEventListener('load', function(){
+
+    orientationChange();
+
+    window.onorientationchange = orientationChange;
+
+});
+
+addEventListener('load', function(){
+$( window ).on( "orientationchange", function( event ) {
+  alert( "This device is in " + event.orientation + " mode!" );
+});
+ 
+// You can also manually force this event to fire.
+//$( window ).orientationchange();
+});*/
+
+function togglezoomdata(flag){
+	option1.dataZoom.show=flag;
+	option2.dataZoom.show=flag;
+	 
+	if (true == flag){
+	   option1.dataZoom.realtime=true;
+	   option1.dataZoom.start=0;
+	   option1.dataZoom.end=20;
+	   option2.dataZoom.realtime=true;
+	   option2.dataZoom.start=0;
+	   option2.dataZoom.end=20;
+	}else{
+	   option1.dataZoom.realtime=true;
+	   option1.dataZoom.start=0;
+	   option1.dataZoom.end=100;
+	   option2.dataZoom.realtime=true;
+	   option2.dataZoom.start=0;
+	   option2.dataZoom.end=100;
+	}
+	
+	
+}
+
 function clicksbxq(){
 	$("#tabdev1").addClass("tabtab");
 	$("#tabdev2").removeClass("tabtab");
@@ -97,6 +174,7 @@ function showtubiaohenping(){
 		
 		
   $("#tubiaohenpingid").addClass("bodyrotation");
+  /*
    $("#main3").bind("mousedown",function(e){
 	   alert(e.target+" " +e.screeX);
 	   
@@ -138,7 +216,7 @@ function showtubiaohenping(){
 		//$('main3')[0].dispatchEvent(e);
 	 document.getElementById('main3').dispatchEvent(event);
 		  
-   });
+   });*/
  // $("body").addClass("bodyrotation");
   
    
@@ -287,12 +365,13 @@ $(document).on("pageshow", "#log_on", function(){
 
 $(document).on("pagehide", "#tubiaohenpingid", function(){
 	switchflagyubiao3_4 = 1;
+	togglezoomdata(true);
 });
 $(document).on("pageshow", "#tubiaohenpingid", function(){
 	     
 	 //   drawechart("main3",option1);
 	//	drawechart("main4",option2);
-		
+		togglezoomdata(false);
 		$("#main4").on("swipe",function(){
 	    
 		  $("#main4").hide();
@@ -345,6 +424,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			tooltip: {
 				show: true
 			},
+			
 			legend: {
 				data:['自动运行时间','小时目标产量','每小时产量']
 			},
@@ -483,6 +563,12 @@ function setechart0(data){
 			tooltip: {
 				show: true
 			},
+			 dataZoom : {
+				show : true,
+				realtime: true,
+				start : 0,
+				end : 20
+            },
 			legend: {
 				data:['每小时产量','日目标产量','累计产量']
 			},
@@ -578,6 +664,12 @@ function setechart1(data){
 			tooltip: {
 				show: true
 			},
+			 dataZoom : {
+				show : true,
+				realtime: true,
+				start : 0,
+				end : 20
+            },
 			legend: {
 				data:['每日产量','月目标产量','累计产量']
 			},
