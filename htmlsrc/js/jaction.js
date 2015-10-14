@@ -372,13 +372,39 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 	 //   drawechart("main3",option1);
 	//	drawechart("main4",option2);
 		togglezoomdata(false);
-		$("#main4").on("swipe",function(){
-	    
-		  $("#main4").hide();
-		  $("#main3").show();
-		   drawechart("main3",0);
-		  drawechart("main3",option1);
-		  $(".centerechartname > span").text("当日产量统计图-小时产量");
+		$("#main3").swipe( {
+    
+		swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			$("#main3").hide();
+			$("#main4").show();
+			drawechart("main4",0);
+			drawechart("main4",option2);
+			$(".centerechartname > span").text("本月产量统计图-日产量");
+			 
+		}
+    });
+ 
+  
+ 
+    $("#main4").swipe( {
+   
+		swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+			$("#main4").hide();
+			$("#main3").show();
+			drawechart("main3",0);
+			drawechart("main3",option1);
+			$(".centerechartname > span").text("当日产量统计图-小时产量");
+			  
+		}
+    });
+	
+	/*$("#main4").on("swipe",function(){
+	
+		$("#main4").hide();
+		$("#main3").show();
+		drawechart("main3",0);
+		drawechart("main3",option1);
+		$(".centerechartname > span").text("当日产量统计图-小时产量");
 		 	 
 	});
 
@@ -386,11 +412,11 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 	 
 		$("#main3").hide();
 		$("#main4").show();
-		 drawechart("main4",0);
+		drawechart("main4",0);
 	    drawechart("main4",option2);
 		$(".centerechartname > span").text("本月产量统计图-日产量");
   
-	});
+	});*/
 	  
 	
 	$("#main3").show();  
@@ -497,6 +523,8 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			drawechart("main2",0);
 			drawechart("main2",option2);
 			$(".centerechartname > span").text("本月产量统计图-日产量");
+		//	event.stopPropagation();
+		//	console.log(event);
 		}
     });
  
@@ -511,6 +539,7 @@ $(document).on("pageshow", "#shebeitongjitubiao", function(){
 			  drawechart("main1",0);
 			  drawechart("main1",option1);
 			  $(".centerechartname > span").text("当日产量统计图-小时产量");
+			 // event.stopPropagation();
 		}
     });
 	 
