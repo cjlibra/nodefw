@@ -105,6 +105,7 @@ function switchtubiaobyclick3_4(){
 		$("#main4").hide();
 		$("#main3").show();
 		drawechart("main3",0);
+		togglezoomdata(false);
 		drawechart("main3",option1);
 		$("#tubiaohenpingid .centerechartname > span").text("当日产量统计图-小时产量");
 		 
@@ -116,6 +117,7 @@ function switchtubiaobyclick3_4(){
 		$("#main3").hide();
 		$("#main4").show();
 		drawechart("main4",0);
+		togglezoomdata(false);
 	    drawechart("main4",option2);
 		$("#tubiaohenpingid .centerechartname > span").text("本月产量统计图-日产量");
     }
@@ -153,6 +155,9 @@ function switchtubiaobyclick(){
 function showtubiaohenping(){
    
   // document.location.href = "#tubiaohenpingid";
+  if (typeof option1 == "undefined" || typeof option2 == "undefined"){
+	  return;
+  }
    $.mobile.changePage("#tubiaohenpingid",{ transition: "pop"});
    var bodyheight =  document.body.clientHeight;
    var bodywidth =  document.body.clientWidth;
@@ -339,6 +344,7 @@ $(document).on("pagehide", "#shebeitongjitubiao", function(){
 	  
 	$(".tabindex").hide();
 	
+	
 	  
 	  
 });
@@ -378,6 +384,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 			$("#main3").hide();
 			$("#main4").show();
 			drawechart("main4",0);
+			togglezoomdata(false);
 			drawechart("main4",option2);
 			$("#tubiaohenpingid .centerechartname > span").text("本月产量统计图-日产量");
 			 
@@ -392,6 +399,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 			$("#main4").hide();
 			$("#main3").show();
 			drawechart("main3",0);
+			togglezoomdata(false);
 			drawechart("main3",option1);
 			$("#tubiaohenpingid .centerechartname > span").text("当日产量统计图-小时产量");
 			  
