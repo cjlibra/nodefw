@@ -428,6 +428,7 @@ $(document).on("pageshow", "#tubiaohenpingid", function(){
 	  
 	
 	$("#main3").show();  
+	$("#tubiaohenpingid .centerechartname > span").text("当日产量统计图-小时产量");
     drawechart("main3",option1);
     $("#main4").hide(); 
 	
